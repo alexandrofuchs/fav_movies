@@ -1,5 +1,5 @@
+import 'package:fav_movies/modules/home/presenter/pages/popular_movies/popular_movies_page.dart';
 import 'package:fav_movies/root/app_module.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class HomeModule extends Module {
@@ -15,16 +15,7 @@ class HomeModule extends Module {
 
   @override
   void routes(RouteManager r) {
-    r.child('/',
-        child: (context) => Scaffold(
-              appBar: AppBar(
-                  backgroundColor: Colors.black,
-                  toolbarHeight: 50,
-                  title: const Text(
-                    'App Module',
-                    style: TextStyle(color: Colors.white),
-                  )),
-            ));
+    r.child('/', child: (context) => const PopularMoviesPage());
     super.routes(r);
   }
 }

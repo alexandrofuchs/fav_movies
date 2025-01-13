@@ -52,4 +52,9 @@ class ApiRequestInterceptor with InterceptorsPart
     final response = await _dio.put(path, data: data);
     return response.data;
   }
+  
+  @override
+  void dispose() {
+    _dio.close();
+  }
 }

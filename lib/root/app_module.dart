@@ -6,7 +6,9 @@ import 'package:flutter_modular/flutter_modular.dart';
 class AppModule extends Module {
   @override
   void exportedBinds(Injector i) {
-    i.addLazySingleton<IRequestInterceptor>(ApiRequestInterceptor.new);
+    i.addLazySingleton<IRequestInterceptor>(ApiRequestInterceptor.new, config: BindConfig(
+      onDispose: (value) => value.dispose(),
+    ));
     super.exportedBinds(i);
   }
 

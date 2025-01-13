@@ -1,5 +1,9 @@
 import 'package:fav_movies/core/external/api/domain/i_interceptor/i_request_interceptor.dart';
 import 'package:fav_movies/modules/home/domain/i_repository/i_popular_movies_repository.dart';
+import 'package:fav_movies/modules/home/domain/models/popular_movie.dart';
+import 'package:fav_movies/modules/home/domain/models/popular_movies.dart';
+
+part 'popular_movie_model.dart';
 
 class PopularMoviesRepository implements IPopularMoviesRepository {
   final IRequestInterceptor _request;
@@ -7,8 +11,8 @@ class PopularMoviesRepository implements IPopularMoviesRepository {
   PopularMoviesRepository(this._request);
 
   @override
-  Future<List<Object>> getMovies() async{
-    final response = await _request.get('/movie/popular?language=en-US&page=1');
-    return [];
+  Future<PopularMovies> getMovies(int page) async{
+    final response = await _request.get('/movie/popular?language=en-US&page=$page');
+    return PopularMoviesModel.fromMap(response);
   }
 }

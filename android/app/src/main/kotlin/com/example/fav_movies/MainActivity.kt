@@ -1,4 +1,4 @@
-package com.example.fav_movies
+package com.alexandrofuchs.fav_movies
 
 import io.flutter.embedding.android.FlutterActivity
 

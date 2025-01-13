@@ -1,7 +1,10 @@
+import 'package:fav_movies/root/app_module.dart';
+import 'package:fav_movies/root/app_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  return runApp(MaterialApp.router());
+  return runApp(ModularApp(module: AppModule(), child: const AppWidget()));
 }

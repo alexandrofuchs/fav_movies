@@ -29,7 +29,7 @@ class HomeModule extends Module {
 
   @override
   void routes(RouteManager r) {
-    r.child('/', child: (context) => const PopularMoviesPage());
+    r.child('/', child: (context) => const PopularMoviesPage(), transition: TransitionType.noTransition);
     super.routes(r);
   }
 }

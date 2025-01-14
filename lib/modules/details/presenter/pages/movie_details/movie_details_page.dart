@@ -35,25 +35,20 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
     super.dispose();
   }
 
-  Widget infoWidget(MovieDetails movieDetails) => Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            widget.movie.title,
-            style: AppTextStyles.titleMedium,
-          ),
-          Row(
-              children: movieDetails.genre
-                  .map((e) => Padding(
-                        padding: const EdgeInsets.only(right: 2),
-                        child: Text(
-                          '${e.name};',
-                          style: AppTextStyles.bodySmall,
-                        ),
-                      ))
-                  .toList()),
-        ],
+  Widget infoWidget(MovieDetails movieDetails) => Flexible(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              widget.movie.title,
+              style: AppTextStyles.titleMedium,
+              softWrap: true,
+              maxLines: 2,
+            ),
+            Text('${movieDetails.genre.join(', ')};')
+          ],
+        ),
       );
 
   Widget overviewWidget() => Container(
@@ -76,7 +71,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
 
   Widget loadedWidget(MovieDetails movieDetails) => SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           cardWidget([
             Row(
@@ -103,7 +98,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
     return Scaffold(
         backgroundColor: AppColors.secundaryColor,
         appBar: AppBar(title: titleDot('Detalhes', true),
-        foregroundColor: AppColors.secundaryColor,
+          foregroundColor: AppColors.secundaryColor,
         ),
         body: Padding(
           padding: const EdgeInsets.all(25),

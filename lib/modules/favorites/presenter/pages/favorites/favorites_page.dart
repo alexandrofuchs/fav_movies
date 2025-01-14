@@ -61,7 +61,7 @@ class _FavoritePageState extends State<FavoritesPage> with CommonWidgets {
   Widget build(BuildContext context) {
     return HomeScaffold(
         appBar: AppBar(
-          title: const Text('Favoritos'),
+          title: titleDot('Favoritos', true),
         ),
         body: Padding(
           padding: const EdgeInsets.all(25),

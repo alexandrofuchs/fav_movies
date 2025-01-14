@@ -8,4 +8,9 @@ class MovieGenre extends Equatable {
 
   @override
   List<Object?> get props => [id, name];
+
+  @override
+  String toString() {
+    return name;
+  }
 }

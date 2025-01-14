@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-class PopularMovie extends Equatable {
+class Movie extends Equatable {
   final int id;
   final String originalLanguage;
   final String originalTitle;
@@ -17,7 +17,7 @@ class PopularMovie extends Equatable {
 
   final List<int> genreIds;
 
-  const PopularMovie(
+  const Movie(
       {required this.id,
       required this.originalLanguage,
       required this.originalTitle,

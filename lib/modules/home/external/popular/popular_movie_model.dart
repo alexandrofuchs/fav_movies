@@ -1,7 +1,7 @@
 part of 'popular_movies_repository.dart';
 
-extension PopularMovieModel on PopularMovie {
-  static PopularMovie fromMap(Map<String, dynamic> map) => PopularMovie(
+extension PopularMovieModel on Movie {
+  static Movie fromMap(Map<String, dynamic> map) => Movie(
         adult: map['adult'],
         genreIds: List<int>.from(map['genre_ids']),
         id: map['id'],
@@ -17,7 +17,7 @@ extension PopularMovieModel on PopularMovie {
         voteCount: map['vote_count'],
       );
 
-  static List<PopularMovie> fromMapList(List<dynamic> list) =>
+  static List<Movie> fromMapList(List<dynamic> list) =>
       list.map((e) => PopularMovieModel.fromMap(e)).toList();
 }
 

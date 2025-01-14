@@ -1,6 +1,6 @@
 import 'package:fav_movies/core/themes/app_colors.dart';
 import 'package:fav_movies/core/themes/app_fonts.dart';
-import 'package:fav_movies/modules/home/domain/models/popular_movie.dart';
+import 'package:fav_movies/modules/home/domain/models/movie.dart';
 import 'package:flutter/material.dart';
 
 mixin MovieWidgets {
@@ -39,7 +39,7 @@ mixin MovieWidgets {
         ],
       );
 
-  Widget otherCardContent(PopularMovie movie) => Row(
+  Widget otherCardContent(Movie movie) => Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

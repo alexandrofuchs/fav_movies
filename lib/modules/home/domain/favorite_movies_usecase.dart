@@ -5,7 +5,7 @@ import 'package:fav_movies/modules/home/domain/i_repository/i_favorite_movie_rep
 import 'package:fav_movies/modules/home/domain/i_usecase/i_favorite_movie_usecase.dart';
 import 'package:fav_movies/modules/home/domain/models/movie.dart';
 
-class FavoriteMoviesUsecase implements IFavoriteMovieUsecase {
+class FavoriteMoviesUsecase implements IFavoriteMoviesUsecase {
   final IFavoriteMoviesRepository _repository;
 
   FavoriteMoviesUsecase(this._repository);

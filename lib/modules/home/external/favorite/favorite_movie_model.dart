@@ -15,5 +15,6 @@ extension FavoriteMovieModel on Movie {
         'video': video ? 1 : 0,
         'vote_average': voteAverage,
         'vote_count': voteCount,
+        'saved_in_favorites': 1,
       };
 }

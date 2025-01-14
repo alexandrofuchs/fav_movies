@@ -13,6 +13,7 @@ abstract class FavoriteMoviesTableModel {
     'video INTEGER',
     'vote_average REAL',
     'vote_count INTEGER',
+    'saved_in_favorites INTEGER',
   };
 
   static String get createTableCommand =>

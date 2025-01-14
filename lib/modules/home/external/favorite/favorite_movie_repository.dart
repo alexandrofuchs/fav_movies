@@ -5,10 +5,10 @@ import 'package:sqflite/sqflite.dart';
 
 part 'favorite_movie_model.dart';
 
-class FavoriteMovieRepository implements IFavoriteMoviesRepository {
+class FavoriteMoviesRepository implements IFavoriteMoviesRepository {
   final Database _database;
 
-  FavoriteMovieRepository(this._database);
+  FavoriteMoviesRepository(this._database);
   
   @override
   Future<ResponseStatus> save(Movie movie) async {

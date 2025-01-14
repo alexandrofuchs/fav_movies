@@ -12,7 +12,7 @@ class PopularMoviesRepository implements IPopularMoviesRepository {
 
   @override
   Future<PopularMovies> getMovies(int page) async{
-    final response = await _request.get('/movie/popular?language=en-US&page=$page');
+    final response = await _request.get('/movie/popular?language=pt-BR&page=$page');
     return PopularMoviesModel.fromMap(response);
   }
 }

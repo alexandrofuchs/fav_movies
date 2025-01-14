@@ -14,6 +14,7 @@ class Movie extends Equatable {
   final int voteCount;
 
   final bool adult;
+  final bool savedInFavorites;
 
   final List<int> genreIds;
 
@@ -30,7 +31,9 @@ class Movie extends Equatable {
       required this.voteAverage,
       required this.voteCount,
       required this.adult,
-      required this.genreIds});
+      required this.genreIds,
+      required this.savedInFavorites
+      });
 
   @override
   List<Object?> get props => [id];

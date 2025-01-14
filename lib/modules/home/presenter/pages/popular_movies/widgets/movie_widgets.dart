@@ -4,7 +4,7 @@ import 'package:fav_movies/modules/home/domain/models/movie.dart';
 import 'package:flutter/material.dart';
 
 mixin MovieWidgets {
-  Widget firstCardHeader(String title) => Row(
+  Widget firstCardHeader(String title, Function() favoriteAction) => Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
@@ -12,7 +12,7 @@ mixin MovieWidgets {
             title,
             style: AppTextStyles.titleMedium,
           )),
-          const Icon(Icons.favorite)
+          IconButton(onPressed: favoriteAction, icon: const Icon(Icons.favorite)),
         ],
       );
 

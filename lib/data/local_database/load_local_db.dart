@@ -5,9 +5,13 @@ import 'package:sqflite/sqflite.dart';
 late Database localDatabase;
 
 Future<void> loadLocalDb() async {
-  await openDatabase('fav_movies.db', version: 1,
-      onOpen: (Database db) async {
-    debugPrint(FavoriteMoviesTableModel.createTableCommand);
-    await db.execute(FavoriteMoviesTableModel.createTableCommand);
-  });
+  try {
+    localDatabase = await openDatabase('fav_movies_4.db', version: 1,
+        onOpen: (Database db) async {
+      debugPrint(FavoriteMoviesTableModel.createTableCommand);
+      await db.execute(FavoriteMoviesTableModel.createTableCommand);
+    });
+  } catch (e) {
+    debugPrint(e.toString());
+  }
 }

@@ -1,5 +1,10 @@
-import 'package:fav_movies/modules/home/domain/i_usecase/i_popular_movies_usecase.dart';
+import 'package:fav_movies/core/widgets/common/common_widgets.dart';
+import 'package:fav_movies/core/widgets/loading/app_loading_dots_widget.dart';
+import 'package:fav_movies/modules/home/domain/models/popular_movie.dart';
+import 'package:fav_movies/modules/home/presenter/bloc/popular_movies_bloc.dart';
+import 'package:fav_movies/modules/home/presenter/pages/popular_movies/widgets/movie_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class PopularMoviesPage extends StatefulWidget {
@@ -9,21 +14,54 @@ class PopularMoviesPage extends StatefulWidget {
   State<StatefulWidget> createState() => _PopularMoviesPageState();
 }
 
-class _PopularMoviesPageState extends State<PopularMoviesPage> {
-
-  final IPopularMoviesUsecase usecase = Modular.get();
+class _PopularMoviesPageState extends State<PopularMoviesPage>
+    with CommonWidgets, MovieWidgets {
+  final PopularMoviesBloc bloc = PopularMoviesBloc(Modular.get());
 
   @override
   void initState() {
-    usecase.getMovies(1);
+    bloc.add(const GetMoviesEvent(1));
     super.initState();
   }
-  
+
+  @override
+  void dispose() {
+    bloc.close();
+    super.dispose();
+  }
+
+  Widget firstMovieItem(PopularMovie movie) =>
+      cardWidget([firstCardHeader(), firstCardContent()]);
+
+  Widget otherMovieItem(PopularMovie movie) =>
+      cardWidget([otherCardContent()]);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Popular movies'),),
+      appBar: AppBar(
+        title: const Text('Popular movies'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(25),
+        child: BlocBuilder<PopularMoviesBloc, PopularMoviesBlocState>(
+            bloc: bloc,
+            builder: (context, state) =>  switch (state.status) {
+                  PopularMoviesBlocStatus.firstLoading =>
+                    const AppLoadingDots(),
+                  PopularMoviesBlocStatus.loadingMore => const AppLoadingDots(),
+                  PopularMoviesBlocStatus.failed => errorMessageWidget(
+                      'Não foi possível carregar a lista de filmes.'),
+                  PopularMoviesBlocStatus.loaded => ListView.builder(
+                      shrinkWrap: true,
+                      physics: const ClampingScrollPhysics(),
+                      itemCount: state.popularMovies!.list.length,
+                      itemBuilder: (context, index) => index == 0
+                          ? firstMovieItem(state.popularMovies!.list[index])
+                          : otherMovieItem(state.popularMovies!.list[index]),
+                    ),
+                }),
+      ),
     );
   }
 }

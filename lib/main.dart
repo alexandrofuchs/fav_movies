@@ -1,4 +1,5 @@
 import 'package:fav_movies/load_environment.dart';
+import 'package:fav_movies/load_local_db.dart';
 import 'package:fav_movies/root/app_module.dart';
 import 'package:fav_movies/root/app_widget.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ void main() async {
 
   await Future.wait([
     loadAppEnvironment(),
+    loadLocalDb(),
   ]);
 
   return runApp(ModularApp(module: AppModule(), child: const AppWidget()));

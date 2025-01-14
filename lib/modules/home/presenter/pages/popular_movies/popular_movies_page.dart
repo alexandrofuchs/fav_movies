@@ -1,5 +1,7 @@
 import 'package:fav_movies/core/widgets/common/common_widgets.dart';
 import 'package:fav_movies/core/widgets/loading/app_loading_dots_widget.dart';
+import 'package:fav_movies/core/widgets/scaffolds/blocs/bottom_navigator_bloc.dart';
+import 'package:fav_movies/core/widgets/scaffolds/home_scaffold.dart';
 import 'package:fav_movies/modules/home/domain/models/popular_movie.dart';
 import 'package:fav_movies/modules/home/presenter/bloc/popular_movies_bloc.dart';
 import 'package:fav_movies/modules/home/presenter/pages/popular_movies/widgets/movie_widgets.dart';
@@ -15,11 +17,12 @@ class PopularMoviesPage extends StatefulWidget {
 }
 
 class _PopularMoviesPageState extends State<PopularMoviesPage>
-    with CommonWidgets, MovieWidgets {
+    with CommonWidgets, MovieWidgets, NavigationRoutes {
   final PopularMoviesBloc bloc = PopularMoviesBloc(Modular.get());
 
   @override
   void initState() {
+    Modular.get<BottomNavigatorBloc>().loadNavigationRoutes(getUserNavigations());
     bloc.add(const GetMoviesEvent(1));
     super.initState();
   }
@@ -31,14 +34,14 @@ class _PopularMoviesPageState extends State<PopularMoviesPage>
   }
 
   Widget firstMovieItem(PopularMovie movie) =>
-      cardWidget([firstCardHeader(), firstCardContent()]);
+      cardWidget([firstCardHeader(movie.title), firstCardContent()]);
 
   Widget otherMovieItem(PopularMovie movie) =>
-      cardWidget([otherCardContent()]);
+      cardWidget([otherCardContent(movie)]);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return HomeScaffold(
       appBar: AppBar(
         title: const Text('Popular movies'),
       ),

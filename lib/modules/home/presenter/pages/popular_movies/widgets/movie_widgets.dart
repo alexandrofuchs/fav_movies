@@ -1,17 +1,18 @@
 import 'package:fav_movies/core/themes/app_colors.dart';
 import 'package:fav_movies/core/themes/app_fonts.dart';
+import 'package:fav_movies/modules/home/domain/models/popular_movie.dart';
 import 'package:flutter/material.dart';
 
 mixin MovieWidgets {
-  Widget firstCardHeader() => const Row(
+  Widget firstCardHeader(String title) => Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
               child: Text(
-            'Titulo do Filme',
+            title,
             style: AppTextStyles.titleMedium,
           )),
-          Icon(Icons.favorite)
+          const Icon(Icons.favorite)
         ],
       );
 
@@ -31,9 +32,6 @@ mixin MovieWidgets {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('Genero: Aventura'),
-                  Text('Genero: Tal'),
-                  Text('Genero'),
-                  Text('Genero'),
                 ],
               ),
             ),
@@ -41,7 +39,7 @@ mixin MovieWidgets {
         ],
       );
 
-  Widget otherCardContent() => Row(
+  Widget otherCardContent(PopularMovie movie) => Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -57,19 +55,14 @@ mixin MovieWidgets {
               height: 150,
             ),
           ),
-          const Expanded(
+           Expanded(
             child: Padding(
-              padding: EdgeInsets.all(15),
+              padding: const EdgeInsets.all(15),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Genero: Aventura',
-                    style: AppTextStyles.titleSmall,
+                  Text(movie.title,style: AppTextStyles.titleSmall,
                   ),
-                  Text('Genero: Aventura'),
-                  Text('Genero: Tal'),
-                  Text('Genero'),
-                  Text('Genero'),
                 ],
               ),
             ),

@@ -5,6 +5,7 @@ import 'package:fav_movies/data/local_database/load_local_db.dart';
 import 'package:fav_movies/modules/details/details_module.dart';
 import 'package:fav_movies/modules/favorites/favorites_module.dart';
 import 'package:fav_movies/modules/home/home_module.dart';
+import 'package:fav_movies/modules/watchlist/watchlist_module.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -32,6 +33,7 @@ class AppModule extends Module {
 
     r.module('/home', module: HomeModule());
     r.module('/favorites', module: FavoritesModule());
+    r.module('/watchlist', module: WatchListModule());
     r.module('/details', module: DetailsModule());
     super.routes(r);
   }

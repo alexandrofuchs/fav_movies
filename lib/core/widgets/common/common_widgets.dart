@@ -39,8 +39,7 @@ mixin CommonWidgets {
           Container(
             margin: const EdgeInsets.all(25),
             decoration: BoxDecoration(
-              color:
-                  lightDot ? AppColors.secundaryColor : AppColors.primaryColor,
+              color: lightDot ? AppColors.secundaryColor : AppColors.primaryColor,
               borderRadius: BorderRadius.circular(5),
             ),
             width: 24,

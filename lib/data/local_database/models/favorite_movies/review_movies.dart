@@ -1,4 +1,4 @@
-abstract class ReviewMoviesTableModel {
+abstract class MovieReviewsTableModel {
   static final _tableFields = {
     'movie_id INTEGER PRIMARY KEY',
     'rating INTEGER',
@@ -6,5 +6,5 @@ abstract class ReviewMoviesTableModel {
   };
 
   static String get createTableCommand =>
-      'CREATE TABLE IF NOT EXISTS ReviewMovies (${_tableFields.join(', ')})';
+      'CREATE TABLE IF NOT EXISTS MovieReviews (${_tableFields.join(', ')})';
 }

@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 
 class MovieReview extends Equatable {
   final int movieId;
-  final num rate;
+  final int rate;
   final String description;
 
   const MovieReview(

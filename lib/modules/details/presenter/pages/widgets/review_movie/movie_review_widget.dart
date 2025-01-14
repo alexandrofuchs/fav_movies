@@ -5,14 +5,15 @@ import 'package:fav_movies/core/widgets/buttons/default_main_button.dart';
 import 'package:fav_movies/core/widgets/snackbars/app_snackbars.dart';
 import 'package:fav_movies/core/widgets/text_fields/default_text_field.dart';
 import 'package:fav_movies/modules/details/domain/models/movie_review.dart';
-import 'package:fav_movies/modules/details/presenter/blocs/review_movie/review_movie_bloc.dart';
+import 'package:fav_movies/modules/details/presenter/blocs/movie_review/movie_review_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-mixin ReviewMovieWidget {
+mixin MovieReviewWidget {
   final ValueNotifier<int> rate = ValueNotifier(0);
   final TextEditingController description = TextEditingController();
-  final reviewBloc = ReviewMovieBloc(Modular.get());
+  final reviewBloc = MovieReviewBloc(Modular.get());
 
   Widget _header() => Container(
         alignment: Alignment.center,
@@ -45,16 +46,38 @@ mixin ReviewMovieWidget {
         ],
       );
 
-  Widget _rateWidget() => ValueListenableBuilder(
-      valueListenable: rate,
-      builder: (context, value, child) => Row(
-          children: [1, 2, 3, 4, 5]
-              .map((e) => IconButton(
-                  onPressed: () {
-                    rate.value = e;
-                  },
-                  icon: Icon(e <= value ? Icons.star : Icons.star_border)))
-              .toList()));
+  Widget rateWidget() => ValueListenableBuilder(
+        valueListenable: rate,
+        builder: (context, value, child) => _rateWidget(value),
+      );
+
+  Widget showRateWidget([bool enable = true]) =>
+      BlocBuilder<MovieReviewBloc, MovieReviewBlocState>(
+          bloc: reviewBloc,
+          buildWhen: (previous, current) =>
+              current.status == MovieReviewBlocStatus.loaded,
+          builder: (context, state) => switch (state.status) {
+                MovieReviewBlocStatus.initial => const SizedBox(),
+                MovieReviewBlocStatus.loading => const SizedBox(),
+                MovieReviewBlocStatus.failed => const SizedBox(),
+                MovieReviewBlocStatus.loaded =>
+                  _rateWidget(state.movieReview!.rate),
+              });
+
+  Widget _rateWidget(int value, [bool enable = true]) => Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [1, 2, 3, 4, 5]
+          .map((e) => IconButton(
+              enableFeedback: enable,
+              onPressed: () {
+                if (!enable) return;
+                rate.value = e;
+              },
+              icon: Icon(
+                e <= value ? Icons.star : Icons.star_border,
+                size: 24,
+              )))
+          .toList());
 
   Widget _descriptionWidget() => DefaultTextField(
         controller: description,
@@ -87,7 +110,6 @@ mixin ReviewMovieWidget {
                         movieId: movie.id,
                         rate: rate.value,
                         description: description.text)));
-                    
 
                     Modular.to.pop();
                   })),
@@ -95,7 +117,6 @@ mixin ReviewMovieWidget {
       );
 
   Future<void> openReviewBottomSheet(BuildContext context, Movie movie) async {
-
     rate.value = 0;
     description.text = '';
 
@@ -118,7 +139,7 @@ mixin ReviewMovieWidget {
               children: [
                 _header(),
                 _movieInfo(movie),
-                _rateWidget(),
+                rateWidget(),
                 _descriptionWidget(),
                 _actionsWidget(context, movie),
               ],

@@ -7,13 +7,13 @@ late Database localDatabase;
 
 Future<void> loadLocalDb() async {
   try {
-    localDatabase = await openDatabase('fav_movies1.db', version: 1,
+    localDatabase = await openDatabase('fav_movies.db', version: 1,
         onOpen: (Database db) async {
       debugPrint(FavoriteMoviesTableModel.createTableCommand);
       await db.execute(FavoriteMoviesTableModel.createTableCommand);
 
-      debugPrint(ReviewMoviesTableModel.createTableCommand);
-      await db.execute(ReviewMoviesTableModel.createTableCommand);
+      debugPrint(MovieReviewsTableModel.createTableCommand);
+      await db.execute(MovieReviewsTableModel.createTableCommand);
     });
   } catch (e) {
     debugPrint(e.toString());

@@ -1,11 +1,11 @@
 import 'package:fav_movies/modules/details/domain/i_repositories/i_movie_details_repository.dart';
-import 'package:fav_movies/modules/details/domain/i_repositories/i_review_movie_repository.dart';
+import 'package:fav_movies/modules/details/domain/i_repositories/i_movie_review_repository.dart';
 import 'package:fav_movies/modules/details/domain/i_usecases/i_movie_details_usecase.dart';
-import 'package:fav_movies/modules/details/domain/i_usecases/i_review_movie_repository.dart';
+import 'package:fav_movies/modules/details/domain/i_usecases/i_movie_review_usecase.dart';
 import 'package:fav_movies/modules/details/domain/movie_details_usecase.dart';
-import 'package:fav_movies/modules/details/domain/review_movie_usecase.dart';
+import 'package:fav_movies/modules/details/domain/movie_review_usecase.dart';
 import 'package:fav_movies/modules/details/external/details/movie_details_repository.dart';
-import 'package:fav_movies/modules/details/external/review/review_movie_repository.dart';
+import 'package:fav_movies/modules/details/external/review/movie_review_repository.dart';
 import 'package:fav_movies/modules/details/presenter/pages/movie_details/movie_details_page.dart';
 import 'package:fav_movies/root/app_module.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -21,8 +21,8 @@ class DetailsModule extends Module {
     i.addLazySingleton<IMovieDetailsRepository>(MovieDetailsRepository.new);
     i.addLazySingleton<IMovieDetailsUsecase>(MovieDetailsUsecase.new);
 
-    i.addLazySingleton<IReviewMovieRepository>(ReviewMovieRepository.new);
-    i.addLazySingleton<IReviewMovieUsecase>(ReviewMovieUsecase.new);
+    i.addLazySingleton<IMovieReviewRepository>(MovieReviewRepository.new);
+    i.addLazySingleton<IMovieReviewUsecase>(MovieReviewUsecase.new);
 
     super.binds(i);
   }

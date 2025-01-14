@@ -5,7 +5,8 @@ import 'package:fav_movies/core/widgets/buttons/default_main_button.dart';
 import 'package:fav_movies/core/widgets/common/common_widgets.dart';
 import 'package:fav_movies/core/widgets/loading/app_loading_dots_widget.dart';
 import 'package:fav_movies/modules/details/domain/models/movie_details.dart';
-import 'package:fav_movies/modules/details/presenter/blocs/movie_details_bloc.dart';
+import 'package:fav_movies/modules/details/presenter/blocs/movie_details/movie_details_bloc.dart';
+import 'package:fav_movies/modules/details/presenter/pages/widgets/review_movie/review_movie_widget.dart';
 import 'package:fav_movies/modules/home/presenter/pages/popular_movies/widgets/movie_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,7 +21,7 @@ class MovieDetailsPage extends StatefulWidget {
 }
 
 class _MovieDetailsPageState extends State<MovieDetailsPage>
-    with MovieWidgets, CommonWidgets {
+    with MovieWidgets, CommonWidgets, ReviewMovieWidget {
   final bloc = MovieDetailsBloc(Modular.get());
 
   @override
@@ -32,6 +33,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
   @override
   void dispose() {
     bloc.close();
+    rate.dispose();
     super.dispose();
   }
 
@@ -88,7 +90,9 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
       ));
 
   Widget actions() => Column(children: [
-        DefaultMainButton(label: 'Avaliar', onPressed: () {}),
+        DefaultMainButton(label: 'Avaliar', onPressed: () {
+          openReviewBottomSheet(context, widget.movie);
+        }),
         DefaultMainButton(
             label: 'Adicionar a lista de assistidos', onPressed: () {}),
       ]);

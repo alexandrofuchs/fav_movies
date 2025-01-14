@@ -36,6 +36,7 @@ class _PopularMoviesPageState extends State<PopularMoviesPage>
   void dispose() {
     popularMoviesBloc.close();
     favoriteMovieBloc.close();
+    focusedCardIndex.dispose();
     super.dispose();
   }
 
@@ -43,13 +44,27 @@ class _PopularMoviesPageState extends State<PopularMoviesPage>
     favoriteMovieBloc.add(SaveMovieEvent(movie));
   }
 
-  Widget firstMovieItem(Movie movie) => cardWidget([
+  Widget focusedWidget(int index, Movie movie) => 
+    ValueListenableBuilder(valueListenable:focusedCardIndex, builder:(context, value, child) => 
+      AnimatedCrossFade(
+      crossFadeState: value == index ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+      duration: const Duration(milliseconds: 300),
+      firstChild: focusedMovieItem(movie),
+      secondChild: otherMovieItem(index, movie),
+    ));
+
+  Widget focusedMovieItem(Movie movie) => cardWidget([
         firstCardHeader(movie.title, () => favoriteAction(movie)),
         firstCardContent(movie),
       ], backgroundColor: AppColors.secundaryColor);
 
-  Widget otherMovieItem(Movie movie) => cardWidget([otherCardContent(movie)],
-      backgroundColor: AppColors.secundaryColor);
+  Widget otherMovieItem(int index, Movie movie) => GestureDetector(
+    onTap: () {
+      focusedCardIndex.value = index;
+    },
+    child: cardWidget([otherCardContent(movie)],
+        backgroundColor: AppColors.secundaryColor),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -85,10 +100,7 @@ class _PopularMoviesPageState extends State<PopularMoviesPage>
                           shrinkWrap: true,
                           physics: const ClampingScrollPhysics(),
                           itemCount: state.popularMovies!.list.length,
-                          itemBuilder: (context, index) => index == 0
-                              ? firstMovieItem(state.popularMovies!.list[index])
-                              : otherMovieItem(
-                                  state.popularMovies!.list[index]),
+                          itemBuilder: (context, index) => focusedWidget(index, state.popularMovies!.list[index]),
                         ),
                     }),
           )),

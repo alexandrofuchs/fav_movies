@@ -19,6 +19,7 @@ dependencies:
   equatable: ^2.0.7
   flutter_bloc: ^9.0.0
   sqflite: ^2.4.1
+  flutter_animate: ^4.5.2
   
 dev_dependencies:
   flutter_test:

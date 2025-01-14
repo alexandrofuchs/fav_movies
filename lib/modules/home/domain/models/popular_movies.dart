@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:fav_movies/core/common/models/models/movie.dart';
+import 'package:fav_movies/core/common/models/movie.dart';
 
 class PopularMovies extends Equatable {
   final List<Movie> list;

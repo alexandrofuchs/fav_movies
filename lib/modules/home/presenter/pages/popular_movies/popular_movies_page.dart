@@ -1,4 +1,4 @@
-import 'package:fav_movies/core/common/models/models/movie.dart';
+import 'package:fav_movies/core/common/models/movie.dart';
 import 'package:fav_movies/core/themes/app_colors.dart';
 import 'package:fav_movies/core/widgets/common/common_widgets.dart';
 import 'package:fav_movies/core/widgets/loading/app_loading_dots_widget.dart';

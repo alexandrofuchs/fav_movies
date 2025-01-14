@@ -16,6 +16,7 @@ extension LoadFavoriteMovieModel on Movie {
         voteAverage: map['vote_average'],
         voteCount: map['vote_count'],
         savedInFavorites: map['saved_in_favorites'] == 1,
+        savedInWatchlist: map['saved_in_watchlist'] == 1,
       );
 
   static List<Movie> fromMapList(List<dynamic> list) =>

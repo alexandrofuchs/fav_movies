@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:fav_movies/core/common/models/models/movie.dart';
+import 'package:fav_movies/core/common/models/movie.dart';
 import 'package:fav_movies/modules/favorites/domain/i_usecases/i_load_favorite_movies_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

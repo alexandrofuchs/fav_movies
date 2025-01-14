@@ -1,5 +1,5 @@
-abstract class FavoriteMoviesTableModel {
-  static final _tableFields = {
+abstract class MovieTableModel {
+  static final tableFields = {
     'id INTEGER PRIMARY KEY',
     'adult INTEGER',
     'genre_ids TEXT',
@@ -14,8 +14,6 @@ abstract class FavoriteMoviesTableModel {
     'vote_average REAL',
     'vote_count INTEGER',
     'saved_in_favorites INTEGER',
+    'saved_in_watchlist INTEGER',
   };
-
-  static String get createTableCommand =>
-      'CREATE TABLE IF NOT EXISTS FavoriteMovies (${_tableFields.join(', ')})';
 }

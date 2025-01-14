@@ -16,6 +16,7 @@ extension PopularMovieModel on Movie {
         voteAverage: map['vote_average'],
         voteCount: map['vote_count'],
         savedInFavorites: false,
+        savedInWatchlist: false,
       );
 
   static List<Movie> fromMapList(List<dynamic> list) =>

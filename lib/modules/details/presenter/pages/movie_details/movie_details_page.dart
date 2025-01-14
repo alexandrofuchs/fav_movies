@@ -1,4 +1,4 @@
-import 'package:fav_movies/core/common/models/models/movie.dart';
+import 'package:fav_movies/core/common/models/movie.dart';
 import 'package:fav_movies/core/themes/app_colors.dart';
 import 'package:fav_movies/core/themes/app_fonts.dart';
 import 'package:fav_movies/core/widgets/buttons/default_main_button.dart';
@@ -7,6 +7,7 @@ import 'package:fav_movies/core/widgets/loading/app_loading_dots_widget.dart';
 import 'package:fav_movies/modules/details/domain/models/movie_details.dart';
 import 'package:fav_movies/modules/details/presenter/blocs/movie_details/movie_details_bloc.dart';
 import 'package:fav_movies/modules/details/presenter/blocs/movie_review/movie_review_bloc.dart';
+import 'package:fav_movies/modules/details/presenter/blocs/watch_list/manage_watchlist_bloc.dart';
 import 'package:fav_movies/modules/details/presenter/pages/widgets/review_movie/movie_review_widget.dart';
 import 'package:fav_movies/modules/home/presenter/pages/popular_movies/widgets/movie_widgets.dart';
 import 'package:flutter/material.dart';
@@ -24,11 +25,13 @@ class MovieDetailsPage extends StatefulWidget {
 class _MovieDetailsPageState extends State<MovieDetailsPage>
     with MovieWidgets, CommonWidgets, MovieReviewWidget {
   final bloc = MovieDetailsBloc(Modular.get());
+  final watchListBloc = ManageWatchlistBloc(Modular.get());
 
   @override
   void initState() {
     bloc.add(GetMovieDetailsEvent(widget.movie.id));
     reviewBloc.add(GetReviewEvent(widget.movie.id));
+    watchListBloc.add(VerifyWatchlistEvent(widget.movie.id));
     super.initState();
   }
 
@@ -36,6 +39,8 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
   void dispose() {
     bloc.close();
     rate.dispose();
+    reviewBloc.close();
+    watchListBloc.close();
     super.dispose();
   }
 
@@ -87,25 +92,41 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
               ],
             ),
             overviewWidget(),
-            
           ]),
           actions(),
         ],
       ));
 
   Widget actions() => Column(children: [
-        DefaultMainButton(label: 'Avaliar', onPressed: () {
-          openReviewBottomSheet(context, widget.movie);
-        }),
         DefaultMainButton(
-            label: 'Adicionar a lista de assistidos', onPressed: () {}),
+            label: 'Avaliar',
+            onPressed: () {
+              openReviewBottomSheet(context, widget.movie);
+            }),
+        BlocBuilder<ManageWatchlistBloc, ManageWatchlistBlocStatus>(
+            bloc: watchListBloc,
+            builder: (context, state) => switch (state) {
+                  ManageWatchlistBlocStatus.initial => const SizedBox(),
+                  ManageWatchlistBlocStatus.loading => const SizedBox(),
+                  ManageWatchlistBlocStatus.inWatchList => DefaultMainButton(
+                      label: 'Remover da lista de assistidos',
+                      onPressed: () {
+                        watchListBloc.add(RemoveFromWatchlistEvent(widget.movie.id));
+                      }),
+                  ManageWatchlistBlocStatus.notInWatchlist => DefaultMainButton(
+                      label: 'Adicionar à lista de assistidos',
+                      onPressed: () {
+                        watchListBloc.add(AddToWatchlistEvent(widget.movie));
+                      }),
+                }),
       ]);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: AppColors.secundaryColor,
-        appBar: AppBar(title: titleDot('Detalhes', true),
+        appBar: AppBar(
+          title: titleDot('Detalhes', true),
           foregroundColor: AppColors.secundaryColor,
         ),
         body: Padding(

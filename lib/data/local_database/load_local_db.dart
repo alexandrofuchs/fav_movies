@@ -1,5 +1,6 @@
-import 'package:fav_movies/data/local_database/models/favorite_movies/favorite_movies.dart';
-import 'package:fav_movies/data/local_database/models/favorite_movies/review_movies.dart';
+import 'package:fav_movies/data/local_database/models/favorite_movies/favorite_movies_table_model.dart';
+import 'package:fav_movies/data/local_database/models/movie_reviews/movie_reviews_table_model.dart';
+import 'package:fav_movies/data/local_database/models/movie_watchlist/movie_watchlist_table_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -14,6 +15,9 @@ Future<void> loadLocalDb() async {
 
       debugPrint(MovieReviewsTableModel.createTableCommand);
       await db.execute(MovieReviewsTableModel.createTableCommand);
+
+      debugPrint(MovieWatchListTableModel.createTableCommand);
+      await db.execute(MovieWatchListTableModel.createTableCommand);
     });
   } catch (e) {
     debugPrint(e.toString());

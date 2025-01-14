@@ -15,6 +15,7 @@ class Movie extends Equatable {
 
   final bool adult;
   final bool savedInFavorites;
+  final bool savedInWatchlist;
 
   final List<int> genreIds;
 
@@ -32,7 +33,8 @@ class Movie extends Equatable {
       required this.voteCount,
       required this.adult,
       required this.genreIds,
-      required this.savedInFavorites
+      required this.savedInFavorites,
+      required this.savedInWatchlist,
       });
 
   @override

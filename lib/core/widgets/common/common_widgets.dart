@@ -1,4 +1,5 @@
 import 'package:fav_movies/core/themes/app_colors.dart';
+import 'package:fav_movies/core/themes/app_fonts.dart';
 import 'package:flutter/material.dart';
 
 mixin CommonWidgets {
@@ -32,13 +33,14 @@ mixin CommonWidgets {
         ),
       );
 
-    Widget titleDot(String text, [bool lightDot = false]) => Row(
+  Widget titleDot(String text, [bool lightDot = false]) => Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
             margin: const EdgeInsets.all(25),
             decoration: BoxDecoration(
-              color: lightDot ? AppColors.primaryColorLight : AppColors.primaryColor,
+              color:
+                  lightDot ? AppColors.secundaryColor : AppColors.primaryColor,
               borderRadius: BorderRadius.circular(5),
             ),
             width: 24,
@@ -53,11 +55,11 @@ mixin CommonWidgets {
         ],
       );
 
-  Widget itemDot(String text) => Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+  Widget itemDot(String text, {bool bold = false}) => Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            margin: const EdgeInsets.only(left: 50, right: 10, bottom: 0, top: 15),
+            margin: const EdgeInsets.only(left: 50, right: 10),
             decoration: BoxDecoration(
               color: AppColors.primaryColor,
               borderRadius: BorderRadius.circular(10),
@@ -68,7 +70,7 @@ mixin CommonWidgets {
           Flexible(
               child: Text(
             text,
-            style: const TextStyle(fontSize: 21),
+            style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.w700),
             softWrap: true,
           )),
         ],

@@ -1,4 +1,5 @@
 import 'package:fav_movies/core/common/models/models/movie.dart';
+import 'package:fav_movies/core/themes/app_colors.dart';
 import 'package:fav_movies/core/widgets/common/common_widgets.dart';
 import 'package:fav_movies/core/widgets/loading/app_loading_dots_widget.dart';
 import 'package:fav_movies/core/widgets/scaffolds/blocs/bottom_navigator_bloc.dart';
@@ -45,15 +46,16 @@ class _PopularMoviesPageState extends State<PopularMoviesPage>
   Widget firstMovieItem(Movie movie) => cardWidget([
         firstCardHeader(movie.title, () => favoriteAction(movie)),
         firstCardContent(movie),
-      ]);
+      ], backgroundColor: AppColors.secundaryColor);
 
-  Widget otherMovieItem(Movie movie) => cardWidget([otherCardContent(movie)]);
+  Widget otherMovieItem(Movie movie) => cardWidget([otherCardContent(movie)],
+      backgroundColor: AppColors.secundaryColor);
 
   @override
   Widget build(BuildContext context) {
     return HomeScaffold(
       appBar: AppBar(
-        title: const Text('Filmes populares'),
+        title: titleDot('Filmes populares', true),
       ),
       body: Padding(
           padding: const EdgeInsets.all(25),

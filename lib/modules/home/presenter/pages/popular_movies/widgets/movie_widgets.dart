@@ -43,7 +43,7 @@ mixin MovieWidgets {
             ],
           ),
         DefaultMainButton(label: 'Ver detalhes', onPressed: (){
-          Modular.to.navigate('/details/', arguments: movie);
+          Modular.to.pushNamed('/details/', arguments: movie);
         })
     ],
   );
@@ -83,9 +83,9 @@ mixin MovieWidgets {
         ],
       );
 
-  Widget cardWidget(List<Widget> children) => Card(
+  Widget cardWidget(List<Widget> children, {Color backgroundColor = AppColors.backgroundColor}) => Card(
         margin: const EdgeInsets.only(top: 15, bottom: 5),
-        color: AppColors.secundaryColor,
+        color: backgroundColor,
         elevation: 5,
         child: Container(
           margin: const EdgeInsets.all(15),

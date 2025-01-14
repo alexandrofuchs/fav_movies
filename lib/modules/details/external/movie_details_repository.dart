@@ -12,6 +12,6 @@ class MovieDetailsRepository implements IMovieDetailsRepository{
   @override
   Future<MovieDetails> getDetails(int id) async {
     final response = await _requestInterceptor.get('/movie/$id');
-    return MovieDetails();
+    return MovieDetailsModel.fromMap(response);
   }
 } 

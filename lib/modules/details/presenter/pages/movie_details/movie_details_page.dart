@@ -1,4 +1,7 @@
 import 'package:fav_movies/core/common/models/models/movie.dart';
+import 'package:fav_movies/core/themes/app_colors.dart';
+import 'package:fav_movies/core/themes/app_fonts.dart';
+import 'package:fav_movies/core/widgets/buttons/default_main_button.dart';
 import 'package:fav_movies/core/widgets/common/common_widgets.dart';
 import 'package:fav_movies/core/widgets/loading/app_loading_dots_widget.dart';
 import 'package:fav_movies/modules/details/domain/models/movie_details.dart';
@@ -32,33 +35,87 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
     super.dispose();
   }
 
+  Widget infoWidget(MovieDetails movieDetails) => Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            widget.movie.title,
+            style: AppTextStyles.titleMedium,
+          ),
+          Row(
+              children: movieDetails.genre
+                  .map((e) => Padding(
+                        padding: const EdgeInsets.only(right: 2),
+                        child: Text(
+                          '${e.name};',
+                          style: AppTextStyles.bodySmall,
+                        ),
+                      ))
+                  .toList()),
+        ],
+      );
+
+  Widget overviewWidget() => Container(
+      decoration: BoxDecoration(
+        color: AppColors.secundaryColor,
+        borderRadius: BorderRadius.circular(5),
+      ),
+      padding: const EdgeInsets.all(25),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          itemDot('Sinopse: ', bold: true),
+          Text(
+            widget.movie.overview,
+            style: AppTextStyles.bodySmall,
+          )
+        ],
+      ));
+
   Widget loadedWidget(MovieDetails movieDetails) => SingleChildScrollView(
-          child: cardWidget([
-        Row(
-          children: [
-            moviePosterWidget(),
-            Column(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          cardWidget([
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(widget.movie.title),
+                moviePosterWidget(),
+                infoWidget(movieDetails),
               ],
-            )
-          ],
-        ),
-        Text(widget.movie.overview)
-      ]));
+            ),
+            overviewWidget(),
+          ]),
+          actions(),
+        ],
+      ));
+
+  Widget actions() => Column(children: [
+        DefaultMainButton(label: 'Avaliar', onPressed: () {}),
+        DefaultMainButton(
+            label: 'Adicionar a lista de assistidos', onPressed: () {}),
+      ]);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
-        body: BlocBuilder<MovieDetailsBloc, MovieDetailsBlocState>(
-            bloc: bloc,
-            builder: (context, state) => switch (state.status) {
-                  MovieDetailsBlocStatus.loading => const AppLoadingDots(),
-                  MovieDetailsBlocStatus.failed => errorMessageWidget(
-                      'Não foi possível carregar os detalhes do filme'),
-                  MovieDetailsBlocStatus.loaded =>
-                    loadedWidget(state.movieDetails!),
-                }));
+        backgroundColor: AppColors.secundaryColor,
+        appBar: AppBar(title: titleDot('Detalhes', true),
+        foregroundColor: AppColors.secundaryColor,
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(25),
+          child: BlocBuilder<MovieDetailsBloc, MovieDetailsBlocState>(
+              bloc: bloc,
+              builder: (context, state) => switch (state.status) {
+                    MovieDetailsBlocStatus.loading => const AppLoadingDots(),
+                    MovieDetailsBlocStatus.failed => errorMessageWidget(
+                        'Não foi possível carregar os detalhes do filme'),
+                    MovieDetailsBlocStatus.loaded =>
+                      loadedWidget(state.movieDetails!),
+                  }),
+        ));
   }
 }

@@ -1,3 +1,4 @@
+import 'package:fav_movies/core/themes/app_colors.dart';
 import 'package:flutter/material.dart';
 
 mixin CommonWidgets {
@@ -29,5 +30,47 @@ mixin CommonWidgets {
             )
           ],
         ),
+      );
+
+    Widget titleDot(String text, [bool lightDot = false]) => Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            margin: const EdgeInsets.all(25),
+            decoration: BoxDecoration(
+              color: lightDot ? AppColors.primaryColorLight : AppColors.primaryColor,
+              borderRadius: BorderRadius.circular(5),
+            ),
+            width: 24,
+            height: 24,
+          ),
+          Flexible(
+              child: Text(
+            text,
+            style: const TextStyle(fontSize: 32, fontWeight: FontWeight.w700),
+            softWrap: true,
+          )),
+        ],
+      );
+
+  Widget itemDot(String text) => Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            margin: const EdgeInsets.only(left: 50, right: 10, bottom: 0, top: 15),
+            decoration: BoxDecoration(
+              color: AppColors.primaryColor,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            width: 10,
+            height: 10,
+          ),
+          Flexible(
+              child: Text(
+            text,
+            style: const TextStyle(fontSize: 21),
+            softWrap: true,
+          )),
+        ],
       );
 }

@@ -20,6 +20,15 @@ mixin NavigationRoutes {
           ),
           label: 'Favoritos',
         ),
+        'watchlist': const NavigationRoute(
+          route: '/watchlist/',
+          icon: Icon(
+            Icons.tv,
+            color: AppColors.secundaryColor,
+            size: 35,
+          ),
+          label: 'Assistidos',
+        ),
         'search': const NavigationRoute(
           route: '/search/',
           icon: Icon(

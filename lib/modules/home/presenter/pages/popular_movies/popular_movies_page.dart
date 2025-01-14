@@ -44,7 +44,7 @@ class _PopularMoviesPageState extends State<PopularMoviesPage>
 
   Widget firstMovieItem(Movie movie) => cardWidget([
         firstCardHeader(movie.title, () => favoriteAction(movie)),
-        firstCardContent()
+        firstCardContent(movie),
       ]);
 
   Widget otherMovieItem(Movie movie) => cardWidget([otherCardContent(movie)]);

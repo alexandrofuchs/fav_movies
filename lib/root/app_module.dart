@@ -2,6 +2,7 @@ import 'package:fav_movies/core/external/api/api_request_interceptor.dart';
 import 'package:fav_movies/core/external/api/domain/i_interceptor/i_request_interceptor.dart';
 import 'package:fav_movies/core/widgets/scaffolds/blocs/bottom_navigator_bloc.dart';
 import 'package:fav_movies/data/local_database/load_local_db.dart';
+import 'package:fav_movies/modules/details/details_module.dart';
 import 'package:fav_movies/modules/favorites/favorites_module.dart';
 import 'package:fav_movies/modules/home/home_module.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -31,6 +32,7 @@ class AppModule extends Module {
 
     r.module('/home', module: HomeModule());
     r.module('/favorites', module: FavoritesModule());
+    r.module('/details', module: DetailsModule());
     super.routes(r);
   }
 }

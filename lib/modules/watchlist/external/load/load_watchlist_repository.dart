@@ -1,3 +1,4 @@
+import 'package:fav_movies/core/common/models/enums/movie_language.dart';
 import 'package:fav_movies/core/common/models/movie.dart';
 import 'package:fav_movies/modules/watchlist/domain/i_repositories/i_load_watchlist_repository.dart';
 import 'package:sqflite/sqflite.dart';

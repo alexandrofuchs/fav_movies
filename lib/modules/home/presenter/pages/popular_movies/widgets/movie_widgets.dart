@@ -2,11 +2,12 @@ import 'package:fav_movies/core/common/models/movie.dart';
 import 'package:fav_movies/core/themes/app_colors.dart';
 import 'package:fav_movies/core/themes/app_fonts.dart';
 import 'package:fav_movies/core/widgets/buttons/default_main_button.dart';
+import 'package:fav_movies/modules/home/presenter/pages/popular_movies/widgets/favorite_action.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-mixin MovieWidgets {
+mixin MovieWidgets on FavoriteAction{
   final ValueNotifier<int> focusedCardIndex = ValueNotifier(0);
 
   Widget firstCardHeader(String title, Function() favoriteAction) => Row(
@@ -69,16 +70,19 @@ mixin MovieWidgets {
         ],
       );
 
-  Widget moviePosterWidget(String path, {double height = 180}) => Padding(
+  Widget moviePosterWidget(String? path, {double height = 180}) => Padding(
         padding: const EdgeInsets.all(15),
         child: ClipRRect(
             borderRadius: BorderRadius.circular(5),
-            child: Image.network(
+            child: path != null ?
+            
+            Image.network(
               loadingBuilder: (BuildContext context, Widget child,
             ImageChunkEvent? loadingProgress) {
           if (loadingProgress == null) {
             return child;
           }
+
           return Center(
             child: Container(
               decoration: BoxDecoration(
@@ -89,7 +93,7 @@ mixin MovieWidgets {
               path,
               fit: BoxFit.fitHeight,
               height: height,
-            )),
+            ):  SizedBox(height: height, width: 100,) ),
       );
 
   Widget otherCardContent(Movie movie) => Row(
@@ -102,7 +106,8 @@ mixin MovieWidgets {
                   border: Border.all(color: AppColors.primaryColor, width: 10),
                   borderRadius: BorderRadius.circular(2)),
               padding: const EdgeInsets.all(1.5),
-              child: moviePosterWidget(movie.posterPath)),
+              child: moviePosterWidget(movie.posterPath)
+                ),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(15),
@@ -121,7 +126,7 @@ mixin MovieWidgets {
         ],
       );
 
-  Widget cardWidget(List<Widget> children,
+  Widget cardContainer(List<Widget> children,
           {Color backgroundColor = AppColors.backgroundColor}) =>
       Card(
         margin: const EdgeInsets.only(top: 15, bottom: 5),
@@ -134,4 +139,28 @@ mixin MovieWidgets {
           ),
         ),
       ).animate().shimmer(duration: const Duration(seconds: 2));
+
+   
+
+  Widget cardWidget(int index, Movie movie) => 
+    ValueListenableBuilder(valueListenable:focusedCardIndex, builder:(context, value, child) => 
+      AnimatedCrossFade(
+      crossFadeState: value == index ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+      duration: const Duration(milliseconds: 300),
+      firstChild: focusedMovieItem(movie),
+      secondChild: otherMovieItem(index, movie),
+    ));
+
+  Widget focusedMovieItem(Movie movie) => cardContainer([
+        firstCardHeader(movie.title, () => favoriteAction(movie)),
+        firstCardContent(movie),
+      ], backgroundColor: AppColors.secundaryColor);
+
+  Widget otherMovieItem(int index, Movie movie) => GestureDetector(
+    onTap: () {
+      focusedCardIndex.value = index;
+    },
+    child: cardContainer([otherCardContent(movie)],
+        backgroundColor: AppColors.secundaryColor),
+  );
 }

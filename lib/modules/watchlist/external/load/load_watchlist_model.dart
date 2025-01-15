@@ -5,7 +5,7 @@ extension LoadWatchListModel on Movie {
         adult: map['adult'] == 1,
         genreIds: List<int>.from((map['genre_ids'] as String).split(',').map((e) => int.parse(e))),
         id: map['id'],
-        originalLanguage: map['original_language'],
+        originalLanguage: MovieLanguage.fromValue(map['original_language']),
         originalTitle: map['original_title'],
         overview: map['overview'],
         popularity: map['popularity'],

@@ -4,6 +4,7 @@ enum MovieLanguage {
   en('en', 'inglês'),
   pt('pt', 'português'),
   es('es', 'espanhol'),
+  fr('fr', 'francês'),
   unknown('none', 'desconhecida');
 
   const MovieLanguage(this.value, this.label);

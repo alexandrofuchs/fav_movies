@@ -54,24 +54,27 @@ mixin CommonWidgets {
         ],
       );
 
-  Widget itemDot(String text, {bool bold = false}) => Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            margin: const EdgeInsets.only(left: 50, right: 10),
-            decoration: BoxDecoration(
-              color: AppColors.primaryColor,
-              borderRadius: BorderRadius.circular(10),
+  Widget itemDot(String text, {bool bold = false}) => Padding(
+    padding: const EdgeInsets.only(top: 15, bottom: 15),
+    child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                color: AppColors.primaryColor,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              width: 10,
+              height: 10,
             ),
-            width: 10,
-            height: 10,
-          ),
-          Flexible(
-              child: Text(
-            text,
-            style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.w700),
-            softWrap: true,
-          )),
-        ],
-      );
+            const SizedBox(width: 15,),
+            Flexible(
+                child: Text(
+              text,
+              style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.w700),
+              softWrap: true,
+            )),
+          ],
+        ),
+  );
 }

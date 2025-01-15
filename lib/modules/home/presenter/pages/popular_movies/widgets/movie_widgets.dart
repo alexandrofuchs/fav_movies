@@ -3,6 +3,7 @@ import 'package:fav_movies/core/themes/app_colors.dart';
 import 'package:fav_movies/core/themes/app_fonts.dart';
 import 'package:fav_movies/core/widgets/buttons/default_main_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 mixin MovieWidgets {
@@ -13,56 +14,50 @@ mixin MovieWidgets {
         children: [
           Flexible(
             child: Text(
-                        title,
-                        style: AppTextStyles.titleMedium,
-                      ),
+              title,
+              style: AppTextStyles.titleMedium,
+            ),
           ),
           IconButton(
               onPressed: favoriteAction, icon: const Icon(Icons.favorite)),
         ],
       );
 
-  Widget contentTextItem(String label, String text) =>
-   RichText(
-            text: TextSpan(
-              style: AppTextStyles.bodySmall,
-              children: <TextSpan>[
-                TextSpan(
-                    text: label,
-                    style: const TextStyle(fontWeight: FontWeight.bold)),
-                TextSpan(text: text),
-              ],
-            ),
-          );
+  Widget contentTextItem(String label, String text) => RichText(
+        text: TextSpan(
+          style: AppTextStyles.bodySmall,
+          children: <TextSpan>[
+            TextSpan(
+                text: label,
+                style: const TextStyle(fontWeight: FontWeight.bold)),
+            TextSpan(text: text),
+          ],
+        ),
+      );
 
   Widget firstCardContent(Movie movie) => Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 15, bottom: 15),
-            child: Image.network(
-              movie.posterPath,
-              fit: BoxFit.fitHeight,
-              height: 400,
-            ),
-          ),
+          moviePosterWidget(movie.posterPath, height: 350),
           Container(
             padding: const EdgeInsets.all(15),
             decoration: const BoxDecoration(
-              color: AppColors.backgroundColor,
-              boxShadow: [
-                BoxShadow(offset: Offset(0, 2), blurRadius: 2, spreadRadius: -2)
-              ]
-            ),
-
+                color: AppColors.backgroundColor,
+                boxShadow: [
+                  BoxShadow(
+                      offset: Offset(0, 2), blurRadius: 2, spreadRadius: -2)
+                ]),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 contentTextItem('Média de votos: ', '${movie.voteAverage}'),
-                contentTextItem('Linguagem Origem: ', movie.originalLanguage),
+                contentTextItem(
+                    'Linguagem Origem: ', movie.originalLanguage.label),
                 contentTextItem('Lançamento: ', movie.releaseDate),
-                contentTextItem('Na lista de favoritos: ', movie.savedInFavorites ? 'Sim' : 'Não'),
-                contentTextItem('Na lista para assistir: ', movie.savedInWatchlist ? 'Sim' : 'Não'),
+                contentTextItem('Na lista de favoritos: ',
+                    movie.savedInFavorites ? 'Sim' : 'Não'),
+                contentTextItem('Na lista para assistir: ',
+                    movie.savedInWatchlist ? 'Sim' : 'Não'),
               ],
             ),
           ),
@@ -74,10 +69,27 @@ mixin MovieWidgets {
         ],
       );
 
-  Widget moviePosterWidget(String path) => Image.network(
-        path,
-        fit: BoxFit.fitHeight,
-        height: 150,
+  Widget moviePosterWidget(String path, {double height = 180}) => Padding(
+        padding: const EdgeInsets.all(15),
+        child: ClipRRect(
+            borderRadius: BorderRadius.circular(5),
+            child: Image.network(
+              loadingBuilder: (BuildContext context, Widget child,
+            ImageChunkEvent? loadingProgress) {
+          if (loadingProgress == null) {
+            return child;
+          }
+          return Center(
+            child: Container(
+              decoration: BoxDecoration(
+                color: AppColors.primaryColorLight,
+                borderRadius: BorderRadius.circular(5),
+              ), height: 150, width: 100,).animate().show(),
+          );},
+              path,
+              fit: BoxFit.fitHeight,
+              height: height,
+            )),
       );
 
   Widget otherCardContent(Movie movie) => Row(
@@ -121,5 +133,5 @@ mixin MovieWidgets {
             children: children,
           ),
         ),
-      );
+      ).animate().shimmer(duration: const Duration(seconds: 2));
 }

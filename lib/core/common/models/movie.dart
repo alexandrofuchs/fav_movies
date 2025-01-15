@@ -1,8 +1,9 @@
 import 'package:equatable/equatable.dart';
+import 'package:fav_movies/core/common/models/enums/movie_language.dart';
 
 class Movie extends Equatable {
   final int id;
-  final String originalLanguage;
+  final MovieLanguage originalLanguage;
   final String originalTitle;
   final String overview;
   final num popularity;

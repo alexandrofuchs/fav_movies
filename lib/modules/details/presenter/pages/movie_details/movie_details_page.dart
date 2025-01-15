@@ -45,24 +45,50 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
     super.dispose();
   }
 
-  Widget infoWidget(MovieDetails movieDetails) => Flexible(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              widget.movie.title,
-              style: AppTextStyles.titleMedium,
-              softWrap: true,
-              maxLines: 2,
-            ),
-            Text('${movieDetails.genre.join(', ')};'),
-            showRateWidget(),
-          ],
+  Widget titleWidget() =>
+    Padding(
+        padding: const EdgeInsets.only(top: 15),
+        child: Text(
+          widget.movie.title,
+          style: AppTextStyles.titleSmall,
+          softWrap: true,
+          maxLines: 2,
         ),
       );
 
-  Widget overviewWidget() => Container(
+  Widget infoRow(String label, String text) =>
+    RichText(
+      softWrap: true,
+      maxLines: 2,
+            text: TextSpan(
+              style: AppTextStyles.bodySmall,
+              children: <TextSpan>[
+                TextSpan(
+                    text: label,
+                    style: const TextStyle(fontWeight: FontWeight.bold)),
+                TextSpan(text: text),
+              ],
+            ),
+          );
+
+  Widget infoWidget(MovieDetails movieDetails) => Column(
+    mainAxisAlignment: MainAxisAlignment.start,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      titleWidget(),
+      infoRow('Título original: ', widget.movie.originalTitle),
+      infoRow('Gêneros: ', '${movieDetails.genre.join(', ')}.'),
+      infoRow('Linguagem original: ', widget.movie.originalLanguage.label),
+      infoRow('Avaliação média: ', widget.movie.voteAverage.toString()),
+      infoRow('Linguagem original: ', widget.movie.originalLanguage.label),
+      
+      
+      showRateWidget(),
+  
+    ],
+  );
+
+  Widget overviewWidget(MovieDetails movieDetails) => Container(
       decoration: BoxDecoration(
         color: AppColors.secundaryColor,
         borderRadius: BorderRadius.circular(5),
@@ -76,7 +102,8 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
           Text(
             widget.movie.overview,
             style: AppTextStyles.bodySmall,
-          )
+          ),
+          videoTrailer(movieDetails.trailer.first.key),
         ],
       ));
 
@@ -89,11 +116,11 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 moviePosterWidget(widget.movie.posterPath),
-                infoWidget(movieDetails),
+                Expanded(child: infoWidget(movieDetails)),
               ],
             ),
-            overviewWidget(),
-            videoTrailer(movieDetails.trailer.first.key),
+            overviewWidget(movieDetails),
+            
           ]),
           actions(),
         ],
@@ -124,7 +151,21 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
       ]);
 
   Widget videoTrailer(String videoId) =>
-    YoutubePlayerWidget(videoId: videoId);
+    Column(
+        children: [
+          itemDot('Trailer'),
+    Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5),
+        border: Border.all(color: AppColors.primaryColor, width: 5),
+        color: AppColors.secundaryColor,
+      ),
+      
+      child: 
+          YoutubePlayerWidget(videoId: videoId),
+    )],
+      
+    );
 
   @override
   Widget build(BuildContext context) {

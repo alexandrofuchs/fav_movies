@@ -7,7 +7,7 @@ extension PopularMovieModel on Movie {
         adult: map['adult'],
         genreIds: List<int>.from(map['genre_ids']),
         id: map['id'],
-        originalLanguage: map['original_language'],
+        originalLanguage: MovieLanguage.fromValue(map['original_language']),
         originalTitle: map['original_title'],
         overview: map['overview'],
         popularity: map['popularity'],

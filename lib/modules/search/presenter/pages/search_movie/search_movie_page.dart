@@ -34,11 +34,14 @@ class _SearchMoviePageState extends State<SearchMoviePage>
   }
 
   Widget loadedWidget(List<Movie> movieList) => Expanded(
-      child: ListView.builder(
-          shrinkWrap: true,
-          itemCount: movieList.length,
-          itemBuilder: (context, index) =>
-              cardWidget(index, movieList[index])));
+      child: Padding(
+        padding: const EdgeInsets.all(25),
+        child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: movieList.length,
+            itemBuilder: (context, index) =>
+                cardWidget(index, movieList[index])),
+      ));
 
   @override
   Widget build(BuildContext context) {

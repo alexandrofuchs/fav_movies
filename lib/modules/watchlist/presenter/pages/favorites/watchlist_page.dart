@@ -4,6 +4,8 @@ import 'package:fav_movies/core/widgets/buttons/default_main_button.dart';
 import 'package:fav_movies/core/widgets/common/common_widgets.dart';
 import 'package:fav_movies/core/widgets/loading/app_loading_dots_widget.dart';
 import 'package:fav_movies/core/widgets/scaffolds/home_scaffold.dart';
+import 'package:fav_movies/modules/home/presenter/pages/popular_movies/widgets/favorite_action.dart';
+import 'package:fav_movies/modules/home/presenter/pages/popular_movies/widgets/movie_widgets.dart';
 import 'package:fav_movies/modules/watchlist/presenter/blocs/load_watchlist_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,7 +18,7 @@ class WatchListPage extends StatefulWidget {
   State<StatefulWidget> createState() => _FavoritePageState();
 }
 
-class _FavoritePageState extends State<WatchListPage> with CommonWidgets {
+class _FavoritePageState extends State<WatchListPage> with CommonWidgets, FavoriteAction, MovieWidgets {
   final bloc = LoadWatchListBloc(Modular.get());
 
   @override
@@ -31,7 +33,9 @@ class _FavoritePageState extends State<WatchListPage> with CommonWidgets {
     super.dispose();
   }
 
-  Widget loadedWidget(List<Movie> movies) => movies.isEmpty
+  Widget loadedWidget(List<Movie> movies) =>
+    
+   movies.isEmpty
       ? Center(
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -54,8 +58,9 @@ class _FavoritePageState extends State<WatchListPage> with CommonWidgets {
       : ListView.builder(
           shrinkWrap: true,
           itemCount: movies.length,
-          itemBuilder: (context, index) => Text(movies[index].title),
-        );
+          itemBuilder: (context, index) => 
+          favoriteListener(child: cardWidget(index, movies[index]),
+        ));
 
   @override
   Widget build(BuildContext context) {

@@ -1,8 +1,10 @@
+import 'package:fav_movies/core/common/models/movie.dart';
+import 'package:fav_movies/core/themes/app_fonts.dart';
 import 'package:fav_movies/core/widgets/common/common_widgets.dart';
 import 'package:fav_movies/core/widgets/loading/app_loading_dots_widget.dart';
 import 'package:fav_movies/core/widgets/scaffolds/blocs/bottom_navigator_bloc.dart';
 import 'package:fav_movies/core/widgets/scaffolds/home_scaffold.dart';
-import 'package:fav_movies/modules/home/domain/models/popular_movies.dart';
+import 'package:fav_movies/core/widgets/search_widgets/search_widgets.dart';
 import 'package:fav_movies/modules/home/presenter/bloc/popular/popular_movies_bloc.dart';
 import 'package:fav_movies/modules/home/presenter/pages/popular_movies/widgets/favorite_action.dart';
 import 'package:fav_movies/modules/home/presenter/pages/popular_movies/widgets/movie_widgets.dart';
@@ -18,7 +20,7 @@ class PopularMoviesPage extends StatefulWidget {
 }
 
 class _PopularMoviesPageState extends State<PopularMoviesPage>
-    with CommonWidgets, FavoriteAction, MovieWidgets, NavigationRoutes {
+    with CommonWidgets, FavoriteAction, MovieWidgets, NavigationRoutes, SearchWidgets {
   final PopularMoviesBloc popularMoviesBloc = PopularMoviesBloc(Modular.get());
 
   @override
@@ -36,13 +38,39 @@ class _PopularMoviesPageState extends State<PopularMoviesPage>
     super.dispose();
   }
 
-  Widget loadedWidget(PopularMovies popularMovies) => ListView.builder(
-        shrinkWrap: true,
-        physics: const ClampingScrollPhysics(),
-        itemCount: popularMovies.list.length,
-        itemBuilder: (context, index) =>
-            cardWidget(index, popularMovies.list[index]),
-      );
+  Widget loadedWidget(List<Movie> movieList) => 
+    movieList.isEmpty
+      ? const Center(
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Text(
+                  'Nenhum filme na lista.',
+                  textAlign: TextAlign.center,
+                  style: AppTextStyles.bodyLarge,
+                ),
+              ])) :
+    Column(
+      children: [
+        searchBar('Pesquisar filme...', (value){
+          popularMoviesBloc.add(SearchByTextEvent(value));
+        },
+        margin: EdgeInsets.zero,
+        padding: const EdgeInsets.only(left: 15, right: 15),
+        ),
+        Expanded(
+          child: ListView.builder(
+              shrinkWrap: true,
+              physics: const ClampingScrollPhysics(),
+              itemCount: movieList.length,
+              itemBuilder: (context, index) =>
+                  cardWidget(index, movieList[index]),
+            ),
+        ),
+      ],
+    );
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +89,7 @@ class _PopularMoviesPageState extends State<PopularMoviesPage>
                       PopularMoviesBlocStatus.failed => errorMessageWidget(
                           'Não foi possível carregar a lista de filmes.'),
                       PopularMoviesBlocStatus.loaded =>
-                        loadedWidget(state.popularMovies!)
+                        loadedWidget(state.filteredList)
                     }),
           )),
     );

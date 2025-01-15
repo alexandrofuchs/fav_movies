@@ -10,11 +10,12 @@ mixin SearchWidgets {
     void Function(String value) debounceAction, {
     bool autofocus = false,
     Key? key,
+    EdgeInsets padding = const EdgeInsets.only(left: 25, right: 25, bottom: 5, top: 5),
+    EdgeInsets margin = const EdgeInsets.only(right: 25, left: 25, top: 15),
   }) =>
       Container(
-          padding:
-              const EdgeInsets.only(left: 25, right: 25, bottom: 5, top: 5),
-          margin: const EdgeInsets.only(right: 25, left: 25, top: 15),
+          padding: padding,
+          margin: margin,
           decoration: BoxDecoration(
               color: const Color(0xffd9d9d9),
               borderRadius: BorderRadius.circular(5)),

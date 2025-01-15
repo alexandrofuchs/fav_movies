@@ -10,6 +10,10 @@ import 'package:flutter_modular/flutter_modular.dart';
 mixin MovieWidgets on FavoriteAction{
   final ValueNotifier<int> focusedCardIndex = ValueNotifier(0);
 
+  Widget favoriteIconButton(Function() favoriteAction) =>
+    IconButton(
+              onPressed: favoriteAction, icon: const Icon(Icons.favorite));
+
   Widget firstCardHeader(String title, Function() favoriteAction) => Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -19,8 +23,7 @@ mixin MovieWidgets on FavoriteAction{
               style: AppTextStyles.titleMedium,
             ),
           ),
-          IconButton(
-              onPressed: favoriteAction, icon: const Icon(Icons.favorite)),
+          favoriteIconButton(favoriteAction),
         ],
       );
 
@@ -33,6 +36,7 @@ mixin MovieWidgets on FavoriteAction{
                 style: const TextStyle(fontWeight: FontWeight.bold)),
             TextSpan(text: text),
           ],
+
         ),
       );
 
@@ -118,7 +122,7 @@ mixin MovieWidgets on FavoriteAction{
               ),
             ),
           ),
-          const Icon(Icons.favorite),
+          favoriteIconButton(() => favoriteAction(movie)),
         ],
       );
 

@@ -11,10 +11,12 @@ mixin MovieWidgets {
   Widget firstCardHeader(String title, Function() favoriteAction) => Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-                      title,
-                      style: AppTextStyles.titleMedium,
-                    ),
+          Flexible(
+            child: Text(
+                        title,
+                        style: AppTextStyles.titleMedium,
+                      ),
+          ),
           IconButton(
               onPressed: favoriteAction, icon: const Icon(Icons.favorite)),
         ],
@@ -35,10 +37,13 @@ mixin MovieWidgets {
 
   Widget firstCardContent(Movie movie) => Column(
         children: [
-          Image.asset(
-            'assets/images/cover_example.png',
-            fit: BoxFit.fitHeight,
-            height: 400,
+          Padding(
+            padding: const EdgeInsets.only(top: 15, bottom: 15),
+            child: Image.network(
+              movie.posterPath,
+              fit: BoxFit.fitHeight,
+              height: 400,
+            ),
           ),
           Container(
             padding: const EdgeInsets.all(15),
@@ -69,8 +74,8 @@ mixin MovieWidgets {
         ],
       );
 
-  Widget moviePosterWidget() => Image.asset(
-        'assets/images/cover_example.png',
+  Widget moviePosterWidget(String path) => Image.network(
+        path,
         fit: BoxFit.fitHeight,
         height: 150,
       );
@@ -85,7 +90,7 @@ mixin MovieWidgets {
                   border: Border.all(color: AppColors.primaryColor, width: 10),
                   borderRadius: BorderRadius.circular(2)),
               padding: const EdgeInsets.all(1.5),
-              child: moviePosterWidget()),
+              child: moviePosterWidget(movie.posterPath)),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(15),

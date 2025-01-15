@@ -4,6 +4,7 @@ import 'package:fav_movies/core/themes/app_fonts.dart';
 import 'package:fav_movies/core/widgets/buttons/default_main_button.dart';
 import 'package:fav_movies/core/widgets/common/common_widgets.dart';
 import 'package:fav_movies/core/widgets/loading/app_loading_dots_widget.dart';
+import 'package:fav_movies/core/widgets/youtube_player/youtube_player_widget.dart';
 import 'package:fav_movies/modules/details/domain/models/movie_details.dart';
 import 'package:fav_movies/modules/details/presenter/blocs/movie_details/movie_details_bloc.dart';
 import 'package:fav_movies/modules/details/presenter/blocs/movie_review/movie_review_bloc.dart';
@@ -87,11 +88,12 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                moviePosterWidget(),
+                moviePosterWidget(widget.movie.posterPath),
                 infoWidget(movieDetails),
               ],
             ),
             overviewWidget(),
+            videoTrailer(movieDetails.trailer.first.key),
           ]),
           actions(),
         ],
@@ -120,6 +122,9 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
                       }),
                 }),
       ]);
+
+  Widget videoTrailer(String videoId) =>
+    YoutubePlayerWidget(videoId: videoId);
 
   @override
   Widget build(BuildContext context) {

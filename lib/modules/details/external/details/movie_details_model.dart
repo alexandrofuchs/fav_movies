@@ -4,7 +4,16 @@ extension MovieDetailsModel on MovieDetails {
   static fromMap(Map<String, dynamic> map) => MovieDetails(
       id: map['id'],
       genre: MovieGenreModel.fromMapList(map['genres']),
-      status: map['status']);
+      status: map['status'],
+      trailer: MovieTrailerModel.fromMapList(map['videos']['results']));
+}
+
+extension MovieTrailerModel on MovieTrailer{
+  static MovieTrailer fromMap(Map<String, dynamic> map) =>
+    MovieTrailer(map['key']);
+
+  static List<MovieTrailer> fromMapList(List<dynamic> list) =>
+    list.map((e) => MovieTrailerModel.fromMap(e)).toList();
 }
 
 extension MovieGenreModel on MovieGenre {

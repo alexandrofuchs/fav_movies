@@ -10,8 +10,8 @@ import 'package:fav_movies/modules/details/presenter/blocs/movie_details/movie_d
 import 'package:fav_movies/modules/details/presenter/blocs/movie_review/movie_review_bloc.dart';
 import 'package:fav_movies/modules/details/presenter/blocs/watch_list/manage_watchlist_bloc.dart';
 import 'package:fav_movies/modules/details/presenter/pages/widgets/review_movie/movie_review_widget.dart';
-import 'package:fav_movies/modules/home/presenter/pages/popular_movies/widgets/favorite_action.dart';
-import 'package:fav_movies/modules/home/presenter/pages/popular_movies/widgets/movie_widgets.dart';
+import 'package:fav_movies/core/widgets/movies/favorite_action.dart';
+import 'package:fav_movies/core/widgets/movies/movie_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';

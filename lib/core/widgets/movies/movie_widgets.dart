@@ -2,7 +2,7 @@ import 'package:fav_movies/core/common/models/movie.dart';
 import 'package:fav_movies/core/themes/app_colors.dart';
 import 'package:fav_movies/core/themes/app_fonts.dart';
 import 'package:fav_movies/core/widgets/buttons/default_main_button.dart';
-import 'package:fav_movies/modules/home/presenter/pages/popular_movies/widgets/favorite_action.dart';
+import 'package:fav_movies/core/widgets/movies/favorite_action.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_modular/flutter_modular.dart';

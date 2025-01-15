@@ -6,13 +6,18 @@ part 'themed_components.dart';
 
 abstract class AppTheme with ThemedComponents {
   static lightTheme(BuildContext context) =>
-      ThemeData.light(useMaterial3: true).copyWith(
+      ThemeData.light(useMaterial3: false).copyWith(
           primaryColor: AppColors.primaryColor,
           primaryColorLight: AppColors.primaryColorLight,
           scaffoldBackgroundColor: AppColors.backgroundColor,
           appBarTheme: ThemedComponents._appBarTheme(),
           iconTheme: ThemedComponents._iconThemeData(),
-          textTheme: const TextTheme(
+          bottomNavigationBarTheme: BottomNavigationBarThemeData(
+            unselectedLabelStyle: AppTextStyles.labelMedium.copyWith(color: AppColors.secundaryColor,),
+            selectedLabelStyle: AppTextStyles.labelMedium.copyWith(color: AppColors.secundaryColor,)
+            
+          ),
+          textTheme:  const TextTheme(
             titleLarge: AppTextStyles.titleLarge,
             titleMedium: AppTextStyles.titleMedium,
             titleSmall: AppTextStyles.titleSmall,
@@ -22,7 +27,12 @@ abstract class AppTheme with ThemedComponents {
             displayLarge: AppTextStyles.titleLarge,
             displayMedium: AppTextStyles.titleMedium,
             displaySmall: AppTextStyles.titleSmall,
-          )
+            labelLarge: AppTextStyles.labelLarge,
+            labelMedium: AppTextStyles.labelMedium,
+            labelSmall: AppTextStyles.labelSmall,
+
+          ),
+          
 
       );
 }

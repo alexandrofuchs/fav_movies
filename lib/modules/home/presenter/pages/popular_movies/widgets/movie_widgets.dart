@@ -101,11 +101,7 @@ mixin MovieWidgets on FavoriteAction{
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-              decoration: BoxDecoration(
-                  color: AppColors.secundaryColor,
-                  border: Border.all(color: AppColors.primaryColor, width: 10),
-                  borderRadius: BorderRadius.circular(2)),
-              padding: const EdgeInsets.all(1.5),
+            padding: const EdgeInsets.all(1.5),
               child: moviePosterWidget(movie.posterPath)
                 ),
           Expanded(

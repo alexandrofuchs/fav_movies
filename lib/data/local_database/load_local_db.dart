@@ -18,7 +18,8 @@ Future<void> loadLocalDb() async {
 
       debugPrint(MovieWatchListTableModel.createTableCommand);
       await db.execute(MovieWatchListTableModel.createTableCommand);
-    });
+    },
+    );
   } catch (e) {
     debugPrint(e.toString());
   }

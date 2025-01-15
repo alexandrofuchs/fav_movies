@@ -27,7 +27,7 @@ mixin NavigationRoutes {
             color: AppColors.secundaryColor,
             size: 35,
           ),
-          label: 'Assistidos',
+          label: 'Assistir',
         ),
         'search': const NavigationRoute(
           route: '/search/',

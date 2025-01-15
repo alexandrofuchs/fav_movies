@@ -5,6 +5,8 @@ import 'package:fav_movies/core/widgets/common/common_widgets.dart';
 import 'package:fav_movies/core/widgets/loading/app_loading_dots_widget.dart';
 import 'package:fav_movies/core/widgets/scaffolds/home_scaffold.dart';
 import 'package:fav_movies/modules/favorites/presenter/blocs/load_favorite_movies_bloc.dart';
+import 'package:fav_movies/modules/home/presenter/pages/popular_movies/widgets/favorite_action.dart';
+import 'package:fav_movies/modules/home/presenter/pages/popular_movies/widgets/movie_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -16,8 +18,8 @@ class FavoritesPage extends StatefulWidget {
   State<StatefulWidget> createState() => _FavoritePageState();
 }
 
-class _FavoritePageState extends State<FavoritesPage> with CommonWidgets {
-  final bloc = LoadFavoriteMoviesBloc(Modular.get());
+class _FavoritePageState extends State<FavoritesPage> with CommonWidgets, FavoriteAction, MovieWidgets {
+  final LoadFavoriteMoviesBloc bloc = Modular.get();
 
   @override
   void initState() {
@@ -27,7 +29,6 @@ class _FavoritePageState extends State<FavoritesPage> with CommonWidgets {
 
   @override
   void dispose() {
-    bloc.close();
     super.dispose();
   }
 
@@ -54,7 +55,7 @@ class _FavoritePageState extends State<FavoritesPage> with CommonWidgets {
       : ListView.builder(
           shrinkWrap: true,
           itemCount: movies.length,
-          itemBuilder: (context, index) => Text(movies[index].title),
+          itemBuilder: (context, index) => cardWidget(index, movies[index]),
         );
 
   @override
@@ -63,7 +64,7 @@ class _FavoritePageState extends State<FavoritesPage> with CommonWidgets {
         appBar: AppBar(
           title: titleDot('Favoritos', true),
         ),
-        body: Padding(
+        body: favoriteListener(child: Padding(
           padding: const EdgeInsets.all(25),
           child: BlocBuilder<LoadFavoriteMoviesBloc, LoadFavoriteBlocState>(
               bloc: bloc,
@@ -74,6 +75,6 @@ class _FavoritePageState extends State<FavoritesPage> with CommonWidgets {
                     LoadFavoriteBlocStatus.loaded =>
                       loadedWidget(state.sourceList!),
                   }),
-        ));
+        )));
   }
 }

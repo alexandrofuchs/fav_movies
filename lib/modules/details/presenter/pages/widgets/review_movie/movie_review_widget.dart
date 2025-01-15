@@ -2,6 +2,7 @@ import 'package:fav_movies/core/common/models/movie.dart';
 import 'package:fav_movies/core/themes/app_colors.dart';
 import 'package:fav_movies/core/themes/app_fonts.dart';
 import 'package:fav_movies/core/widgets/buttons/default_main_button.dart';
+import 'package:fav_movies/core/widgets/common/common_widgets.dart';
 import 'package:fav_movies/core/widgets/snackbars/app_snackbars.dart';
 import 'package:fav_movies/core/widgets/text_fields/default_text_field.dart';
 import 'package:fav_movies/modules/details/domain/models/movie_review.dart';
@@ -10,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-mixin MovieReviewWidget {
+mixin MovieReviewWidget on CommonWidgets {
   final ValueNotifier<int> rate = ValueNotifier(0);
   final TextEditingController description = TextEditingController();
   final reviewBloc = MovieReviewBloc(Modular.get());
@@ -20,8 +21,6 @@ mixin MovieReviewWidget {
         height: 75,
         decoration: const BoxDecoration(
           color: AppColors.primaryColor,
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(5), topRight: Radius.circular(5)),
         ),
         child: Text(
           'Avaliar',
@@ -30,20 +29,23 @@ mixin MovieReviewWidget {
         ),
       );
 
-  Widget _movieInfo(Movie movie) => Column(
-        children: [
-          RichText(
-            text: TextSpan(
-              style: AppTextStyles.bodyMedium,
-              children: <TextSpan>[
-                const TextSpan(
-                    text: 'Filme: ',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
-                TextSpan(text: movie.title),
-              ],
-            ),
-          )
-        ],
+  Widget _movieInfo(Movie movie) => Padding(
+        padding: const EdgeInsets.all(15),
+        child: Column(
+          children: [
+            RichText(
+              text: TextSpan(
+                style: AppTextStyles.bodyMedium,
+                children: <TextSpan>[
+                  const TextSpan(
+                      text: 'Filme: ',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  TextSpan(text: movie.title),
+                ],
+              ),
+            )
+          ],
+        ),
       );
 
   Widget rateWidget() => ValueListenableBuilder(
@@ -51,45 +53,104 @@ mixin MovieReviewWidget {
         builder: (context, value, child) => _rateWidget(value),
       );
 
-  Widget showRateWidget([bool enable = true]) =>
-      BlocBuilder<MovieReviewBloc, MovieReviewBlocState>(
-          bloc: reviewBloc,
-          buildWhen: (previous, current) =>
-              current.status == MovieReviewBlocStatus.loaded,
-          builder: (context, state) => switch (state.status) {
-                MovieReviewBlocStatus.initial => const SizedBox(),
-                MovieReviewBlocStatus.loading => const SizedBox(),
-                MovieReviewBlocStatus.failed => const SizedBox(),
-                MovieReviewBlocStatus.loaded =>
-                  _rateWidget(state.movieReview!.rate),
-              });
+  Widget showRateWidget({bool enable = true, bool showDescription = false}) =>
+      Column(
+        children: [
+          BlocBuilder<MovieReviewBloc, MovieReviewBlocState>(
+              bloc: reviewBloc,
+              buildWhen: (previous, current) =>
+                  current.status == MovieReviewBlocStatus.loaded,
+              builder: (context, state) => switch (state.status) {
+                    MovieReviewBlocStatus.initial => const SizedBox(),
+                    MovieReviewBlocStatus.loading => const SizedBox(),
+                    MovieReviewBlocStatus.failed => const SizedBox(),
+                    MovieReviewBlocStatus.loaded => Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: AppColors.secundaryColor),
+                        margin: const EdgeInsets.only(bottom: 15),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _rateWidget(state.movieReview!.rate),
+                            showDescription
+                                ? Padding(
+                                    padding: const EdgeInsets.all(15),
+                                    child: infoRow('Opinião: ',
+                                        state.movieReview!.description),
+                                  )
+                                : const SizedBox()
+                          ],
+                        ),
+                      ),
+                  }),
+        ],
+      );
 
-  Widget _rateWidget(int value, [bool enable = true]) => Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [1, 2, 3, 4, 5]
-          .map((e) => IconButton(
-              enableFeedback: enable,
-              onPressed: () {
-                if (!enable) return;
-                rate.value = e;
-              },
-              icon: Icon(
-                e <= value ? Icons.star : Icons.star_border,
-                size: 24,
-              )))
-          .toList());
+  Widget _rateWidget(int value, {bool enable = true}) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 25, top: 15),
+            child: Text(
+              'Sua avaliação',
+              style: AppTextStyles.titleSmall
+                  .copyWith(fontWeight: FontWeight.w700),
+            ),
+          ),
+          Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [1, 2, 3, 4, 5]
+                  .map((e) => Flexible(
+                        child: IconButton(
+                            enableFeedback: enable,
+                            onPressed: () {
+                              if (!enable) return;
+                              rate.value = e;
+                            },
+                            icon: Icon(
+                              e <= value ? Icons.star : Icons.star_border,
+                              size: 32,
+                            )),
+                      ))
+                  .toList()),
+        ],
+      );
 
-  Widget _descriptionWidget() => DefaultTextField(
-        controller: description,
-        maxLines: 5,
-        maxLength: 200,
+  Widget _descriptionWidget() => Padding(
+        padding: const EdgeInsets.all(15),
+        child: DefaultTextField(
+          labelText: 'Deixe sua opinião',
+          labelColor: Colors.black,
+          fillColor: Colors.white,
+          controller: description,
+          maxLines: 5,
+          maxLength: 200,
+        ),
+      );
+
+  Widget reviewedListener({Widget? child}) =>
+      BlocListener<MovieReviewBloc, MovieReviewBlocState>(
+        bloc: reviewBloc,
+        listenWhen: (previous, current) =>
+            current.status == MovieReviewBlocStatus.loaded,
+        listener: (context, state) {
+          AppSnackbars.showSuccessSnackbar(context, "Avaliação salva");
+
+          Modular.to.pop();
+        },
+        child: child,
       );
 
   Widget _actionsWidget(BuildContext context, Movie movie) => Row(
         children: [
           Flexible(
               child: DefaultMainButton(
-                  invertColors: true, label: 'Cancelar', onPressed: () {})),
+                  invertColors: true,
+                  label: 'Cancelar',
+                  onPressed: () {
+                    Modular.to.pop();
+                  })),
           Flexible(
               child: DefaultMainButton(
                   label: 'Confirmar',
@@ -110,8 +171,6 @@ mixin MovieReviewWidget {
                         movieId: movie.id,
                         rate: rate.value,
                         description: description.text)));
-
-                    Modular.to.pop();
                   })),
         ],
       );
@@ -123,25 +182,24 @@ mixin MovieReviewWidget {
     await showModalBottomSheet(
       context: context,
       builder: (context) => Scaffold(
-        backgroundColor: AppColors.secundaryColor,
-        body: Container(
-          alignment: Alignment.center,
-          margin: const EdgeInsets.all(15),
+        body: reviewedListener(
           child: Container(
             alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: AppColors.primaryColorLight,
-              borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(5), topRight: Radius.circular(5)),
-              border: Border.all(color: AppColors.primaryColor, width: 2),
+            decoration: const BoxDecoration(
+              color: AppColors.backgroundColor,
             ),
             child: Column(
               children: [
                 _header(),
-                _movieInfo(movie),
-                rateWidget(),
-                _descriptionWidget(),
-                _actionsWidget(context, movie),
+                Expanded(
+                    child: ListView(
+                  children: [
+                    _movieInfo(movie),
+                    rateWidget(),
+                    _descriptionWidget(),
+                    _actionsWidget(context, movie),
+                  ],
+                )),
               ],
             ),
           ),

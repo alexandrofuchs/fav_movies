@@ -43,7 +43,6 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
     rate.dispose();
     reviewBloc.close();
     watchListBloc.close();
-    favoriteMovieBloc.close();
     super.dispose();
   }
 
@@ -58,20 +57,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
         ),
       );
 
-  Widget infoRow(String label, String text) =>
-    RichText(
-      softWrap: true,
-      maxLines: 2,
-            text: TextSpan(
-              style: AppTextStyles.bodySmall,
-              children: <TextSpan>[
-                TextSpan(
-                    text: label,
-                    style: const TextStyle(fontWeight: FontWeight.bold)),
-                TextSpan(text: text),
-              ],
-            ),
-          );
+  
 
   Widget infoWidget(MovieDetails movieDetails) => Column(
     mainAxisAlignment: MainAxisAlignment.start,
@@ -82,11 +68,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
       infoRow('Gêneros: ', '${movieDetails.genre.join(', ')}.'),
       infoRow('Linguagem original: ', widget.movie.originalLanguage.label),
       infoRow('Avaliação média: ', widget.movie.voteAverage.toString()),
-      infoRow('Linguagem original: ', widget.movie.originalLanguage.label),
-      
-      
-      showRateWidget(),
-  
+      infoRow('Data Lançamento: ', widget.movie.releaseDate),
     ],
   );
 
@@ -121,6 +103,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
                 Expanded(child: infoWidget(movieDetails)),
               ],
             ),
+            showRateWidget(showDescription: true),
             overviewWidget(movieDetails),
             
           ]),

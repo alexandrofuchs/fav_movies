@@ -77,4 +77,20 @@ mixin CommonWidgets {
           ],
         ),
   );
+
+
+  Widget infoRow(String label, String text) =>
+    RichText(
+      softWrap: true,
+      maxLines: 2,
+            text: TextSpan(
+              style: AppTextStyles.bodySmall,
+              children: <TextSpan>[
+                TextSpan(
+                    text: label,
+                    style: const TextStyle(fontWeight: FontWeight.bold)),
+                TextSpan(text: text),
+              ],
+            ),
+          );
 }

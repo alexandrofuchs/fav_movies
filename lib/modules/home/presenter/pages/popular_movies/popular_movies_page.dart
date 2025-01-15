@@ -2,9 +2,7 @@ import 'package:fav_movies/core/widgets/common/common_widgets.dart';
 import 'package:fav_movies/core/widgets/loading/app_loading_dots_widget.dart';
 import 'package:fav_movies/core/widgets/scaffolds/blocs/bottom_navigator_bloc.dart';
 import 'package:fav_movies/core/widgets/scaffolds/home_scaffold.dart';
-import 'package:fav_movies/core/widgets/snackbars/app_snackbars.dart';
 import 'package:fav_movies/modules/home/domain/models/popular_movies.dart';
-import 'package:fav_movies/modules/home/presenter/bloc/favorite/favorite_movie_bloc.dart';
 import 'package:fav_movies/modules/home/presenter/bloc/popular/popular_movies_bloc.dart';
 import 'package:fav_movies/modules/home/presenter/pages/popular_movies/widgets/favorite_action.dart';
 import 'package:fav_movies/modules/home/presenter/pages/popular_movies/widgets/movie_widgets.dart';
@@ -34,28 +32,9 @@ class _PopularMoviesPageState extends State<PopularMoviesPage>
   @override
   void dispose() {
     popularMoviesBloc.close();
-    favoriteMovieBloc.close();
     focusedCardIndex.dispose();
     super.dispose();
   }
-
-  favoriteListener({Widget? child}) =>
-      BlocListener<FavoriteMovieBloc, FavoriteMovieBlocStatus>(
-          bloc: favoriteMovieBloc,
-          listenWhen: (previous, current) =>
-              current == FavoriteMovieBlocStatus.failed ||
-              current == FavoriteMovieBlocStatus.saved,
-          listener: (context, state) => switch (state) {
-                FavoriteMovieBlocStatus.initial => null,
-                FavoriteMovieBlocStatus.saving => null,
-                FavoriteMovieBlocStatus.failed =>
-                  AppSnackbars.showErrorSnackbar(
-                      context, 'Não foi possível favoritar.'),
-                FavoriteMovieBlocStatus.saved =>
-                  AppSnackbars.showSuccessSnackbar(
-                      context, 'Filme salvo nos favoritos'),
-              },
-          child: child);
 
   Widget loadedWidget(PopularMovies popularMovies) => ListView.builder(
         shrinkWrap: true,

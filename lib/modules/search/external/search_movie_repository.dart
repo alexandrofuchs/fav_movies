@@ -12,7 +12,7 @@ class SearchMovieRepository implements ISearchMovieRepository {
   
   @override
   Future<List<Movie>> searchMovieByText(String text) async {
-    final response = await _request.get('/search/movie?query=$text');
+    final response = await _request.get('/search/movie?query=$text&language=pt-BR');
     return SearchMovieModel.fromMapList(response['results']);
   }
 

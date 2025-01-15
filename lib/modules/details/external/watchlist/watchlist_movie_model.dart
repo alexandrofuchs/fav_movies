@@ -6,7 +6,7 @@ extension WatchlistMovieModel on Movie {
         'id': id,
         'adult': adult ? 1 : 0,
         'genre_ids': genreIds.join(','),
-        'original_language': originalLanguage,
+        'original_language': originalLanguage.value,
         'original_title': originalTitle,
         'overview': overview,
         'popularity': popularity,

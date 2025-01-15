@@ -29,7 +29,6 @@ class _SearchMoviePageState extends State<SearchMoviePage>
   @override
   void dispose() {
     searchBarController.dispose();
-    favoriteMovieBloc.close();
     focusedCardIndex.dispose();
     super.dispose();
   }
@@ -52,7 +51,7 @@ class _SearchMoviePageState extends State<SearchMoviePage>
             searchBar('Pesquisar...', (value) {
               bloc.add(SearchEvent(value));
             }),
-            BlocBuilder<SearchMovieBloc, SearchMovieBlocState>(
+            favoriteListener(child: BlocBuilder<SearchMovieBloc, SearchMovieBlocState>(
                 bloc: bloc,
                 builder: (context, state) => switch (state.status) {
                       SearchMovieBlocStatus.initial => const SizedBox(),
@@ -61,7 +60,7 @@ class _SearchMoviePageState extends State<SearchMoviePage>
                           'Não foi possível efetuar a pesquisa!'),
                       SearchMovieBlocStatus.loaded =>
                         loadedWidget(state.filteredList),
-                    })
+                    })),
           ],
         ));
   }

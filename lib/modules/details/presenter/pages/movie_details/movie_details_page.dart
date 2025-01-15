@@ -4,6 +4,7 @@ import 'package:fav_movies/core/themes/app_fonts.dart';
 import 'package:fav_movies/core/widgets/buttons/default_main_button.dart';
 import 'package:fav_movies/core/widgets/common/common_widgets.dart';
 import 'package:fav_movies/core/widgets/loading/app_loading_dots_widget.dart';
+import 'package:fav_movies/core/widgets/snackbars/app_snackbars.dart';
 import 'package:fav_movies/core/widgets/youtube_player/youtube_player_widget.dart';
 import 'package:fav_movies/modules/details/domain/models/movie_details.dart';
 import 'package:fav_movies/modules/details/presenter/blocs/movie_details/movie_details_bloc.dart';
@@ -117,18 +118,24 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
             onPressed: () {
               openReviewBottomSheet(context, widget.movie);
             }),
-        BlocBuilder<ManageWatchlistBloc, ManageWatchlistBlocStatus>(
+        BlocConsumer<ManageWatchlistBloc, ManageWatchlistBlocStatus>(
+          listener: (context, state) => switch(state){
+            ManageWatchlistBlocStatus.initial => null,
+            ManageWatchlistBlocStatus.loading => null,
+            ManageWatchlistBlocStatus.inWatchList => AppSnackbars.showSuccessSnackbar(context, 'Filme adicionado na lista para assistir.'),
+            ManageWatchlistBlocStatus.notInWatchlist => AppSnackbars.showSuccessSnackbar(context, 'Filme removido da lista para assistir.'),
+          },
             bloc: watchListBloc,
             builder: (context, state) => switch (state) {
                   ManageWatchlistBlocStatus.initial => const SizedBox(),
                   ManageWatchlistBlocStatus.loading => const SizedBox(),
                   ManageWatchlistBlocStatus.inWatchList => DefaultMainButton(
-                      label: 'Remover da lista de assistidos',
+                      label: 'Remover da lista para assistir',
                       onPressed: () {
                         watchListBloc.add(RemoveFromWatchlistEvent(widget.movie.id));
                       }),
                   ManageWatchlistBlocStatus.notInWatchlist => DefaultMainButton(
-                      label: 'Adicionar à lista de assistidos',
+                      label: 'Adicionar à lista para assistir',
                       onPressed: () {
                         watchListBloc.add(AddToWatchlistEvent(widget.movie));
                       }),

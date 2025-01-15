@@ -5,7 +5,6 @@ import 'package:fav_movies/core/widgets/loading/app_loading_dots_widget.dart';
 import 'package:fav_movies/core/widgets/scaffolds/blocs/bottom_navigator_bloc.dart';
 import 'package:fav_movies/core/widgets/scaffolds/home_scaffold.dart';
 import 'package:fav_movies/core/widgets/search_widgets/search_widgets.dart';
-import 'package:fav_movies/modules/favorites/presenter/blocs/load_favorite_movies_bloc.dart';
 import 'package:fav_movies/modules/home/presenter/bloc/popular/popular_movies_bloc.dart';
 import 'package:fav_movies/core/widgets/movies/favorite_action.dart';
 import 'package:fav_movies/core/widgets/movies/movie_widgets.dart';
@@ -30,8 +29,6 @@ class _PopularMoviesPageState extends State<PopularMoviesPage>
         .loadNavigationRoutes(getUserNavigations());
     popularMoviesBloc.add(const GetMoviesEvent(1));
 
-    Modular.get<LoadFavoriteMoviesBloc>().add(LoadMoviesEvent());
-    
     super.initState();
   }
 
@@ -43,6 +40,14 @@ class _PopularMoviesPageState extends State<PopularMoviesPage>
   }
 
   Widget loadedWidget(List<Movie> movieList) => 
+    Column(
+      children: [
+        searchBar('Pesquisar filme...', (value){
+          popularMoviesBloc.add(SearchByTextEvent(value));
+        },
+        margin: EdgeInsets.zero,
+        padding: const EdgeInsets.only(left: 15, right: 15),
+        ),
     movieList.isEmpty
       ? const Center(
           child: Column(
@@ -56,14 +61,7 @@ class _PopularMoviesPageState extends State<PopularMoviesPage>
                   style: AppTextStyles.bodyLarge,
                 ),
               ])) :
-    Column(
-      children: [
-        searchBar('Pesquisar filme...', (value){
-          popularMoviesBloc.add(SearchByTextEvent(value));
-        },
-        margin: EdgeInsets.zero,
-        padding: const EdgeInsets.only(left: 15, right: 15),
-        ),
+    
         Expanded(
           child: ListView.builder(
               shrinkWrap: true,

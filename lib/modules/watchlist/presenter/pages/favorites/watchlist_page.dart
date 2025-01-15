@@ -75,7 +75,7 @@ class _FavoritePageState extends State<WatchListPage> with CommonWidgets, Favori
               builder: (context, state) => switch (state.status) {
                     LoadWatchListBlocStatus.loading => const AppLoadingDots(),
                     LoadWatchListBlocStatus.failed => errorMessageWidget(
-                        'Não foi possível carregar sua lista de assistidos'),
+                        'Não foi possível carregar sua lista para assistir'),
                     LoadWatchListBlocStatus.loaded =>
                       loadedWidget(state.sourceList!),
                   }),

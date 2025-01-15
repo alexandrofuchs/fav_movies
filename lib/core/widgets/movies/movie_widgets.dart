@@ -12,7 +12,9 @@ mixin MovieWidgets on FavoriteAction{
 
   Widget favoriteIconButton(Function() favoriteAction) =>
     IconButton(
-              onPressed: favoriteAction, icon: const Icon(Icons.favorite));
+              onPressed: favoriteAction, icon:  const Icon(
+                 Icons.favorite))
+                 .animate().scaleXY(begin: 0.2, end:  1, duration: const Duration(milliseconds: 1000));
 
   Widget firstCardHeader(String title, Function() favoriteAction) => Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -20,7 +22,7 @@ mixin MovieWidgets on FavoriteAction{
           Flexible(
             child: Text(
               title,
-              style: AppTextStyles.titleMedium,
+              style: AppTextStyles.titleMedium.copyWith(fontWeight: FontWeight.w700),
             ),
           ),
           favoriteIconButton(favoriteAction),
@@ -59,10 +61,8 @@ mixin MovieWidgets on FavoriteAction{
                 contentTextItem(
                     'Linguagem Origem: ', movie.originalLanguage.label),
                 contentTextItem('Lançamento: ', movie.releaseDate),
-                contentTextItem('Na lista de favoritos: ',
-                    movie.savedInFavorites ? 'Sim' : 'Não'),
-                contentTextItem('Na lista para assistir: ',
-                    movie.savedInWatchlist ? 'Sim' : 'Não'),
+                contentTextItem('Categoria Adulto: ',
+                    movie.adult ? 'Sim' : 'Não'),
               ],
             ),
           ),

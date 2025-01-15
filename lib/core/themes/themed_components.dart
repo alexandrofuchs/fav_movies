@@ -4,6 +4,10 @@ mixin ThemedComponents {
   static _appBarTheme() => AppBarTheme(
       color: AppColors.primaryColor,
       toolbarHeight: 80,
+      iconTheme: const IconThemeData(
+        size: 24,
+        color: AppColors.secundaryColor
+      ),
       titleTextStyle: AppTextStyles.titleLarge.copyWith(
           color: AppColors.secundaryColor, fontWeight: FontWeight.w700));
 

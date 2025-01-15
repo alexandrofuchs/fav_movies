@@ -12,11 +12,16 @@ abstract class AppTheme with ThemedComponents {
           scaffoldBackgroundColor: AppColors.backgroundColor,
           appBarTheme: ThemedComponents._appBarTheme(),
           iconTheme: ThemedComponents._iconThemeData(),
-          bottomNavigationBarTheme: BottomNavigationBarThemeData(
-            unselectedLabelStyle: AppTextStyles.labelMedium.copyWith(color: AppColors.secundaryColor,),
-            selectedLabelStyle: AppTextStyles.labelMedium.copyWith(color: AppColors.secundaryColor,)
-            
-          ),
+          navigationBarTheme: NavigationBarTheme.of(context).copyWith(
+            height: 75,
+            backgroundColor: AppColors.primaryColor,
+            overlayColor:
+                const WidgetStatePropertyAll(AppColors.secundaryColor),
+            indicatorColor: AppColors.primaryColor,
+            labelTextStyle:  const WidgetStatePropertyAll(
+                AppTextStyles.labelMedium),
+            indicatorShape: const Border(
+                top: BorderSide(color: AppColors.secundaryColor, width: 2))),
           textTheme:  const TextTheme(
             titleLarge: AppTextStyles.titleLarge,
             titleMedium: AppTextStyles.titleMedium,

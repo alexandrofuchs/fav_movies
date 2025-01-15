@@ -85,9 +85,7 @@ class HomeScaffoldState extends State<HomeScaffold>  {
                         Modular.get<BottomNavigatorBloc>().navigateTo(List.of(state.navigations.values)[index]);
                       },
                       selectedIndex: List.of(state.navigations.values).indexOf(state.current!),
-                      height: 60,
                       destinations: List.of(state.navigations.values),
-                      
                     ),
                 }),
       ),

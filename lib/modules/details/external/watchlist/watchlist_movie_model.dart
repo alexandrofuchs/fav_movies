@@ -21,17 +21,17 @@ extension WatchlistMovieModel on Movie {
       };
 
     static Movie fromTableMap(Map<String, dynamic> map) => Movie(
-        adult: map['adult'],
-        genreIds: List<int>.from(map['genre_ids']),
+        adult: map['adult'] == 1,
+        genreIds: List<int>.from((map['genre_ids'] as String).split(',').map((e) => int.parse(e))),
         id: map['id'],
-        originalLanguage: map['original_language'],
+        originalLanguage: MovieLanguage.fromValue(map['original_language']),
         originalTitle: map['original_title'],
         overview: map['overview'],
         popularity: map['popularity'],
         posterPath: map['poster_path'],
         releaseDate: map['release_date'],
         title: map['title'],
-        video: map['video'],
+        video: map['video'] == 1,
         voteAverage: map['vote_average'],
         voteCount: map['vote_count'],
         savedInFavorites: map['saved_in_favorites'] == 1,

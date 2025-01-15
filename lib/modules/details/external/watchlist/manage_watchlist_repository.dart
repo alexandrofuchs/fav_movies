@@ -1,3 +1,4 @@
+import 'package:fav_movies/core/common/models/enums/movie_language.dart';
 import 'package:fav_movies/core/common/models/movie.dart';
 import 'package:fav_movies/core/common/responses/status/response_status.dart';
 import 'package:fav_movies/modules/details/domain/i_repositories/i_manage_watchlist_repository.dart';

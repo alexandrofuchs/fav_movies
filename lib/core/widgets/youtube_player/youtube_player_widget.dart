@@ -18,14 +18,6 @@ class _YoutubePlayerState extends State<YoutubePlayerWidget>
     with TickerProviderStateMixin {
   late YoutubePlayerController _controller;
 
-  bool mediaError = true;
-
-  bool showErrorMessage = false;
-
-  bool isReady = false;
-
-  bool startedDragging = false;
-
   @override
   void initState() {
     super.initState();
@@ -46,6 +38,8 @@ class _YoutubePlayerState extends State<YoutubePlayerWidget>
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
+
+    _controller.dispose();
 
     super.dispose();
   }
@@ -68,22 +62,17 @@ class _YoutubePlayerState extends State<YoutubePlayerWidget>
       ),
     );
 
-    setState(() {
-      mediaError = false;
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return YoutubePlayer(
+    return YoutubePlayerBuilder(player: YoutubePlayer(
       controller: _controller,
       aspectRatio: 1.51,
       onReady: () {
-        setState(() {
-          isReady = true;
-        });
+
       },
-      controlsTimeOut: const Duration(milliseconds: 0),
-    );
+    ), builder:(context, player) =>  player,)
+     ;
   }
 }

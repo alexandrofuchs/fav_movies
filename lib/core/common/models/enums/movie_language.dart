@@ -41,11 +41,5 @@ enum MovieLanguage {
   
   factory MovieLanguage.fromValue(String value) {
 
-    
-    if(MovieLanguage.values.firstWhereOrNull((e)=> e.value.contains(value)) == null){
-      print(value);
-    }
-    
-    
-    return MovieLanguage.values.firstWhereOrNull((e) => e.value.contains(value)) ?? MovieLanguage.unknown;}
+  return MovieLanguage.values.firstWhereOrNull((e) => e.value.contains(value)) ?? MovieLanguage.unknown;}
 }

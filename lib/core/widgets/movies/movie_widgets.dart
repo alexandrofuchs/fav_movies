@@ -26,25 +26,23 @@ mixin MovieWidgets on FavoriteAction , CommonWidgets {
         ],
       );
 
-  Widget firstCardHeader(String title, Function() favoriteAction) => Container(
-    child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 25),
-                child: Text(
-                  title,
-                  softWrap: true,
-                  maxLines: 2,
-                  style: AppTextStyles.titleMedium.copyWith(fontWeight: FontWeight.w700),
-                ),
+  Widget firstCardHeader(String title, Function() favoriteAction) => Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 25),
+              child: Text(
+                title,
+                softWrap: true,
+                maxLines: 2,
+                style: AppTextStyles.titleMedium.copyWith(fontWeight: FontWeight.w700),
               ),
             ),
-            favoriteIconButton(favoriteAction),
-          ],
-        ),
-  );
+          ),
+          favoriteIconButton(favoriteAction),
+        ],
+      );
 
   Widget contentTextItem(String label, String text) => Flexible(
     child: Column(

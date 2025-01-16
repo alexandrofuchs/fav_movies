@@ -66,7 +66,7 @@ class _FavoritePageState extends State<WatchListPage> with CommonWidgets, Favori
   Widget build(BuildContext context) {
     return HomeScaffold(
         appBar: AppBar(
-          title: titleDot('Watchlist', true),
+          title: titleDot('Lista para assistir', true),
         ),
         body: Padding(
           padding: const EdgeInsets.all(25),

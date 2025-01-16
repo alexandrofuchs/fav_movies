@@ -112,12 +112,15 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Column(children:[
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                moviePosterWidget(widget.movie.posterPath),
-                Expanded(child: infoWidget(movieDetails)),
-              ],
+            Padding(
+              padding: const EdgeInsets.all(15),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  moviePosterWidget(widget.movie.posterPath),
+                  Expanded(child: infoWidget(movieDetails)),
+                ],
+              ),
             ),
             divider(),
             showRateWidget(showDescription: true),
@@ -127,38 +130,41 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
         ],
       ));
 
-  Widget actions() => Column(children: [
-        DefaultMainButton(
-            label: 'Avaliar',
-            leftIcon: Icons.star,
-            onPressed: () {
-              openReviewBottomSheet(context, widget.movie);
-            }),
-        BlocConsumer<ManageWatchlistBloc, ManageWatchlistBlocStatus>(
-          listener: (context, state) => switch(state){
-            ManageWatchlistBlocStatus.initial => null,
-            ManageWatchlistBlocStatus.loading => null,
-            ManageWatchlistBlocStatus.inWatchList => AppSnackbars.showSuccessSnackbar(context, 'Filme adicionado na lista para assistir.'),
-            ManageWatchlistBlocStatus.notInWatchlist => AppSnackbars.showSuccessSnackbar(context, 'Filme removido da lista para assistir.'),
-          },
-            bloc: watchListBloc,
-            builder: (context, state) => switch (state) {
-                  ManageWatchlistBlocStatus.initial => const SizedBox(),
-                  ManageWatchlistBlocStatus.loading => const SizedBox(),
-                  ManageWatchlistBlocStatus.inWatchList => DefaultMainButton(
-                      label: 'Remover da lista para assistir',
-                      leftIcon: Icons.tv_off,
-                      onPressed: () {
-                        watchListBloc.add(RemoveFromWatchlistEvent(widget.movie.id));
-                      }),
-                  ManageWatchlistBlocStatus.notInWatchlist => DefaultMainButton(
-                      label: 'Adicionar à lista para assistir',
-                      leftIcon: Icons.tv,
-                      onPressed: () {
-                        watchListBloc.add(AddToWatchlistEvent(widget.movie));
-                      }),
-                }),
-      ]);
+  Widget actions() => Padding(
+    padding: const EdgeInsets.only(left: 15, right: 15),
+    child: Column(children: [
+          DefaultMainButton(
+              label: 'Avaliar',
+              leftIcon: Icons.star,
+              onPressed: () {
+                openReviewBottomSheet(context, widget.movie);
+              }),
+          BlocConsumer<ManageWatchlistBloc, ManageWatchlistBlocStatus>(
+            listener: (context, state) => switch(state){
+              ManageWatchlistBlocStatus.initial => null,
+              ManageWatchlistBlocStatus.loading => null,
+              ManageWatchlistBlocStatus.inWatchList => AppSnackbars.showSuccessSnackbar(context, 'Filme adicionado na lista para assistir.'),
+              ManageWatchlistBlocStatus.notInWatchlist => AppSnackbars.showSuccessSnackbar(context, 'Filme removido da lista para assistir.'),
+            },
+              bloc: watchListBloc,
+              builder: (context, state) => switch (state) {
+                    ManageWatchlistBlocStatus.initial => const SizedBox(),
+                    ManageWatchlistBlocStatus.loading => const SizedBox(),
+                    ManageWatchlistBlocStatus.inWatchList => DefaultMainButton(
+                        label: 'Remover da lista para assistir',
+                        leftIcon: Icons.tv_off,
+                        onPressed: () {
+                          watchListBloc.add(RemoveFromWatchlistEvent(widget.movie.id));
+                        }),
+                    ManageWatchlistBlocStatus.notInWatchlist => DefaultMainButton(
+                        label: 'Adicionar à lista para assistir',
+                        leftIcon: Icons.tv,
+                        onPressed: () {
+                          watchListBloc.add(AddToWatchlistEvent(widget.movie));
+                        }),
+                  }),
+        ]),
+  );
 
   Widget videoTrailer(String videoId) =>
     Column(

@@ -42,17 +42,17 @@ class _FavoritePageState extends State<WatchListPage> with CommonWidgets, Favori
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
               children: [
-                const Text(
-                  'Nenhum filme na lista.',
+                Text(
+                  'Nenhum filme adicionado a lista para assistir.',
                   textAlign: TextAlign.center,
-                  style: AppTextStyles.bodyLarge,
+                  style: AppTextStyles.labelLarge.copyWith(),
                 ),
                 DefaultMainButton(
                     leftIcon: Icons.arrow_back,
                     onPressed: () {
                       Modular.to.navigate('/home/');
                     },
-                    label: 'Voltar')
+                    label: 'Voltar para o início')
               ]),
         )
       : ListView.builder(

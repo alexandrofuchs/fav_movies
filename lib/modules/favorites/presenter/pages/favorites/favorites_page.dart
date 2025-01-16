@@ -39,17 +39,17 @@ class _FavoritePageState extends State<FavoritesPage> with CommonWidgets, Favori
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
               children: [
-                const Text(
+                Text(
                   'Nenhum filme adicionado aos favoritos.',
                   textAlign: TextAlign.center,
-                  style: AppTextStyles.bodyLarge,
+                  style: AppTextStyles.labelLarge.copyWith(),
                 ),
                 DefaultMainButton(
                     leftIcon: Icons.arrow_back,
                     onPressed: () {
                       Modular.to.navigate('/home/');
                     },
-                    label: 'Voltar a lista de filmes')
+                    label: 'Voltar para o início')
               ]),
         )
       : ListView.builder(

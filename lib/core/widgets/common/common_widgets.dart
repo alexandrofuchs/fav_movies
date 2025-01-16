@@ -92,11 +92,14 @@ mixin CommonWidgets {
         ),
       );
 
-  Widget divider() => const Divider(
-        color: AppColors.primaryColorDark,
-        height: 2,
-        thickness: 0.3,
-        indent: 1,
-        endIndent: 3,
-      );
+  Widget divider() => const Padding(
+    padding: EdgeInsets.all(15),
+    child: Divider(
+          color: AppColors.primaryColorDark,
+          height: 2,
+          thickness: 0.3,
+          indent: 1,
+          endIndent: 3,
+        ),
+  );
 }

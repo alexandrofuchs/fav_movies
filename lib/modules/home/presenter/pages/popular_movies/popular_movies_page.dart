@@ -57,8 +57,7 @@ class _PopularMoviesPageState extends State<PopularMoviesPage>
               children: [
                 Text(
                   'Nenhum filme na lista.',
-                  textAlign: TextAlign.center,
-                  style: AppTextStyles.bodyLarge,
+                  style: AppTextStyles.labelLarge,
                 ),
               ])) :
     

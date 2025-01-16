@@ -76,28 +76,34 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
     ),
   );
 
-  Widget overviewWidget(MovieDetails movieDetails) => Container(
-      decoration: BoxDecoration(
-        color: AppColors.secundaryColor,
-        borderRadius: BorderRadius.circular(5),
-      ),
-      padding: const EdgeInsets.all(25),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          itemDot('Sinopse: ', bold: true),
-          Text(
-            widget.movie.overview,
-            textAlign: TextAlign.justify,
-            style: AppTextStyles.bodyMedium,
-            
+  Widget overviewWidget(MovieDetails movieDetails) => Column(
+    children: [
+      Container(
+          decoration: BoxDecoration(
+            color: AppColors.secundaryColor,
+            borderRadius: BorderRadius.circular(5),
           ),
-          movieDetails.trailer.isEmpty ?
-            const SizedBox() :
-           videoTrailer(movieDetails.trailer.first.key),
-        ],
-      ));
+          padding: const EdgeInsets.all(25),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              itemDot('Sinopse: ', bold: true),
+              Text(
+                widget.movie.overview,
+                textAlign: TextAlign.justify,
+                style: AppTextStyles.bodyMedium,
+                
+              ),
+              
+              movieDetails.trailer.isEmpty ?
+                const SizedBox() :
+               videoTrailer(movieDetails.trailer.first.key),
+            ],
+          )),
+        divider(),
+    ],
+  );
 
   
 

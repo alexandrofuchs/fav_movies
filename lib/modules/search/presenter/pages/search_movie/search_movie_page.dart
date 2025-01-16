@@ -35,7 +35,7 @@ class _SearchMoviePageState extends State<SearchMoviePage>
   }
 
   Widget loadedWidget(List<Movie> movieList) => Expanded(
-      child: movieList.isEmpty ? const Text('Nada encontrado.') : Padding(
+      child: movieList.isEmpty ? const Center(child: Text('Nenhum filme encontrado.', style: AppTextStyles.labelLarge,)) : Padding(
         padding: const EdgeInsets.all(25),
         child: ListView.builder(
             shrinkWrap: true,

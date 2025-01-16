@@ -41,6 +41,7 @@ class _PopularMoviesPageState extends State<PopularMoviesPage>
 
   Widget loadedWidget(List<Movie> movieList) => 
     Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         searchBar('Pesquisar filme...', (value){
           popularMoviesBloc.add(SearchByTextEvent(value));
@@ -50,16 +51,11 @@ class _PopularMoviesPageState extends State<PopularMoviesPage>
         ),
     movieList.isEmpty
       ? const Center(
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Text(
-                  'Nenhum filme na lista.',
+          child: Text(
+                  'Nenhum filme foi retornado na lista.',
                   style: AppTextStyles.labelLarge,
                 ),
-              ])) :
+              ) :
     
         Expanded(
           child: ListView.builder(
@@ -70,6 +66,7 @@ class _PopularMoviesPageState extends State<PopularMoviesPage>
                   cardWidget(index, movieList[index]),
             ),
         ),
+        const SizedBox()
       ],
     );
 

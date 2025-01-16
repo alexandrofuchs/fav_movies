@@ -52,7 +52,7 @@ class _YoutubePlayerState extends State<YoutubePlayerWidget>
         enableCaption: false,
         hideThumbnail: false,
         controlsVisibleAtStart: false,
-        useHybridComposition: true,
+        useHybridComposition: false,
         disableDragSeek: false,
         showLiveFullscreenButton: false,
         isLive: false,

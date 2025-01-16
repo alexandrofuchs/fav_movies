@@ -51,8 +51,12 @@ class _SearchMoviePageState extends State<SearchMoviePage>
             searchBar('Pesquisar...', (value) {
               bloc.add(SearchEvent(value));
             }),
-            Expanded(child: favoriteListener(child: BlocBuilder<SearchMovieBloc, SearchMovieBlocState>(
+            Expanded(child: favoriteListener(child: BlocConsumer<SearchMovieBloc, SearchMovieBlocState>(
                 bloc: bloc,
+                listenWhen: (previous, current) => current.status == SearchMovieBlocStatus.loaded,
+                listener: (context, state) {
+                  focusedCardIndex.value = 0;
+                },
                 builder: (context, state) => switch (state.status) {
                       SearchMovieBlocStatus.initial =>   Center(
                         child: Container(

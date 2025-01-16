@@ -187,24 +187,6 @@ mixin MovieWidgets on FavoriteAction, CommonWidgets {
         ).animate().shimmer(duration: const Duration(seconds: 2)),
       );
 
-  Widget _animatedLayoutWidgetsDisposition(
-      topChild, topChildKey, bottomChild, bottomChildKey) {
-    return Stack(
-      fit: StackFit.expand,
-      alignment: Alignment.center,
-      children: <Widget>[
-        Positioned(
-          key: bottomChildKey,
-          child: bottomChild,
-        ),
-        Positioned(
-          key: topChildKey,
-          child: topChild,
-        ),
-      ],
-    );
-  }
-
   Widget cardWidget(int index, Movie movie) => ValueListenableBuilder(
       valueListenable: focusedCardIndex,
       builder: (context, value, child) => AnimatedCrossFade(

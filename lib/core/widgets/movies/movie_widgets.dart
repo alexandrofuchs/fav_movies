@@ -226,7 +226,7 @@ mixin MovieWidgets on FavoriteAction, CommonWidgets {
               ],
               color: AppColors.secundaryColor,
             ),
-            child: Container(
+            child: Padding(
               padding: const EdgeInsets.all(5),
               child: otherCardContent(movie),
             ),

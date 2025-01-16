@@ -14,6 +14,8 @@ class PopularMoviesBloc extends Bloc<PopularMoviesBlocEvent, PopularMoviesBlocSt
     on<GetMoviesEvent>(
       (event, emit) async {
 
+        emit(const PopularMoviesBlocState(PopularMoviesBlocStatus.firstLoading));
+
         final response = await _usecase.getMovies(1);
 
         response.resolve(

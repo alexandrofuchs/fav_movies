@@ -95,7 +95,7 @@ mixin MovieReviewWidget on CommonWidgets {
             padding: const EdgeInsets.only(left: 15, top: 15),
             child: Text(
               'Sua avaliação',
-              style: AppTextStyles.titleSmall
+              style: AppTextStyles.titleMedium
                   .copyWith(fontWeight: FontWeight.w700),
             ),
           ),

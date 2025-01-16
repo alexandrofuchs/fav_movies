@@ -103,18 +103,20 @@ mixin MovieReviewWidget on CommonWidgets {
             
               mainAxisAlignment: MainAxisAlignment.center,
               children: [1, 2, 3, 4, 5]
-                  .map((e) => IconButton(
-                      enableFeedback: enable,
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        if (!enable) return;
-                        rate.value = e;
-                      },
-                      icon: Icon(
-                        e <= value ? Icons.star : Icons.star_border,
-                        size: 24,
-                        color: AppColors.successColor,
-                      )))
+                  .map((e) => Flexible(
+                    child: IconButton(
+                        enableFeedback: enable,
+                        padding: EdgeInsets.zero,
+                        onPressed: () {
+                          if (!enable) return;
+                          rate.value = e;
+                        },
+                        icon: Icon(
+                          e <= value ? Icons.star : Icons.star_border,
+                          size: 24,
+                          color: AppColors.successColor,
+                        )),
+                  ))
                   .toList()),
                   
         ],

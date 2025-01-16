@@ -52,10 +52,12 @@ mixin MovieWidgets on FavoriteAction, CommonWidgets {
               label,
               style: AppTextStyles.bodySmall.copyWith(),
               softWrap: true,
-              maxLines: 2,
+              maxLines: 1,
             ),
             Text(
               text,
+              softWrap: false,
+              overflow: TextOverflow.fade,
               style:
                   AppTextStyles.bodySmall.copyWith(fontWeight: FontWeight.w700),
             ),
@@ -69,7 +71,7 @@ mixin MovieWidgets on FavoriteAction, CommonWidgets {
             padding: const EdgeInsets.only(left: 15, right: 15, bottom: 15),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 contentTextItem('Avaliação', movie.voteAverage.toStringAsFixed(1)),
                 contentTextItem('Idioma', movie.originalLanguage.label),
@@ -110,7 +112,7 @@ mixin MovieWidgets on FavoriteAction, CommonWidgets {
                     ).animate().show();
                   },
                   path,
-                  fit: BoxFit.fitWidth,
+                  fit: BoxFit.fill,
                   width: width,
                 )
               : SizedBox(
@@ -195,8 +197,8 @@ mixin MovieWidgets on FavoriteAction, CommonWidgets {
 
   Widget focusedMovieItem(Movie movie) => firstCardContainer([
         Padding(
-          padding: const EdgeInsets.only(top: 15),
-          child: moviePosterWidget(movie.posterPath, width: 250),
+          padding: const EdgeInsets.only(top: 10),
+          child: moviePosterWidget(movie.posterPath, width: 260),
         ),
         firstCardHeader(movie.title, () => favoriteAction(movie)),
         firstCardContent(movie),

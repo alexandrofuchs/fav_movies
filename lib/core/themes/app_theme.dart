@@ -13,14 +13,13 @@ abstract class AppTheme with ThemedComponents {
           appBarTheme: ThemedComponents._appBarTheme(),
           iconTheme: ThemedComponents._iconThemeData(),
           navigationBarTheme: NavigationBarTheme.of(context).copyWith(
-            height: 75,
             backgroundColor: AppColors.primaryColorDark,
             elevation: 1,
             overlayColor:
                 const WidgetStatePropertyAll(AppColors.secundaryColor),
             indicatorColor: AppColors.primaryColor,
             labelTextStyle:  const WidgetStatePropertyAll(
-                AppTextStyles.labelMedium),
+                AppTextStyles.labelSmall),
             indicatorShape: const Border(
                 top: BorderSide(color: AppColors.secundaryColor, width: 2))),
           textTheme:  const TextTheme(

@@ -114,27 +114,30 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
   
 
   Widget loadedWidget(MovieDetails movieDetails) => SingleChildScrollView(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(children:[
-            Padding(
-              padding: const EdgeInsets.all(15),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  moviePosterWidget(widget.movie.posterPath, width: 150),
-                  Expanded(child: infoWidget(movieDetails)),
-                ],
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 15),
+            child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+            Column(children:[
+              Padding(
+                padding: const EdgeInsets.all(15),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    moviePosterWidget(widget.movie.posterPath, width: 150),
+                    Expanded(child: infoWidget(movieDetails)),
+                  ],
+                ),
               ),
-            ),
-            divider(),
-            showRateWidget(showDescription: true),
-            overviewWidget(movieDetails),
-          ]),
-          actions(),
-        ],
-      ));
+              divider(),
+              showRateWidget(showDescription: true),
+              overviewWidget(movieDetails),
+            ]),
+            actions(),
+                    ],
+                  ),
+          ));
 
   Widget actions() => Padding(
     padding: const EdgeInsets.only(left: 15, right: 15),

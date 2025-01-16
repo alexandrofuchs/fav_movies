@@ -148,9 +148,9 @@ mixin MovieWidgets on FavoriteAction, CommonWidgets {
                       'Nota: ',
                       movie.voteAverage.toStringAsFixed(1),
                     ),
-                    infoRow('Data:', movie.releaseDate),
-                    infoRow('Idioma:', movie.originalLanguage.label),
-                    infoRow('Adulto:', movie.adult ? 'Sim' : 'Não'),
+                    infoRow('Data: ', movie.releaseDate),
+                    infoRow('Idioma: ', movie.originalLanguage.label),
+                    infoRow('Adulto: ', movie.adult ? 'Sim' : 'Não'),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [

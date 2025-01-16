@@ -67,7 +67,7 @@ class DefaultTextField extends StatefulWidget {
     this.maxLines = 1,
     this.borderWidth = 1,
     this.hasError = false,
-    this.fillColor = AppColors.backgroundColor,
+    this.fillColor = AppColors.secundaryColor,
     this.errorColor = Colors.red,
     this.borderAndIconColor = AppColors.primaryColorLight,
     this.mainColor = Colors.black,

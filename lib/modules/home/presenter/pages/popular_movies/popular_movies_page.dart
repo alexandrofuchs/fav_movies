@@ -46,7 +46,7 @@ class _PopularMoviesPageState extends State<PopularMoviesPage>
           popularMoviesBloc.add(SearchByTextEvent(value));
         },
         margin: EdgeInsets.zero,
-        padding: const EdgeInsets.only(left: 15, right: 15),
+        padding: const EdgeInsets.only(left: 15, right: 5),
         ),
     movieList.isEmpty
       ? const Center(

@@ -11,7 +11,7 @@ class FavoritesModule extends Module {
 
   @override
   void routes(RouteManager r) {
-    r.child('/', child: (context) => const FavoritesPage(), transition: TransitionType.leftToRightWithFade);
+    r.child('/', child: (context) => const FavoritesPage(), transition: TransitionType.fadeIn);
     super.routes(r);
   }
 }

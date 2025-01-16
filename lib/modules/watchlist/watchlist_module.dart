@@ -23,7 +23,7 @@ class WatchListModule extends Module {
 
   @override
   void routes(RouteManager r) {
-    r.child('/', child: (context) => const WatchListPage(), transition: TransitionType.leftToRightWithFade);
+    r.child('/', child: (context) => const WatchListPage(), transition: TransitionType.fadeIn);
     super.routes(r);
   }
 }

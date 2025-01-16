@@ -36,27 +36,18 @@ mixin CommonWidgets {
   Widget titleDot(String text, [bool lightDot = false]) => Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
-            margin: const EdgeInsets.all(25),
-            decoration: BoxDecoration(
-              color: lightDot ? AppColors.secundaryColor : AppColors.primaryColor,
-              borderRadius: BorderRadius.circular(5),
-            ),
-            width: 24,
-            height: 24,
-          ),
           Flexible(
               child: Text(
             text,
-            style: const TextStyle(fontSize: 32, fontWeight: FontWeight.w700),
+            style: AppTextStyles.labelLarge,
             softWrap: true,
           )),
         ],
       );
 
   Widget itemDot(String text, {bool bold = false}) => Padding(
-    padding: const EdgeInsets.only(top: 15, bottom: 15),
-    child: Row(
+        padding: const EdgeInsets.only(top: 15, bottom: 15),
+        child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
@@ -67,30 +58,45 @@ mixin CommonWidgets {
               width: 10,
               height: 10,
             ),
-            const SizedBox(width: 15,),
+            const SizedBox(
+              width: 15,
+            ),
             Flexible(
                 child: Text(
               text,
-              style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.w700),
+              style: AppTextStyles.bodyMedium
+                  .copyWith(fontWeight: FontWeight.w700),
               softWrap: true,
             )),
           ],
         ),
-  );
+      );
 
+  Widget infoRow(String label, String text,
+          {EdgeInsets padding = const EdgeInsets.only()}) =>
+      Padding(
+        padding: padding,
+        child: RichText(
+          softWrap: true,
+          maxLines: 2,
+          text: TextSpan(
+            style: AppTextStyles.bodySmall,
+            children: <TextSpan>[
+              TextSpan(
+                  text: label,
+                  style: AppTextStyles.bodySmall
+                      .copyWith(fontWeight: FontWeight.w700)),
+              TextSpan(text: text),
+            ],
+          ),
+        ),
+      );
 
-  Widget infoRow(String label, String text) =>
-    RichText(
-      softWrap: true,
-      maxLines: 2,
-            text: TextSpan(
-              style: AppTextStyles.bodySmall,
-              children: <TextSpan>[
-                TextSpan(
-                    text: label,
-                    style: const TextStyle(fontWeight: FontWeight.bold)),
-                TextSpan(text: text),
-              ],
-            ),
-          );
+  Widget divider() => const Divider(
+        color: AppColors.primaryColorDark,
+        height: 2,
+        thickness: 0.3,
+        indent: 1,
+        endIndent: 3,
+      );
 }

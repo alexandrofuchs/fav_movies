@@ -49,6 +49,9 @@ class SearchMovieBloc extends Bloc<SearchEvent, SearchMovieBlocState> {
   SearchMovieBloc(this._usecase)
       : super(const SearchMovieBlocState(SearchMovieBlocStatus.initial)) {
     on<SearchEvent>((event, emit) async {
+
+      emit(const SearchMovieBlocState(SearchMovieBlocStatus.loading));
+
       final response = await _usecase.searchMovieByText(event.text);
 
       response.resolve(

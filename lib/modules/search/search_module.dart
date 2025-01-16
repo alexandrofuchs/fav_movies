@@ -23,7 +23,7 @@ class SearchModule extends Module {
 
   @override
   void routes(RouteManager r) {
-    r.child('/', child: (context) => const SearchMoviePage(), transition: TransitionType.leftToRightWithFade);
+    r.child('/', child: (context) => const SearchMoviePage(), transition: TransitionType.fadeIn);
     super.routes(r);
   }
 }

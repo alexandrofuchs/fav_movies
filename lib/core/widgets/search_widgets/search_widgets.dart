@@ -46,9 +46,11 @@ mixin SearchWidgets {
             ),
             IconButton(
               icon: const Icon(Icons.cancel, size: 24),
+              padding: EdgeInsets.zero,
               onPressed: () {
                 searchBarController.text = '';
-
+                Modular.get<AppDebouncer>().handleTextFieldChange(
+                    const Duration(milliseconds: 500), searchBarController.text, debounceAction);
               },
             )
           ]));

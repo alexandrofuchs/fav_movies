@@ -79,7 +79,8 @@ mixin MovieReviewWidget on CommonWidgets {
                                     child: infoRow('Opinião: ',
                                         state.movieReview!.description),
                                   )
-                                : const SizedBox()
+                                : const SizedBox(),
+                                divider(),
                           ],
                         ),
                       ),
@@ -91,7 +92,7 @@ mixin MovieReviewWidget on CommonWidgets {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 25, top: 15),
+            padding: const EdgeInsets.only(left: 15, top: 15),
             child: Text(
               'Sua avaliação',
               style: AppTextStyles.titleSmall
@@ -99,21 +100,23 @@ mixin MovieReviewWidget on CommonWidgets {
             ),
           ),
           Row(
+            
               mainAxisAlignment: MainAxisAlignment.center,
               children: [1, 2, 3, 4, 5]
-                  .map((e) => Flexible(
-                        child: IconButton(
-                            enableFeedback: enable,
-                            onPressed: () {
-                              if (!enable) return;
-                              rate.value = e;
-                            },
-                            icon: Icon(
-                              e <= value ? Icons.star : Icons.star_border,
-                              size: 32,
-                            )),
-                      ))
+                  .map((e) => IconButton(
+                      enableFeedback: enable,
+                      padding: EdgeInsets.zero,
+                      onPressed: () {
+                        if (!enable) return;
+                        rate.value = e;
+                      },
+                      icon: Icon(
+                        e <= value ? Icons.star : Icons.star_border,
+                        size: 24,
+                        color: AppColors.successColor,
+                      )))
                   .toList()),
+                  
         ],
       );
 
@@ -186,7 +189,7 @@ mixin MovieReviewWidget on CommonWidgets {
           child: Container(
             alignment: Alignment.center,
             decoration: const BoxDecoration(
-              color: AppColors.backgroundColor,
+              color: AppColors.secundaryColor,
             ),
             child: Column(
               children: [

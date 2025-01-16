@@ -9,12 +9,13 @@ abstract class AppTheme with ThemedComponents {
       ThemeData.light(useMaterial3: false).copyWith(
           primaryColor: AppColors.primaryColor,
           primaryColorLight: AppColors.primaryColorLight,
-          scaffoldBackgroundColor: AppColors.backgroundColor,
+          scaffoldBackgroundColor: AppColors.primaryColor,
           appBarTheme: ThemedComponents._appBarTheme(),
           iconTheme: ThemedComponents._iconThemeData(),
           navigationBarTheme: NavigationBarTheme.of(context).copyWith(
             height: 75,
-            backgroundColor: AppColors.primaryColor,
+            backgroundColor: AppColors.primaryColorDark,
+            elevation: 1,
             overlayColor:
                 const WidgetStatePropertyAll(AppColors.secundaryColor),
             indicatorColor: AppColors.primaryColor,

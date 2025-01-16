@@ -1,4 +1,5 @@
 import 'package:fav_movies/core/common/models/movie.dart';
+import 'package:fav_movies/core/themes/app_fonts.dart';
 import 'package:fav_movies/core/widgets/common/common_widgets.dart';
 import 'package:fav_movies/core/widgets/loading/app_loading_dots_widget.dart';
 import 'package:fav_movies/core/widgets/scaffolds/home_scaffold.dart';
@@ -34,7 +35,7 @@ class _SearchMoviePageState extends State<SearchMoviePage>
   }
 
   Widget loadedWidget(List<Movie> movieList) => Expanded(
-      child: Padding(
+      child: movieList.isEmpty ? const Text('Nada encontrado.') : Padding(
         padding: const EdgeInsets.all(25),
         child: ListView.builder(
             shrinkWrap: true,
@@ -54,17 +55,22 @@ class _SearchMoviePageState extends State<SearchMoviePage>
             searchBar('Pesquisar...', (value) {
               bloc.add(SearchEvent(value));
             }),
-            favoriteListener(child: BlocBuilder<SearchMovieBloc, SearchMovieBlocState>(
+            Expanded(child: favoriteListener(child: BlocBuilder<SearchMovieBloc, SearchMovieBlocState>(
                 bloc: bloc,
                 builder: (context, state) => switch (state.status) {
-                      SearchMovieBlocStatus.initial => const SizedBox(),
+                      SearchMovieBlocStatus.initial =>   Center(
+                        child: Container(
+                          alignment: Alignment.center,
+                          child: 
+                        const Text('Digite um filme no campo de pesquisa.', style: AppTextStyles.labelLarge, textAlign: TextAlign.center,)),
+                      ) ,
                       SearchMovieBlocStatus.loading => const AppLoadingDots(),
                       SearchMovieBlocStatus.failed => errorMessageWidget(
                           'Não foi possível efetuar a pesquisa!'),
                       SearchMovieBlocStatus.loaded =>
                         loadedWidget(state.filteredList),
                     })),
-          ],
+        )],
         ));
   }
 }

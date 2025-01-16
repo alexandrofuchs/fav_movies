@@ -26,7 +26,7 @@ class MovieDetailsPage extends StatefulWidget {
 }
 
 class _MovieDetailsPageState extends State<MovieDetailsPage>
-    with FavoriteAction, MovieWidgets, CommonWidgets, MovieReviewWidget {
+    with FavoriteAction, CommonWidgets, MovieWidgets,  MovieReviewWidget {
   final bloc = MovieDetailsBloc(Modular.get());
   final watchListBloc = ManageWatchlistBloc(Modular.get());
 
@@ -52,7 +52,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
         padding: const EdgeInsets.only(top: 15),
         child: Text(
           widget.movie.title,
-          style: AppTextStyles.titleSmall,
+          style: AppTextStyles.titleLarge.copyWith(fontWeight: FontWeight.bold),
           softWrap: true,
           maxLines: 2,
         ),
@@ -60,17 +60,20 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
 
   
 
-  Widget infoWidget(MovieDetails movieDetails) => Column(
-    mainAxisAlignment: MainAxisAlignment.start,
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      titleWidget(),
-      infoRow('Título original: ', widget.movie.originalTitle),
-      infoRow('Gêneros: ', '${movieDetails.genre.join(', ')}.'),
-      infoRow('Linguagem original: ', widget.movie.originalLanguage.label),
-      infoRow('Avaliação média: ', widget.movie.voteAverage.toString()),
-      infoRow('Data Lançamento: ', widget.movie.releaseDate),
-    ],
+  Widget infoWidget(MovieDetails movieDetails) => Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        titleWidget(),
+        infoRow('Título original: ', widget.movie.originalTitle),
+        infoRow('Gêneros: ', '${movieDetails.genre.join(', ')}.'),
+        infoRow('Linguagem original: ', widget.movie.originalLanguage.label),
+        infoRow('Avaliação média: ', widget.movie.voteAverage.toString()),
+        infoRow('Data Lançamento: ', widget.movie.releaseDate),
+      ],
+    ),
   );
 
   Widget overviewWidget(MovieDetails movieDetails) => Container(
@@ -86,17 +89,23 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
           itemDot('Sinopse: ', bold: true),
           Text(
             widget.movie.overview,
-            style: AppTextStyles.bodySmall,
+            textAlign: TextAlign.justify,
+            style: AppTextStyles.bodyMedium,
+            
           ),
-          videoTrailer(movieDetails.trailer.first.key),
+          movieDetails.trailer.isEmpty ?
+            const SizedBox() :
+           videoTrailer(movieDetails.trailer.first.key),
         ],
       ));
+
+  
 
   Widget loadedWidget(MovieDetails movieDetails) => SingleChildScrollView(
           child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          cardContainer([
+          Column(children:[
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -104,9 +113,9 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
                 Expanded(child: infoWidget(movieDetails)),
               ],
             ),
+            divider(),
             showRateWidget(showDescription: true),
             overviewWidget(movieDetails),
-            
           ]),
           actions(),
         ],
@@ -168,7 +177,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
           foregroundColor: AppColors.secundaryColor,
         ),
         body: Padding(
-          padding: const EdgeInsets.all(25),
+          padding: const EdgeInsets.all(15),
           child: BlocBuilder<MovieDetailsBloc, MovieDetailsBlocState>(
               bloc: bloc,
               builder: (context, state) => switch (state.status) {

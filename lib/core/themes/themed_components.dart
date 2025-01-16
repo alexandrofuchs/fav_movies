@@ -2,8 +2,9 @@ part of 'app_theme.dart';
 
 mixin ThemedComponents {
   static _appBarTheme() => AppBarTheme(
-      color: AppColors.primaryColor,
+      color: AppColors.primaryColorDark,
       toolbarHeight: 80,
+      elevation: 0,
       iconTheme: const IconThemeData(
         size: 24,
         color: AppColors.secundaryColor

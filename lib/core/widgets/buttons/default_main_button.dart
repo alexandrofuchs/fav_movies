@@ -31,7 +31,7 @@ class DefaultMainButton extends StatelessWidget {
       this.padding = const EdgeInsets.all(8),
       this.invertColors = false,
       this.primaryColor = AppColors.primaryColor,
-      this.secundaryColor = AppColors.backgroundColor,
+      this.secundaryColor = AppColors.secundaryColor,
       this.disable = false,
       this.width,
       this.shape = const RoundedRectangleBorder(

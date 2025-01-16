@@ -35,7 +35,7 @@ class DefaultMainButton extends StatelessWidget {
       this.disable = false,
       this.width,
       this.shape = const RoundedRectangleBorder(
-        side: BorderSide(width: 1.5, color: AppColors.primaryColorLight),
+        side: BorderSide(width: 1.5, color: AppColors.primaryColorDark),
         borderRadius: BorderRadius.all(Radius.circular(5)),
       ),
       this.leftIcon,
@@ -51,17 +51,18 @@ class DefaultMainButton extends StatelessWidget {
           : primaryColor;
   Color get getSecundaryColor => invertColors ? primaryColor : secundaryColor;
 
-  Widget labelWidget() => Text(
-        label.toUpperCase(),
-        overflow: TextOverflow.visible,
-        softWrap: true,
-        style: AppTextStyles.bodyMedium.copyWith(
-            color: getSecundaryColor,
-            fontSize: compact ? 12 : 13,
-            fontWeight: FontWeight.bold),
-        textAlign: TextAlign.center,
-        maxLines: compact ? 1 : null,
-      );
+  Widget labelWidget() =>
+      Text(
+            label.toUpperCase(),
+            overflow: TextOverflow.visible,
+            softWrap: true,
+            style: AppTextStyles.bodyMedium.copyWith(
+                color: getSecundaryColor,
+                fontSize: compact ? 12 : 13,
+                fontWeight: FontWeight.bold),
+            textAlign: TextAlign.center,
+            maxLines: compact ? 1 : null,
+  );
 
   Widget leftIconWidget() => Padding(
         padding: const EdgeInsets.only(left: 5, right: 2),
@@ -80,14 +81,17 @@ class DefaultMainButton extends StatelessWidget {
         size: 24,
       ));
 
-  Widget withLeftIcon() => Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Flexible(child: leftIconWidget(),),
-          const SizedBox(width: 10),
-          Flexible(child: labelWidget(),),
-        ],
-      );
+  Widget withLeftIcon() => Padding(
+    padding: const EdgeInsets.only(left: 15, right: 15),
+    child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Flexible(child: leftIconWidget(),),
+            const SizedBox(width: 10),
+            Flexible(flex: 3, child: labelWidget(),),
+          ],
+        ),
+  );
 
   Widget withRightIcon() => Row(
         mainAxisAlignment: MainAxisAlignment.center,

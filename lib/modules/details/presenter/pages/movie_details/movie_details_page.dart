@@ -130,6 +130,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
   Widget actions() => Column(children: [
         DefaultMainButton(
             label: 'Avaliar',
+            leftIcon: Icons.star,
             onPressed: () {
               openReviewBottomSheet(context, widget.movie);
             }),
@@ -146,11 +147,13 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
                   ManageWatchlistBlocStatus.loading => const SizedBox(),
                   ManageWatchlistBlocStatus.inWatchList => DefaultMainButton(
                       label: 'Remover da lista para assistir',
+                      leftIcon: Icons.tv_off,
                       onPressed: () {
                         watchListBloc.add(RemoveFromWatchlistEvent(widget.movie.id));
                       }),
                   ManageWatchlistBlocStatus.notInWatchlist => DefaultMainButton(
                       label: 'Adicionar à lista para assistir',
+                      leftIcon: Icons.tv,
                       onPressed: () {
                         watchListBloc.add(AddToWatchlistEvent(widget.movie));
                       }),

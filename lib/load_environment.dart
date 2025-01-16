@@ -12,6 +12,9 @@ Future<void> loadAppEnvironment() async {
     accessToken = credentials['access_token'];
     apiKey = credentials['api_key'];
   }catch(e){
+    baseUrl = '';
+    accessToken = '';
+    apiKey = '';
     debugPrint(e.toString());
   }
 }

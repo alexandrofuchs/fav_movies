@@ -28,6 +28,7 @@ mixin CommonWidgets {
             Text(
               label,
               textAlign: TextAlign.center,
+              style: AppTextStyles.labelMedium,
             )
           ],
         ),

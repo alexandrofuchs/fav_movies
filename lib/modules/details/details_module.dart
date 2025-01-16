@@ -36,7 +36,7 @@ class DetailsModule extends Module {
 
   @override
   void routes(RouteManager r) {
-    r.child('/', child: (context) => MovieDetailsPage(movie: r.args.data));
+    r.child('/', child: (context) => MovieDetailsPage(movie: r.args.data), transition: TransitionType.downToUp);
     super.routes(r);
   }
 }

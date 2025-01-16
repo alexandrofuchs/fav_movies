@@ -71,8 +71,7 @@ mixin MovieWidgets on FavoriteAction, CommonWidgets {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                contentTextItem(
-                    'Avaliação', movie.voteAverage.toStringAsFixed(1)),
+                contentTextItem('Avaliação', movie.voteAverage.toStringAsFixed(1)),
                 contentTextItem('Idioma', movie.originalLanguage.label),
                 contentTextItem('Data', movie.releaseDate),
                 contentTextItem('Adulto', movie.adult ? 'Sim' : 'Não'),
@@ -187,6 +186,24 @@ mixin MovieWidgets on FavoriteAction, CommonWidgets {
           ),
         ).animate().shimmer(duration: const Duration(seconds: 2)),
       );
+
+  Widget _animatedLayoutWidgetsDisposition(
+      topChild, topChildKey, bottomChild, bottomChildKey) {
+    return Stack(
+      fit: StackFit.expand,
+      alignment: Alignment.center,
+      children: <Widget>[
+        Positioned(
+          key: bottomChildKey,
+          child: bottomChild,
+        ),
+        Positioned(
+          key: topChildKey,
+          child: topChild,
+        ),
+      ],
+    );
+  }
 
   Widget cardWidget(int index, Movie movie) => ValueListenableBuilder(
       valueListenable: focusedCardIndex,

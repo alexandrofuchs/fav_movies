@@ -34,15 +34,11 @@ class _SearchMoviePageState extends State<SearchMoviePage>
     super.dispose();
   }
 
-  Widget loadedWidget(List<Movie> movieList) => Expanded(
-      child: movieList.isEmpty ? const Center(child: Text('Nenhum filme encontrado.', style: AppTextStyles.labelLarge,)) : Padding(
-        padding: const EdgeInsets.all(25),
-        child: ListView.builder(
-            shrinkWrap: true,
-            itemCount: movieList.length,
-            itemBuilder: (context, index) =>
-                cardWidget(index, movieList[index])),
-      ));
+  Widget loadedWidget(List<Movie> movieList) => movieList.isEmpty ? const Center(child: Text('Nenhum filme encontrado.', style: AppTextStyles.labelLarge,)) : ListView.builder(
+      shrinkWrap: true,
+      itemCount: movieList.length,
+      itemBuilder: (context, index) =>
+          cardWidget(index, movieList[index]));
 
   @override
   Widget build(BuildContext context) {

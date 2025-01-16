@@ -37,6 +37,15 @@ mixin CommonWidgets {
   Widget titleDot(String text, [bool lightDot = false]) => Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          Container(
+            width: 15,
+            height: 15,
+            margin: const EdgeInsets.all(15),
+            decoration: BoxDecoration(
+              color: AppColors.secundaryColor,
+              borderRadius: BorderRadius.circular(3),
+            ),
+          ),
           Flexible(
               child: Text(
             text,

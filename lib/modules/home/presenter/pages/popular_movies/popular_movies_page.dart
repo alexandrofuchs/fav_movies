@@ -47,24 +47,29 @@ class _PopularMoviesPageState extends State<PopularMoviesPage>
           popularMoviesBloc.add(SearchByTextEvent(value));
         },
         margin: EdgeInsets.zero,
-        padding: const EdgeInsets.only(left: 15, right: 5),
         ),
     movieList.isEmpty
-      ? const Center(
-          child: Text(
-                  'Nenhum filme foi retornado na lista.',
-                  style: AppTextStyles.labelLarge,
+      ? const Padding(
+        padding: EdgeInsets.all(25),
+        child: Center(
+            child: Text(
+                    'Nenhum filme foi retornado na lista.',
+                    style: AppTextStyles.labelLarge,
+                  ),
                 ),
-              ) :
+      ) :
     
         Expanded(
-          child: ListView.builder(
-              shrinkWrap: true,
-              physics: const ClampingScrollPhysics(),
-              itemCount: movieList.length,
-              itemBuilder: (context, index) =>
-                  cardWidget(index, movieList[index]),
-            ),
+          child: Padding(
+            padding: const EdgeInsets.all(25),
+            child: ListView.builder(
+                shrinkWrap: true,
+                physics: const ClampingScrollPhysics(),
+                itemCount: movieList.length,
+                itemBuilder: (context, index) =>
+                    cardWidget(index, movieList[index]),
+              ),
+          ),
         ),
         const SizedBox()
       ],
@@ -76,20 +81,18 @@ class _PopularMoviesPageState extends State<PopularMoviesPage>
       appBar: AppBar(
         title: titleDot('Filmes populares', true),
       ),
-      body: Padding(
-          padding: const EdgeInsets.all(25),
-          child: favoriteListener(
-            child: BlocBuilder<PopularMoviesBloc, PopularMoviesBlocState>(
-                bloc: popularMoviesBloc,
-                builder: (context, state) => switch (state.status) {
-                      PopularMoviesBlocStatus.firstLoading => const AppLoadingDots(),
-                      PopularMoviesBlocStatus.loadingMore => const AppLoadingDots(),
-                      PopularMoviesBlocStatus.failed => errorMessageWidget(
-                          'Não foi possível carregar a lista de filmes.'),
-                      PopularMoviesBlocStatus.loaded =>
-                        loadedWidget(state.filteredList)
-                    }),
-          )),
+      body: favoriteListener(
+        child: BlocBuilder<PopularMoviesBloc, PopularMoviesBlocState>(
+            bloc: popularMoviesBloc,
+            builder: (context, state) => switch (state.status) {
+                  PopularMoviesBlocStatus.firstLoading => const AppLoadingDots(),
+                  PopularMoviesBlocStatus.loadingMore => const AppLoadingDots(),
+                  PopularMoviesBlocStatus.failed => errorMessageWidget(
+                      'Não foi possível carregar a lista de filmes.'),
+                  PopularMoviesBlocStatus.loaded =>
+                    loadedWidget(state.filteredList)
+                }),
+      ),
     );
   }
 }

@@ -90,12 +90,12 @@ mixin CommonWidgets {
           softWrap: true,
           maxLines: 2,
           text: TextSpan(
-            style: AppTextStyles.bodySmall,
+            style: AppTextStyles.bodyMedium,
             children: <TextSpan>[
               TextSpan(
                   text: label,
-                  style: AppTextStyles.bodySmall
-                      .copyWith(fontWeight: FontWeight.w700)),
+                  style: TextStyle(fontWeight: FontWeight.w700)
+                  ),
               TextSpan(text: text),
             ],
           ),
@@ -103,7 +103,7 @@ mixin CommonWidgets {
       );
 
   Widget divider() => const Padding(
-    padding: EdgeInsets.all(15),
+    padding: EdgeInsets.only(top: 15),
     child: Divider(
           color: AppColors.primaryColorDark,
           height: 2,

@@ -30,7 +30,7 @@ class DefaultMainButton extends StatelessWidget {
       this.margin = const EdgeInsets.all(8),
       this.padding = const EdgeInsets.all(8),
       this.invertColors = false,
-      this.primaryColor = AppColors.primaryColor,
+      this.primaryColor = AppColors.primaryColorDark,
       this.secundaryColor = AppColors.secundaryColor,
       this.disable = false,
       this.width,

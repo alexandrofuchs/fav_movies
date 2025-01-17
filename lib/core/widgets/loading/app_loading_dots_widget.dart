@@ -9,7 +9,7 @@ class AppLoadingDots extends StatefulWidget {
   const AppLoadingDots(
       {super.key,
       this.dotSize = const Size(14, 14),
-      this.color = AppColors.primaryColor});
+      this.color = AppColors.primaryColorLight});
 
   @override
   State<StatefulWidget> createState() => _AppLoadingDotsState();

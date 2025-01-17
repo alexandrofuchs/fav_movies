@@ -26,7 +26,7 @@ class MovieDetailsPage extends StatefulWidget {
 }
 
 class _MovieDetailsPageState extends State<MovieDetailsPage>
-    with FavoriteAction, CommonWidgets, MovieWidgets,  MovieReviewWidget {
+    with FavoriteAction, CommonWidgets, MovieWidgets, MovieReviewWidget {
   final bloc = MovieDetailsBloc(Modular.get());
   final watchListBloc = ManageWatchlistBloc(Modular.get());
 
@@ -47,170 +47,181 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
     super.dispose();
   }
 
-  Widget titleWidget() =>
-    Padding(
+  Widget titleWidget() => Padding(
         padding: const EdgeInsets.only(top: 15),
         child: Text(
           widget.movie.title,
-          style: AppTextStyles.titleLarge.copyWith(fontWeight: FontWeight.bold),
+          style: AppTextStyles.labelLarge.copyWith(fontWeight: FontWeight.bold),
           softWrap: true,
           maxLines: 2,
         ),
       );
 
-  
+  Widget infoWidget(MovieDetails movieDetails) => Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          infoRow('Título original: ', widget.movie.originalTitle),
+          infoRow('Gêneros: ', '${movieDetails.genre.join(', ')}.'),
+          infoRow('Linguagem original: ', widget.movie.originalLanguage.label),
+          infoRow('Avaliação média: ', widget.movie.voteAverage.toString()),
+          infoRow('Data Lançamento: ', widget.movie.releaseDate),
+        ],
+      );
 
-  Widget infoWidget(MovieDetails movieDetails) => Padding(
-    padding: const EdgeInsets.only(left: 8),
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        titleWidget(),
-        infoRow('Título original: ', widget.movie.originalTitle),
-        infoRow('Gêneros: ', '${movieDetails.genre.join(', ')}.'),
-        infoRow('Linguagem original: ', widget.movie.originalLanguage.label),
-        infoRow('Avaliação média: ', widget.movie.voteAverage.toString()),
-        infoRow('Data Lançamento: ', widget.movie.releaseDate),
-      ],
-    ),
-  );
-
-  Widget overviewWidget(MovieDetails movieDetails) => Padding(
-    padding: const EdgeInsets.all(20),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text('Visão geral', style: AppTextStyles.titleMedium.copyWith(fontWeight: FontWeight.w700),),
-        Container(
-            decoration: BoxDecoration(
-              color: AppColors.secundaryColor,
-              borderRadius: BorderRadius.circular(5),
-            ),
-            padding: const EdgeInsets.all(10),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                
-                itemDot('Sinopse: ', bold: true),
-                Text(
-                  widget.movie.overview,
-                  textAlign: TextAlign.justify,
-                  style: AppTextStyles.bodyMedium,
-                  
-                ),
-                
-                movieDetails.trailer.isEmpty ?
-                  const SizedBox() :
-                 videoTrailer(movieDetails.trailer.first.key),
-              ],
-            )),
-          divider(),
-      ],
-    ),
-  );
-
-  
+  Widget overviewWidget(MovieDetails movieDetails) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            margin: const EdgeInsets.only(top: 25),
+              decoration: const BoxDecoration(
+                color: AppColors.secundaryColor,
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(25), topRight: Radius.circular(25)),
+              ),
+              padding: const EdgeInsets.all(25),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  infoWidget(movieDetails),
+                  divider(),
+                  showRateWidget(showDescription: true),
+                  itemDot('Sinopse: ', bold: true),
+                  Text(
+                    widget.movie.overview,
+                    textAlign: TextAlign.justify,
+                    style: AppTextStyles.bodyMedium,
+                  ),
+                  divider(),
+                  movieDetails.trailer.isEmpty
+                      ? const SizedBox()
+                      : videoTrailer(movieDetails.trailer.first.key),
+                ],
+              )),
+        ],
+      );
 
   Widget loadedWidget(MovieDetails movieDetails) => SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.only(bottom: 15),
-            child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-            Column(children:[
-              Padding(
-                padding: const EdgeInsets.all(15),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    moviePosterWidget(widget.movie.posterPath, width: 150),
-                    Expanded(child: infoWidget(movieDetails)),
-                  ],
-                ),
+        child: Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.only(bottom: 15),
+              alignment: Alignment.center,
+              color: AppColors.primaryColorDark,
+              child: Column(
+                children: [
+                  ClipRRect(
+                      borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(25),
+                          topRight: Radius.circular(25)),
+                      child: Image.network(
+                        widget.movie.posterPath!,
+                        width: MediaQuery.of(context).size.width,
+                        fit: BoxFit.fitWidth,
+                      )),
+                  Container(
+                      color: AppColors.primaryColorDark, child: titleWidget()),
+                ],
               ),
-              divider(),
-              showRateWidget(showDescription: true),
-              overviewWidget(movieDetails),
-            ]),
+            ),
             actions(),
-                    ],
-                  ),
-          ));
+            overviewWidget(movieDetails),
+            
+          ],
+        ),
+      );
 
-  Widget actions() => Padding(
-    padding: const EdgeInsets.only(left: 15, right: 15),
-    child: Column(children: [
+  Widget actions() => Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(25),
+        ),
+        padding: const EdgeInsets.only(left: 30, top: 25),
+        child: Column(children: [
           DefaultMainButton(
               label: 'Avaliar',
+              compact: true,
               leftIcon: Icons.star,
+              invertColors: true,
+              primaryColor: AppColors.primaryColor,
+              maxWidth: 400,
               onPressed: () {
                 openReviewBottomSheet(context, widget.movie);
               }),
           BlocConsumer<ManageWatchlistBloc, ManageWatchlistBlocStatus>(
-            listener: (context, state) => switch(state){
-              ManageWatchlistBlocStatus.initial => null,
-              ManageWatchlistBlocStatus.loading => null,
-              ManageWatchlistBlocStatus.inWatchList => AppSnackbars.showSuccessSnackbar(context, 'Filme adicionado na lista para assistir.'),
-              ManageWatchlistBlocStatus.notInWatchlist => AppSnackbars.showSuccessSnackbar(context, 'Filme removido da lista para assistir.'),
-            },
+              listener: (context, state) => switch (state) {
+                    ManageWatchlistBlocStatus.initial => null,
+                    ManageWatchlistBlocStatus.loading => null,
+                    ManageWatchlistBlocStatus.inWatchList =>
+                      AppSnackbars.showSuccessSnackbar(
+                          context, 'Filme adicionado na lista para assistir.'),
+                    ManageWatchlistBlocStatus.notInWatchlist =>
+                      AppSnackbars.showSuccessSnackbar(
+                          context, 'Filme removido da lista para assistir.'),
+                  },
               bloc: watchListBloc,
               builder: (context, state) => switch (state) {
                     ManageWatchlistBlocStatus.initial => const SizedBox(),
                     ManageWatchlistBlocStatus.loading => const SizedBox(),
                     ManageWatchlistBlocStatus.inWatchList => DefaultMainButton(
+                      compact: true,
                         label: 'Remover da lista para assistir',
+                        maxWidth: 400,
                         leftIcon: Icons.tv_off,
+                        primaryColor: AppColors.primaryColor,
+                        invertColors: true,
                         onPressed: () {
-                          watchListBloc.add(RemoveFromWatchlistEvent(widget.movie.id));
+                          watchListBloc
+                              .add(RemoveFromWatchlistEvent(widget.movie.id));
                         }),
-                    ManageWatchlistBlocStatus.notInWatchlist => DefaultMainButton(
-                        label: 'Adicionar à lista para assistir',
-                        leftIcon: Icons.tv,
-                        onPressed: () {
-                          watchListBloc.add(AddToWatchlistEvent(widget.movie));
-                        }),
+                    ManageWatchlistBlocStatus.notInWatchlist =>
+                      DefaultMainButton(
+                        compact: true,
+                          label: 'Adicionar à lista para assistir',
+                          leftIcon: Icons.tv,
+                          invertColors: true,
+                          primaryColor: AppColors.primaryColor,
+                          maxWidth: 400,
+                          onPressed: () {
+                            watchListBloc
+                                .add(AddToWatchlistEvent(widget.movie));
+                          }),
                   }),
         ]),
-  );
+      );
 
-  Widget videoTrailer(String videoId) =>
-    Column(
+  Widget videoTrailer(String videoId) => Column(
         children: [
           itemDot('Trailer'),
-    Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
-        border: Border.all(color: AppColors.primaryColor, width: 5),
-        color: AppColors.secundaryColor,
-      ),
-      
-      child: 
-          YoutubePlayerWidget(videoId: videoId),
-    )],
-      
-    );
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              border: Border.all(color: AppColors.primaryColor, width: 5),
+              color: AppColors.secundaryColor,
+            ),
+            child: YoutubePlayerWidget(videoId: videoId),
+          )
+        ],
+      );
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: AppColors.secundaryColor,
+        extendBodyBehindAppBar: true,
         appBar: AppBar(
-          title: titleDot('Detalhes', true),
-          foregroundColor: AppColors.secundaryColor,
+          backgroundColor: Colors.transparent,
+          iconTheme: const IconThemeData(
+            color: AppColors.primaryColorDark,
+            size: 32,
+          ),
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(15),
-          child: BlocBuilder<MovieDetailsBloc, MovieDetailsBlocState>(
-              bloc: bloc,
-              builder: (context, state) => switch (state.status) {
-                    MovieDetailsBlocStatus.loading => const AppLoadingDots(),
-                    MovieDetailsBlocStatus.failed => errorMessageWidget(
-                        'Não foi possível carregar os detalhes do filme'),
-                    MovieDetailsBlocStatus.loaded =>
-                      loadedWidget(state.movieDetails!),
-                  }),
-        ));
+        body: BlocBuilder<MovieDetailsBloc, MovieDetailsBlocState>(
+            bloc: bloc,
+            builder: (context, state) => switch (state.status) {
+                  MovieDetailsBlocStatus.loading => const AppLoadingDots(),
+                  MovieDetailsBlocStatus.failed => errorMessageWidget(
+                      'Não foi possível carregar os detalhes do filme'),
+                  MovieDetailsBlocStatus.loaded =>
+                    loadedWidget(state.movieDetails!),
+                }));
   }
 }

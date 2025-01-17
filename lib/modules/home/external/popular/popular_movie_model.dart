@@ -1,7 +1,7 @@
 part of 'popular_movies_repository.dart';
 
 extension PopularMovieModel on Movie {
-  static const _imageAPIBaseURL = 'https://image.tmdb.org/t/p/w300/';
+  static const _imageAPIBaseURL = 'https://image.tmdb.org/t/p/w400/';
 
   static Movie fromMap(Map<String, dynamic> map) => Movie(
         adult: map['adult'],

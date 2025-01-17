@@ -9,7 +9,7 @@ abstract class AppTheme with ThemedComponents {
       ThemeData.light(useMaterial3: false).copyWith(
           primaryColor: AppColors.primaryColor,
           primaryColorLight: AppColors.primaryColorLight,
-          scaffoldBackgroundColor: AppColors.primaryColor,
+          scaffoldBackgroundColor: const Color.fromARGB(255, 59, 47, 47),
           appBarTheme: ThemedComponents._appBarTheme(),
           iconTheme: ThemedComponents._iconThemeData(),
           navigationBarTheme: NavigationBarTheme.of(context).copyWith(

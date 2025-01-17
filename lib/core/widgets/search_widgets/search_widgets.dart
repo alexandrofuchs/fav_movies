@@ -1,3 +1,5 @@
+import 'package:fav_movies/core/themes/app_colors.dart';
+import 'package:fav_movies/core/themes/app_fonts.dart';
 import 'package:fav_movies/core/tools/debouncer/app_debouncer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -14,38 +16,50 @@ mixin SearchWidgets {
     EdgeInsets margin = const EdgeInsets.only(right: 25, left: 25, top: 15),
   }) =>
       Container(
-          padding: padding,
-          margin: margin,
-          decoration: BoxDecoration(
-              color: const Color(0xffd9d9d9),
-              borderRadius: BorderRadius.circular(5)),
+          padding: const EdgeInsets.only(left: 25, bottom: 25, right: 25),
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.only(bottomLeft: Radius.circular(25), bottomRight: Radius.circular(25)),
+             color: AppColors.primaryColorDark,
+             boxShadow: [
+              BoxShadow(
+                color: AppColors.primaryColorLight,
+                spreadRadius: 2,
+                blurRadius: 1,
+                offset: Offset(0, 1),
+              )
+             ]
+             ),
           child: Row(children: [
             const Icon(
               Icons.search,
               size: 24,
+              color: AppColors.secundaryColor,
             ),
             const SizedBox(
               width: 10,
             ),
             Flexible(
                 child: TextFormField(
-              key: key,
-              controller: searchBarController,
-              autofocus: autofocus,
-              onChanged: (value) {
+                              key: key,
+                              controller: searchBarController,
+                
+                              
+                              autofocus: autofocus,
+                              style: AppTextStyles.labelMedium.copyWith(color: AppColors.secundaryColor),
+                              onChanged: (value) {
                 Modular.get<AppDebouncer>().handleTextFieldChange(
                     const Duration(milliseconds: 500), value, debounceAction);
-              },
-              decoration: InputDecoration(
+                              },
+                              decoration: InputDecoration(
                   hintText: label,
-                  border:
-                      const UnderlineInputBorder(borderSide: BorderSide.none)),
-            )),
+                  hintStyle: AppTextStyles.labelMedium,
+                  border: const UnderlineInputBorder(borderSide: BorderSide.none)),
+                            )),
             const SizedBox(
               width: 10,
             ),
             IconButton(
-              icon: const Icon(Icons.cancel, size: 24),
+              icon: const Icon(Icons.cancel, size: 24, color: AppColors.secundaryColor,),
               padding: EdgeInsets.zero,
               onPressed: () {
                 searchBarController.text = '';

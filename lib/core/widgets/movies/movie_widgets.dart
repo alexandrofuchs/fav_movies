@@ -171,9 +171,10 @@ mixin MovieWidgets on FavoriteAction, CommonWidgets {
           borderRadius: BorderRadius.circular(5),
           boxShadow: const [
             BoxShadow(
-              spreadRadius: 0,
-              blurRadius: 5,
-              color: AppColors.secundaryColor,
+              spreadRadius: 1,
+              blurRadius: 1,
+              offset: Offset(0, 4),
+              color: AppColors.primaryColorDark,
             )
           ],
           color: AppColors.secundaryColor,
@@ -216,7 +217,7 @@ mixin MovieWidgets on FavoriteAction, CommonWidgets {
             boxShadow: const [
               BoxShadow(
                 spreadRadius: 0,
-                blurRadius: 1,
+                blurRadius: 0,
                 color: AppColors.secundaryColor,
               )
             ],

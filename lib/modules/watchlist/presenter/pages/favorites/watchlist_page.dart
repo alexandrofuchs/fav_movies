@@ -1,5 +1,6 @@
 import 'package:fav_movies/core/common/models/movie.dart';
 import 'package:fav_movies/core/themes/app_fonts.dart';
+import 'package:fav_movies/core/widgets/appbar_widgets/default_appbar_widgets.dart';
 import 'package:fav_movies/core/widgets/buttons/default_main_button.dart';
 import 'package:fav_movies/core/widgets/common/common_widgets.dart';
 import 'package:fav_movies/core/widgets/loading/app_loading_dots_widget.dart';
@@ -18,7 +19,7 @@ class WatchListPage extends StatefulWidget {
   State<StatefulWidget> createState() => _FavoritePageState();
 }
 
-class _FavoritePageState extends State<WatchListPage> with CommonWidgets, FavoriteAction, MovieWidgets {
+class _FavoritePageState extends State<WatchListPage> with DefaultAppbarWidgets, CommonWidgets, FavoriteAction, MovieWidgets {
   final bloc = LoadWatchListBloc(Modular.get());
 
   @override
@@ -67,9 +68,10 @@ class _FavoritePageState extends State<WatchListPage> with CommonWidgets, Favori
     return HomeScaffold(
         appBar: AppBar(
           title: titleDot('Lista para assistir', true),
+          bottom: bottomWidget(),
         ),
         body: Padding(
-          padding: const EdgeInsets.all(25),
+          padding: const EdgeInsets.only(left: 25, right: 25),
           child: BlocBuilder<LoadWatchListBloc, LoadWatchListBlocState>(
               bloc: bloc,
               builder: (context, state) => switch (state.status) {

@@ -50,7 +50,7 @@ class _PopularMoviesPageState extends State<PopularMoviesPage>
         ),
     movieList.isEmpty
       ? const Padding(
-        padding: EdgeInsets.all(25),
+        padding: EdgeInsets.only(left: 25, right: 25),
         child: Center(
             child: Text(
                     'Nenhum filme foi retornado na lista.',
@@ -61,7 +61,7 @@ class _PopularMoviesPageState extends State<PopularMoviesPage>
     
         Expanded(
           child: Padding(
-            padding: const EdgeInsets.all(25),
+            padding: const EdgeInsets.only(left: 25, right: 25),
             child: ListView.builder(
                 shrinkWrap: true,
                 physics: const ClampingScrollPhysics(),

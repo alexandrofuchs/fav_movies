@@ -52,7 +52,7 @@ mixin SearchWidgets {
 
                                 
                                 autofocus: autofocus,
-                                style: AppTextStyles.bodySmall.copyWith(color: AppColors.secundaryColor),
+                                style: AppTextStyles.bodyMedium.copyWith(color: AppColors.secundaryColor),
                                 onChanged: (value) {
                   Modular.get<AppDebouncer>().handleTextFieldChange(
                       const Duration(milliseconds: 500), value, debounceAction);

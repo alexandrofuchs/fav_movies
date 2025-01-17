@@ -184,17 +184,20 @@ mixin MovieWidgets on FavoriteAction, CommonWidgets {
         ),
       ).animate().shimmer(duration: const Duration(seconds: 2));
 
-  Widget cardWidget(int index, Movie movie) => ValueListenableBuilder(
-      valueListenable: focusedCardIndex,
-      builder: (context, value, child) => AnimatedCrossFade(
-            crossFadeState: value == index
-                ? CrossFadeState.showFirst
-                : CrossFadeState.showSecond,
-            duration: const Duration(milliseconds: 300),
-            alignment: Alignment.center,
-            firstChild: focusedMovieItem(movie),
-            secondChild: otherMovieItem(index, movie),
-          ));
+  Widget cardWidget(int index, Movie movie) => Padding(
+    padding: const EdgeInsets.only(top: 5, bottom: 0),
+    child: ValueListenableBuilder(
+        valueListenable: focusedCardIndex,
+        builder: (context, value, child) => AnimatedCrossFade(
+              crossFadeState: value == index
+                  ? CrossFadeState.showFirst
+                  : CrossFadeState.showSecond,
+              duration: const Duration(milliseconds: 300),
+              alignment: Alignment.center,
+              firstChild: focusedMovieItem(movie),
+              secondChild: otherMovieItem(index, movie),
+            )),
+  );
 
   Widget focusedMovieItem(Movie movie) => firstCardContainer([
         Padding(

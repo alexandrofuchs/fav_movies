@@ -164,6 +164,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
               invertColors: true,
               primaryColor: AppColors.primaryColor,
               maxWidth: 400,
+              minWidth: 200,
               onPressed: () {
                 openReviewBottomSheet(context, widget.movie);
               }),
@@ -226,11 +227,13 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        extendBodyBehindAppBar: true,
+        // extendBodyBehindAppBar: true,
         appBar: AppBar(
-          backgroundColor: Colors.transparent,
+          title: const Text('Detalhes do filme', style: AppTextStyles.labelLarge,),
+          toolbarHeight: 70,
+          // backgroundColor: Colors.transparent,
           iconTheme: const IconThemeData(
-            color: AppColors.successColor,
+            color: AppColors.secundaryColor,
             size: 32,
           ),
         ),

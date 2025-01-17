@@ -1,5 +1,7 @@
 import 'package:fav_movies/core/common/models/movie.dart';
+import 'package:fav_movies/core/themes/app_colors.dart';
 import 'package:fav_movies/core/themes/app_fonts.dart';
+import 'package:fav_movies/core/widgets/appbar_widgets/default_appbar_widgets.dart';
 import 'package:fav_movies/core/widgets/buttons/default_main_button.dart';
 import 'package:fav_movies/core/widgets/common/common_widgets.dart';
 import 'package:fav_movies/core/widgets/loading/app_loading_dots_widget.dart';
@@ -18,7 +20,7 @@ class FavoritesPage extends StatefulWidget {
   State<StatefulWidget> createState() => _FavoritePageState();
 }
 
-class _FavoritePageState extends State<FavoritesPage> with CommonWidgets, FavoriteAction, MovieWidgets {
+class _FavoritePageState extends State<FavoritesPage> with DefaultAppbarWidgets, CommonWidgets, FavoriteAction, MovieWidgets {
   final LoadFavoriteMoviesBloc bloc = Modular.get();
 
   @override
@@ -63,9 +65,10 @@ class _FavoritePageState extends State<FavoritesPage> with CommonWidgets, Favori
     return HomeScaffold(
         appBar: AppBar(
           title: titleDot('Favoritos', true),
+          bottom: bottomWidget(),
         ),
         body: favoriteListener(child: Padding(
-          padding: const EdgeInsets.all(25),
+          padding: const EdgeInsets.only(left: 25, right: 25),
           child: BlocBuilder<LoadFavoriteMoviesBloc, LoadFavoriteBlocState>(
               bloc: bloc,
               builder: (context, state) => switch (state.status) {

@@ -9,7 +9,7 @@ class AppLoadingDots extends StatefulWidget {
   const AppLoadingDots(
       {super.key,
       this.dotSize = const Size(14, 14),
-      this.color = AppColors.primaryColorLight});
+      this.color = AppColors.secundaryColor});
 
   @override
   State<StatefulWidget> createState() => _AppLoadingDotsState();
@@ -41,8 +41,18 @@ class _AppLoadingDotsState extends State<AppLoadingDots> {
         child: Container(
             height: widget.dotSize.height,
             width: widget.dotSize.width,
+            
             decoration:
-                BoxDecoration(shape: BoxShape.circle, color: widget.color)));
+                BoxDecoration(shape: BoxShape.circle, color: widget.color,
+                boxShadow: const [
+                  BoxShadow(
+                    blurRadius: 5,
+                    spreadRadius: 2,
+                    color: AppColors.secundaryColor,
+                  )
+                ]
+                
+                )));
   }
 
   void changeSize() {
@@ -67,7 +77,9 @@ class _AppLoadingDotsState extends State<AppLoadingDots> {
   }
 
   @override
-  Widget build(BuildContext context) => Center(
+  Widget build(BuildContext context) => Container(
+    alignment: Alignment.center,
+      color: AppColors.primaryColorDark,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,

@@ -3,7 +3,7 @@ part of 'app_theme.dart';
 mixin ThemedComponents {
   static _appBarTheme() => AppBarTheme(
       color: AppColors.primaryColorDark,
-      toolbarHeight: 80,
+      toolbarHeight: 75,
       elevation: 0,
       iconTheme: const IconThemeData(
         size: 24,

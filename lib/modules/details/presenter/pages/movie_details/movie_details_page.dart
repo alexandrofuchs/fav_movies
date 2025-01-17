@@ -74,6 +74,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
+            alignment: Alignment.bottomCenter,
             margin: const EdgeInsets.only(top: 25),
               decoration: const BoxDecoration(
                 color: AppColors.secundaryColor,
@@ -115,7 +116,10 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
                       borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(25),
                           topRight: Radius.circular(25)),
-                      child: Image.network(
+                      child:
+                      widget.movie.posterPath == null ?
+                        const SizedBox(height: 300,):
+                      Image.network(
                         widget.movie.posterPath!,
                         width: MediaQuery.of(context).size.width,
                         fit: BoxFit.fitWidth,
@@ -211,7 +215,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           iconTheme: const IconThemeData(
-            color: AppColors.primaryColorDark,
+            color: AppColors.successColor,
             size: 32,
           ),
         ),

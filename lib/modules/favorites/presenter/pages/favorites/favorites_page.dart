@@ -1,5 +1,4 @@
 import 'package:fav_movies/core/common/models/movie.dart';
-import 'package:fav_movies/core/themes/app_colors.dart';
 import 'package:fav_movies/core/themes/app_fonts.dart';
 import 'package:fav_movies/core/widgets/appbar_widgets/default_appbar_widgets.dart';
 import 'package:fav_movies/core/widgets/buttons/default_main_button.dart';

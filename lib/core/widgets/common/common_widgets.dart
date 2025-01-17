@@ -94,7 +94,7 @@ mixin CommonWidgets {
             children: <TextSpan>[
               TextSpan(
                   text: label,
-                  style: TextStyle(fontWeight: FontWeight.w700)
+                  style: const TextStyle(fontWeight: FontWeight.w700)
                   ),
               TextSpan(text: text),
             ],

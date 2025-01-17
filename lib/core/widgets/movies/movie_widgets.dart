@@ -128,7 +128,7 @@ mixin MovieWidgets on FavoriteAction, CommonWidgets {
               padding: const EdgeInsets.only(right: 10),
               child: moviePosterWidget(
                 movie.posterPath,
-                width: 120,
+                width: 130,
               )),
           Expanded(
             child: Padding(

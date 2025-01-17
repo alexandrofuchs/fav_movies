@@ -48,11 +48,12 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
   }
 
   Widget titleWidget() => Padding(
-        padding: const EdgeInsets.only(top: 15),
+        padding: const EdgeInsets.only(top: 15, left: 5),
         child: Text(
           widget.movie.title,
           style: AppTextStyles.labelLarge.copyWith(fontWeight: FontWeight.bold),
           softWrap: true,
+          textAlign: TextAlign.center,
           maxLines: 2,
         ),
       );

@@ -74,11 +74,13 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            alignment: Alignment.bottomCenter,
-            margin: const EdgeInsets.only(top: 25),
+              alignment: Alignment.bottomCenter,
+              margin: const EdgeInsets.only(top: 25),
               decoration: const BoxDecoration(
                 color: AppColors.secundaryColor,
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(25), topRight: Radius.circular(25)),
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(25),
+                    topRight: Radius.circular(25)),
               ),
               padding: const EdgeInsets.all(25),
               child: Column(
@@ -109,29 +111,42 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
             Container(
               padding: const EdgeInsets.only(bottom: 15),
               alignment: Alignment.center,
-              color: AppColors.primaryColorDark,
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      AppColors.primaryColorDark,
+                      AppColors.primaryColor,
+                      AppColors.brandColor,
+                    ],
+                    stops: [
+                      0.91,
+                      0.98,
+                      1,
+                    ]),
+              ),
               child: Column(
                 children: [
                   ClipRRect(
                       borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(25),
                           topRight: Radius.circular(25)),
-                      child:
-                      widget.movie.posterPath == null ?
-                        const SizedBox(height: 300,):
-                      Image.network(
-                        widget.movie.posterPath!,
-                        width: MediaQuery.of(context).size.width,
-                        fit: BoxFit.fitWidth,
-                      )),
-                  Container(
-                      color: AppColors.primaryColorDark, child: titleWidget()),
+                      child: widget.movie.posterPath == null
+                          ? const SizedBox(
+                              height: 300,
+                            )
+                          : Image.network(
+                              widget.movie.posterPath!,
+                              width: MediaQuery.of(context).size.width,
+                              fit: BoxFit.fitWidth,
+                            )),
+                  titleWidget(),
                 ],
               ),
             ),
             actions(),
             overviewWidget(movieDetails),
-            
           ],
         ),
       );
@@ -168,7 +183,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
                     ManageWatchlistBlocStatus.initial => const SizedBox(),
                     ManageWatchlistBlocStatus.loading => const SizedBox(),
                     ManageWatchlistBlocStatus.inWatchList => DefaultMainButton(
-                      compact: true,
+                        compact: true,
                         label: 'Remover da lista para assistir',
                         maxWidth: 400,
                         leftIcon: Icons.tv_off,
@@ -180,7 +195,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
                         }),
                     ManageWatchlistBlocStatus.notInWatchlist =>
                       DefaultMainButton(
-                        compact: true,
+                          compact: true,
                           label: 'Adicionar à lista para assistir',
                           leftIcon: Icons.tv,
                           invertColors: true,

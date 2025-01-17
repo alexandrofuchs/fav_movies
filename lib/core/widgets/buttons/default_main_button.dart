@@ -58,7 +58,7 @@ class DefaultMainButton extends StatelessWidget {
             softWrap: true,
             style: AppTextStyles.bodyMedium.copyWith(
                 color: getSecundaryColor,
-                fontSize: compact ? 12 : 13,
+                fontSize: compact ? 8 : 12,
                 fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
             maxLines: compact ? 1 : null,

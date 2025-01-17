@@ -3,29 +3,29 @@ import 'package:flutter/material.dart';
 
 abstract class AppTextStyles {
   static const TextStyle titleSmall = TextStyle(
-      fontSize: 16, color: AppColors.primaryColorDark);
+      fontSize: 12, color: AppColors.primaryColorDark, fontWeight: FontWeight.w500);
   static const TextStyle titleMedium = TextStyle(
-      fontSize: 18, color: AppColors.primaryColorDark);
+      fontSize: 14, color: AppColors.primaryColorDark, fontWeight: FontWeight.w500);
   static const TextStyle titleLarge = TextStyle(
-      fontSize: 20, color: AppColors.primaryColorDark);
+      fontSize: 16, color: AppColors.primaryColorDark, fontWeight: FontWeight.w500);
 
   static const TextStyle bodySmall =
-      TextStyle(fontSize: 12, color: Colors.black);
+      TextStyle(fontSize: 10, color: Colors.black);
   static const TextStyle bodyMedium =
-      TextStyle(fontSize: 16, color: Colors.black);
+      TextStyle(fontSize: 12, color: Colors.black);
   static const TextStyle bodyLarge =
-      TextStyle(fontSize: 18, color: Colors.black);
+      TextStyle(fontSize: 14, color: Colors.black);
 
   static const TextStyle labelSmall = TextStyle(
-            fontSize: 14,
+            fontSize: 12,
       color: Colors.white,
       fontWeight: FontWeight.w700);
   static const TextStyle labelMedium = TextStyle(
-            fontSize: 18,
+            fontSize: 14,
       color: Colors.white,
       fontWeight: FontWeight.w700);
   static const TextStyle labelLarge = TextStyle(
-            fontSize: 20,
+            fontSize: 16,
       color: Colors.white,
       fontWeight: FontWeight.w700);
 }

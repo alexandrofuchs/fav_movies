@@ -23,49 +23,57 @@ mixin SearchWidgets {
              boxShadow: [
               BoxShadow(
                 color: AppColors.primaryColorLight,
-                spreadRadius: 2,
-                blurRadius: 1,
+                spreadRadius: 0,
+                blurRadius: 2,
                 offset: Offset(0, 1),
               )
              ]
              ),
-          child: Row(children: [
-            const Icon(
-              Icons.search,
-              size: 24,
-              color: AppColors.secundaryColor,
+          child: Container(
+            
+            decoration: BoxDecoration(
+              color: AppColors.primaryColor,
+              borderRadius: BorderRadius.circular(5)
             ),
-            const SizedBox(
-              width: 10,
-            ),
-            Flexible(
-                child: TextFormField(
-                              key: key,
-                              controller: searchBarController,
-                
-                              
-                              autofocus: autofocus,
-                              style: AppTextStyles.labelMedium.copyWith(color: AppColors.secundaryColor),
-                              onChanged: (value) {
-                Modular.get<AppDebouncer>().handleTextFieldChange(
-                    const Duration(milliseconds: 500), value, debounceAction);
-                              },
-                              decoration: InputDecoration(
-                  hintText: label,
-                  hintStyle: AppTextStyles.labelMedium,
-                  border: const UnderlineInputBorder(borderSide: BorderSide.none)),
-                            )),
-            const SizedBox(
-              width: 10,
-            ),
-            IconButton(
-              icon: const Icon(Icons.cancel, size: 24, color: AppColors.secundaryColor,),
-              padding: EdgeInsets.zero,
-              onPressed: () {
-                searchBarController.text = '';
-                Modular.get<AppDebouncer>().handleTextFieldChange(
-                    const Duration(milliseconds: 500), searchBarController.text, debounceAction);
-              },
-            )
-          ]));
+            padding: const EdgeInsets.only(left: 15),
+            child: Row(children: [
+              const Icon(
+                Icons.search,
+                size: 24,
+                color: AppColors.secundaryColor,
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Flexible(
+                  child: TextFormField(
+                                key: key,
+                                controller: searchBarController,
+
+                                
+                                autofocus: autofocus,
+                                style: AppTextStyles.bodySmall.copyWith(color: AppColors.secundaryColor),
+                                onChanged: (value) {
+                  Modular.get<AppDebouncer>().handleTextFieldChange(
+                      const Duration(milliseconds: 500), value, debounceAction);
+                                },
+                                decoration: InputDecoration(
+                    hintText: label,
+                    hintStyle: AppTextStyles.labelSmall,
+                    border: const UnderlineInputBorder(borderSide: BorderSide.none)),
+                              )),
+              const SizedBox(
+                width: 10,
+              ),
+              IconButton(
+                icon: const Icon(Icons.cancel, size: 24, color: AppColors.secundaryColor,),
+                padding: EdgeInsets.zero,
+                onPressed: () {
+                  searchBarController.text = '';
+                  Modular.get<AppDebouncer>().handleTextFieldChange(
+                      const Duration(milliseconds: 500), searchBarController.text, debounceAction);
+                },
+              )
+            ]),
+          ));
 }

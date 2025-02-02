@@ -20,8 +20,11 @@ abstract class AppTheme with ThemedComponents {
             indicatorColor: AppColors.primaryColor,
             labelTextStyle:  const WidgetStatePropertyAll(
                 AppTextStyles.labelSmall),
+            iconTheme: const WidgetStatePropertyAll(
+              IconThemeData(size: 24, color: AppColors.primaryColorLight)),
             indicatorShape: const Border(
-                top: BorderSide(color: AppColors.secundaryColor, width: 2))),
+
+                top: BorderSide(color: AppColors.secundaryColor, width: 0.25))),
           textTheme:  const TextTheme(
             titleLarge: AppTextStyles.titleLarge,
             titleMedium: AppTextStyles.titleMedium,

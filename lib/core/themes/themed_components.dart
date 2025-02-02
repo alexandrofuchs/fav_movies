@@ -5,6 +5,7 @@ mixin ThemedComponents {
       color: AppColors.primaryColorDark,
       toolbarHeight: 75,
       elevation: 0,
+      shape: const Border(bottom: BorderSide(color: AppColors.secundaryColor, width: 0.25)),
       iconTheme: const IconThemeData(
         size: 24,
         color: AppColors.secundaryColor

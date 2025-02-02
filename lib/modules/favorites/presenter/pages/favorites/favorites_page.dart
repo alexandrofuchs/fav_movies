@@ -56,27 +56,33 @@ class _FavoritePageState extends State<FavoritesPage> with DefaultAppbarWidgets,
       : ListView.builder(
           shrinkWrap: true,
           itemCount: movies.length,
-          itemBuilder: (context, index) => cardWidget(index, movies[index]),
+          itemBuilder: (context, index) => cardWidget(context, index, movies[index]),
         );
 
   @override
   Widget build(BuildContext context) {
     return HomeScaffold(
         appBar: AppBar(
-          title: titleDot('Favoritos', true),
-          bottom: bottomWidget(),
+          title: titleDot('Favoritos'),
         ),
-        body: favoriteListener(child: Padding(
-          padding: const EdgeInsets.only(left: 25, right: 25),
-          child: BlocBuilder<LoadFavoriteMoviesBloc, LoadFavoriteBlocState>(
-              bloc: bloc,
-              builder: (context, state) => switch (state.status) {
-                    LoadFavoriteBlocStatus.loading => const AppLoadingDots(),
-                    LoadFavoriteBlocStatus.failed => errorMessageWidget(
-                        'Não foi possível carregar os favoritos'),
-                    LoadFavoriteBlocStatus.loaded =>
-                      loadedWidget(state.sourceList!),
-                  }),
+        body: favoriteListener(child: Column(
+          children: [
+            Expanded(
+              child: Container(
+                color: Colors.black,
+                padding: const EdgeInsets.only(left: 5, right: 5, bottom: 5),
+                child: BlocBuilder<LoadFavoriteMoviesBloc, LoadFavoriteBlocState>(
+                    bloc: bloc,
+                    builder: (context, state) => switch (state.status) {
+                          LoadFavoriteBlocStatus.loading => const AppLoadingDots(),
+                          LoadFavoriteBlocStatus.failed => errorMessageWidget(
+                              'Não foi possível carregar os favoritos'),
+                          LoadFavoriteBlocStatus.loaded =>
+                            loadedWidget(state.sourceList!),
+                        }),
+              ),
+            ),
+          ],
         )));
   }
 }

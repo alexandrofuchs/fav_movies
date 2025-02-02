@@ -20,9 +20,15 @@ class PopularMoviesPage extends StatefulWidget {
 }
 
 class _PopularMoviesPageState extends State<PopularMoviesPage>
-    with CommonWidgets, FavoriteAction, MovieWidgets, NavigationRoutes, SearchWidgets {
+    with
+        CommonWidgets,
+        FavoriteAction,
+        MovieWidgets,
+        NavigationRoutes,
+        SearchWidgets {
   final PopularMoviesBloc popularMoviesBloc = PopularMoviesBloc(Modular.get());
 
+  final ValueNotifier<bool> showSearchBar = ValueNotifier(false);
   @override
   void initState() {
     Modular.get<BottomNavigatorBloc>()
@@ -35,57 +41,83 @@ class _PopularMoviesPageState extends State<PopularMoviesPage>
   @override
   void dispose() {
     popularMoviesBloc.close();
+    showSearchBar.dispose();
     focusedCardIndex.dispose();
     super.dispose();
   }
 
-  Widget loadedWidget(List<Movie> movieList) => 
-    Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        searchBar('Pesquisar filme...', (value){
-          popularMoviesBloc.add(SearchByTextEvent(value));
-        },
-        margin: EdgeInsets.zero,
-        ),
-    movieList.isEmpty
-      ? const Padding(
-        padding: EdgeInsets.only(left: 25, right: 25),
-        child: Center(
-            child: Text(
-                    'Nenhum filme foi retornado na lista.',
-                    style: AppTextStyles.labelLarge,
+  Widget loadedWidget(List<Movie> movieList) => Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          movieList.isEmpty
+              ? const Padding(
+                  padding: EdgeInsets.only(left: 15, right: 15),
+                  child: Center(
+                    child: Text(
+                      'Nenhum filme foi retornado na lista.',
+                      style: AppTextStyles.labelLarge,
+                    ),
+                  ),
+                )
+              : Expanded(
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.only(left: 5, right: 5, bottom: 5),
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      physics: const ClampingScrollPhysics(),
+                      itemCount: movieList.length,
+                      itemBuilder: (context, index) =>
+                          cardWidget(context, index, movieList[index]),
+                    ),
                   ),
                 ),
-      ) :
-    
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 25, right: 25),
-            child: ListView.builder(
-                shrinkWrap: true,
-                physics: const ClampingScrollPhysics(),
-                itemCount: movieList.length,
-                itemBuilder: (context, index) =>
-                    cardWidget(index, movieList[index]),
-              ),
-          ),
-        ),
-        const SizedBox()
-      ],
-    );
+          const SizedBox()
+        ],
+      );
 
   @override
   Widget build(BuildContext context) {
     return HomeScaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        title: titleDot('Filmes populares', true),
-      ),
+          title: ValueListenableBuilder(
+        valueListenable: showSearchBar,
+        builder: (context, show, child) => AnimatedCrossFade(
+            firstChild: Row(
+              children: [
+                Expanded(child: titleDot('Filmes populares')),
+                IconButton(
+                  onPressed: () {
+                    showSearchBar.value = !show;
+                  },
+                  icon: const Icon(
+                    Icons.search,
+                    size: 24,
+                  ),
+                ),
+              ],
+            ),
+            secondChild: searchBar(
+              'Pesquisar em filmes polulares',
+              (value) {
+                popularMoviesBloc.add(SearchByTextEvent(value));
+              },
+              onClearText: () {
+                showSearchBar.value = false;
+              },
+              margin: EdgeInsets.zero,
+            ),
+            crossFadeState:
+                show ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+            duration: const Duration(milliseconds: 300)),
+      )),
       body: favoriteListener(
         child: BlocBuilder<PopularMoviesBloc, PopularMoviesBlocState>(
             bloc: popularMoviesBloc,
             builder: (context, state) => switch (state.status) {
-                  PopularMoviesBlocStatus.firstLoading => const AppLoadingDots(),
+                  PopularMoviesBlocStatus.firstLoading =>
+                    const AppLoadingDots(),
                   PopularMoviesBlocStatus.loadingMore => const AppLoadingDots(),
                   PopularMoviesBlocStatus.failed => errorMessageWidget(
                       'Não foi possível carregar a lista de filmes.'),

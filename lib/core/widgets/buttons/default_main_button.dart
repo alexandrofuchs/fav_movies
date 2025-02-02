@@ -14,6 +14,7 @@ class DefaultMainButton extends StatelessWidget {
   final OutlinedBorder shape;
   final IconData? leftIcon;
   final IconData? rightIcon;
+  final Color? iconColor;
   final bool expandedWidth;
   final bool compact;
   final bool boldText;
@@ -27,6 +28,7 @@ class DefaultMainButton extends StatelessWidget {
       required this.onPressed,
       this.minWidth = 120,
       this.maxWidth = 220,
+      this.iconColor,
       this.margin = const EdgeInsets.all(8),
       this.padding = const EdgeInsets.all(8),
       this.invertColors = false,
@@ -58,8 +60,8 @@ class DefaultMainButton extends StatelessWidget {
             softWrap: true,
             style: AppTextStyles.bodyMedium.copyWith(
                 color: getSecundaryColor,
-                fontSize: compact ? 8 : 12,
-                fontWeight: FontWeight.bold),
+                fontSize: compact ? 8 : 10,
+                fontWeight: FontWeight.w400),
             textAlign: TextAlign.center,
             maxLines: compact ? 1 : null,
   );
@@ -68,7 +70,7 @@ class DefaultMainButton extends StatelessWidget {
         padding: const EdgeInsets.only(left: 5, right: 2),
         child: Icon(
           leftIcon,
-          color: getSecundaryColor,
+          color: iconColor ?? getSecundaryColor,
           size: 24,
         ),
       );
@@ -77,7 +79,7 @@ class DefaultMainButton extends StatelessWidget {
       padding: const EdgeInsets.only(right: 5),
       child: Icon(
         rightIcon,
-        color: getSecundaryColor,
+        color: iconColor ?? getSecundaryColor,
         size: 24,
       ));
 

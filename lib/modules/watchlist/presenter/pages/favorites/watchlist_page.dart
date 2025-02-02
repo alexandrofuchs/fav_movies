@@ -60,27 +60,33 @@ class _FavoritePageState extends State<WatchListPage> with DefaultAppbarWidgets,
           shrinkWrap: true,
           itemCount: movies.length,
           itemBuilder: (context, index) => 
-          favoriteListener(child: cardWidget(index, movies[index]),
+          favoriteListener(child: cardWidget(context, index, movies[index]),
         ));
 
   @override
   Widget build(BuildContext context) {
     return HomeScaffold(
         appBar: AppBar(
-          title: titleDot('Lista para assistir', true),
-          bottom: bottomWidget(),
+          title: titleDot('Lista para assistir'),
         ),
-        body: Padding(
-          padding: const EdgeInsets.only(left: 25, right: 25),
-          child: BlocBuilder<LoadWatchListBloc, LoadWatchListBlocState>(
-              bloc: bloc,
-              builder: (context, state) => switch (state.status) {
-                    LoadWatchListBlocStatus.loading => const AppLoadingDots(),
-                    LoadWatchListBlocStatus.failed => errorMessageWidget(
-                        'Não foi possível carregar sua lista para assistir'),
-                    LoadWatchListBlocStatus.loaded =>
-                      loadedWidget(state.sourceList!),
-                  }),
+        body: Column(
+          children: [
+            Expanded(
+              child: Container(
+                color: Colors.black,
+                padding: const EdgeInsets.only(left: 5, right: 5, bottom: 5),
+                child: BlocBuilder<LoadWatchListBloc, LoadWatchListBlocState>(
+                    bloc: bloc,
+                    builder: (context, state) => switch (state.status) {
+                          LoadWatchListBlocStatus.loading => const AppLoadingDots(),
+                          LoadWatchListBlocStatus.failed => errorMessageWidget(
+                              'Não foi possível carregar sua lista para assistir'),
+                          LoadWatchListBlocStatus.loaded =>
+                            loadedWidget(state.sourceList!),
+                        }),
+              ),
+            ),
+          ],
         ));
   }
 }

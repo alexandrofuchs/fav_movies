@@ -34,22 +34,23 @@ mixin CommonWidgets {
         ),
       );
 
-  Widget titleDot(String text, [bool lightDot = false]) => Row(
+  Widget titleDot(String text,) => Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            width: 15,
-            height: 15,
+            width: 8,
+            height: 8,
             margin: const EdgeInsets.all(15),
-            decoration: BoxDecoration(
-              color: AppColors.secundaryColor,
-              borderRadius: BorderRadius.circular(3),
-            ),
-          ),
+            decoration: const ShapeDecoration(shape: BeveledRectangleBorder(borderRadius: BorderRadius.only(
+              topRight: Radius.circular(5),
+              bottomRight: Radius.circular(5)
+              )),
+              color:   AppColors.secundaryColor,
+            )),
           Flexible(
               child: Text(
             text,
-            style: AppTextStyles.labelLarge,
+            style: AppTextStyles.labelMedium,
             softWrap: true,
           )),
         ],
@@ -90,13 +91,13 @@ mixin CommonWidgets {
           softWrap: true,
           maxLines: 2,
           text: TextSpan(
-            style: AppTextStyles.bodyMedium,
+            style: AppTextStyles.labelSmall,
             children: <TextSpan>[
               TextSpan(
                   text: label,
-                  style: const TextStyle(fontWeight: FontWeight.w700)
+                  style: const TextStyle(fontWeight: FontWeight.w400, color: AppColors.primaryColorLight)
                   ),
-              TextSpan(text: text),
+              TextSpan(text: text,),
             ],
           ),
         ),

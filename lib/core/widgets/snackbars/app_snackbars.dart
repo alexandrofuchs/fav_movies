@@ -7,7 +7,7 @@ abstract class AppSnackbars {
               {Duration duration = const Duration(seconds: 2)}) =>
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             margin: const EdgeInsets.only(left: 8, right: 8, bottom: 30),
-            backgroundColor: AppColors.failedColor,
+            backgroundColor: AppColors.orangeColor,
             duration: duration,
             shape:
                 const BeveledRectangleBorder(borderRadius: BorderRadius.zero),
@@ -45,7 +45,7 @@ abstract class AppSnackbars {
   ) =>
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             margin: const EdgeInsets.only(left: 8, right: 8, bottom: 30),
-            backgroundColor: AppColors.successColor,
+            backgroundColor: AppColors.greenColor,
             shape:
                 const BeveledRectangleBorder(borderRadius: BorderRadius.zero),
             behavior: SnackBarBehavior.floating,

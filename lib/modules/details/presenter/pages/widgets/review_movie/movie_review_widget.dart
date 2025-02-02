@@ -4,7 +4,6 @@ import 'package:fav_movies/core/themes/app_fonts.dart';
 import 'package:fav_movies/core/widgets/buttons/default_main_button.dart';
 import 'package:fav_movies/core/widgets/common/common_widgets.dart';
 import 'package:fav_movies/core/widgets/snackbars/app_snackbars.dart';
-import 'package:fav_movies/core/widgets/text_fields/default_text_field.dart';
 import 'package:fav_movies/modules/details/domain/models/movie_review.dart';
 import 'package:fav_movies/modules/details/presenter/blocs/movie_review/movie_review_bloc.dart';
 import 'package:flutter/material.dart';
@@ -16,34 +15,14 @@ mixin MovieReviewWidget on CommonWidgets {
   final TextEditingController description = TextEditingController();
   final reviewBloc = MovieReviewBloc(Modular.get());
 
-  Widget _header() => Container(
-        alignment: Alignment.center,
-        height: 75,
-        decoration: const BoxDecoration(
-          color: AppColors.primaryColor,
-        ),
-        child: Text(
-          'Avaliar',
-          style: AppTextStyles.titleLarge
-              .copyWith(color: AppColors.secundaryColor),
-        ),
-      );
-
   Widget _movieInfo(Movie movie) => Padding(
-        padding: const EdgeInsets.all(15),
+        padding: const EdgeInsets.only(top: 15),
         child: Column(
           children: [
-            RichText(
-              text: TextSpan(
-                style: AppTextStyles.bodyMedium,
-                children: <TextSpan>[
-                  const TextSpan(
-                      text: 'Filme: ',
-                      style: TextStyle(fontWeight: FontWeight.bold)),
-                  TextSpan(text: movie.title),
-                ],
-              ),
-            )
+            Text(
+              movie.title,
+              style: AppTextStyles.labelMedium,
+            ),
           ],
         ),
       );
@@ -66,8 +45,7 @@ mixin MovieReviewWidget on CommonWidgets {
                     MovieReviewBlocStatus.failed => const SizedBox(),
                     MovieReviewBlocStatus.loaded => Container(
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: AppColors.secundaryColor),
+                            borderRadius: BorderRadius.circular(5),),
                         margin: const EdgeInsets.only(bottom: 15),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,12 +53,12 @@ mixin MovieReviewWidget on CommonWidgets {
                             _rateWidget(state.movieReview!.rate),
                             showDescription
                                 ? Padding(
-                                    padding: const EdgeInsets.all(15),
+                                    padding: const EdgeInsets.only(left: 30, right: 30),
                                     child: infoRow('Opinião: ',
                                         state.movieReview!.description),
                                   )
                                 : const SizedBox(),
-                                divider(),
+                            divider(),
                           ],
                         ),
                       ),
@@ -93,41 +71,48 @@ mixin MovieReviewWidget on CommonWidgets {
         children: [
           Padding(
             padding: const EdgeInsets.only(left: 15, top: 15),
-            child: Text(
-              'Sua avaliação',
-              style: AppTextStyles.titleMedium
-                  .copyWith(fontWeight: FontWeight.w700),
-            ),
+            child: titleDot('Sua avaliação'),
           ),
           Row(
-            
               mainAxisAlignment: MainAxisAlignment.center,
               children: [1, 2, 3, 4, 5]
                   .map((e) => Flexible(
-                    child: IconButton(
-                        enableFeedback: enable,
-                        padding: EdgeInsets.zero,
-                        onPressed: () {
-                          if (!enable) return;
-                          rate.value = e;
-                        },
-                        icon: Icon(
-                          e <= value ? Icons.star : Icons.star_border,
-                          size: 24,
-                          color: AppColors.successColor,
-                        )),
-                  ))
+                        child: IconButton(
+                            enableFeedback: enable,
+                            padding: EdgeInsets.zero,
+                            onPressed: () {
+                              if (!enable) return;
+                              rate.value = e;
+                            },
+                            icon: Icon(
+                              e <= value ? Icons.star : Icons.star_border,
+                              size: 24,
+                              color: AppColors.orangeColor,
+                            )),
+                      ))
                   .toList()),
-                  
         ],
       );
 
   Widget _descriptionWidget() => Padding(
         padding: const EdgeInsets.all(15),
-        child: DefaultTextField(
-          labelText: 'Deixe sua opinião',
-          labelColor: Colors.black,
-          fillColor: Colors.white,
+        child: TextField(
+          style: AppTextStyles.labelSmall,
+          decoration: const InputDecoration(
+            fillColor: AppColors.brandColor,
+            filled: true,
+            labelStyle: AppTextStyles.labelSmall,
+            label: Text(
+              'Descreva sua opinião',
+              style: AppTextStyles.labelSmall,
+              textAlign: TextAlign.center,
+            ),
+            alignLabelWithHint: true,
+            focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: AppColors.orangeColor)),
+            contentPadding: EdgeInsets.all(15),
+            counterStyle: AppTextStyles.labelSmall,
+          ),
           controller: description,
           maxLines: 5,
           maxLength: 200,
@@ -152,6 +137,7 @@ mixin MovieReviewWidget on CommonWidgets {
           Flexible(
               child: DefaultMainButton(
                   invertColors: true,
+                  primaryColor: AppColors.orangeColor,
                   label: 'Cancelar',
                   onPressed: () {
                     Modular.to.pop();
@@ -159,6 +145,7 @@ mixin MovieReviewWidget on CommonWidgets {
           Flexible(
               child: DefaultMainButton(
                   label: 'Confirmar',
+                  primaryColor: AppColors.orangeColor,
                   onPressed: () {
                     if (rate.value == 0) {
                       AppSnackbars.showErrorSnackbar(
@@ -191,11 +178,10 @@ mixin MovieReviewWidget on CommonWidgets {
           child: Container(
             alignment: Alignment.center,
             decoration: const BoxDecoration(
-              color: AppColors.secundaryColor,
+              color: AppColors.primaryColorDark,
             ),
             child: Column(
               children: [
-                _header(),
                 Expanded(
                     child: ListView(
                   children: [

@@ -8,7 +8,6 @@ mixin NavigationRoutes {
           icon: Icon(
             Icons.home,
             color: AppColors.secundaryColor,
-            size: 35,
           ),
         ),
         'favorites': const NavigationRoute(
@@ -16,7 +15,6 @@ mixin NavigationRoutes {
           icon: Icon(
             Icons.favorite,
             color: AppColors.secundaryColor,
-            size: 35,
           ),
           label: 'Favoritos',
         ),
@@ -25,7 +23,6 @@ mixin NavigationRoutes {
           icon: Icon(
             Icons.tv,
             color: AppColors.secundaryColor,
-            size: 35,
           ),
           label: 'Assistir',
         ),
@@ -34,7 +31,6 @@ mixin NavigationRoutes {
           icon: Icon(
             Icons.search,
             color: AppColors.secundaryColor,
-            size: 35,
           ),
           label: 'Pesquisar',
         ),

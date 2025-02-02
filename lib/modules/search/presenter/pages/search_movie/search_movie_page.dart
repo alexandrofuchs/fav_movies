@@ -34,43 +34,66 @@ class _SearchMoviePageState extends State<SearchMoviePage>
     super.dispose();
   }
 
-  Widget loadedWidget(List<Movie> movieList) => movieList.isEmpty ? const Center(child: Text('Nenhum filme encontrado.', style: AppTextStyles.labelLarge,)) : ListView.builder(
-      shrinkWrap: true,
-      itemCount: movieList.length,
-      itemBuilder: (context, index) =>
-          cardWidget(index, movieList[index]));
+  Widget loadedWidget(List<Movie> movieList) => movieList.isEmpty
+      ? const Center(
+          child: Text(
+          'Nenhum filme encontrado.',
+          style: AppTextStyles.labelLarge,
+        ))
+      : ListView.builder(
+          shrinkWrap: true,
+          itemCount: movieList.length,
+          itemBuilder: (context, index) =>
+              cardWidget(context, index, movieList[index]));
 
   @override
   Widget build(BuildContext context) {
     return HomeScaffold(
         appBar: AppBar(
-          title: titleDot('Pesquisar Filme', true),
+          title: titleDot('Pesquisar Filme'),
+          toolbarHeight: 100,
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(25),
+            child: searchBarContainer(searchBar('Nome do filme...', (value) {
+              bloc.add(SearchEvent(value));
+            })),
+          ),
         ),
         body: Column(
           children: [
-            searchBar('Pesquisar...', (value) {
-              bloc.add(SearchEvent(value));
-            }),
-            Expanded(child: favoriteListener(child: BlocConsumer<SearchMovieBloc, SearchMovieBlocState>(
-                bloc: bloc,
-                listenWhen: (previous, current) => current.status == SearchMovieBlocStatus.loaded,
-                listener: (context, state) {
-                  focusedCardIndex.value = 0;
-                },
-                builder: (context, state) => switch (state.status) {
-                      SearchMovieBlocStatus.initial =>   Center(
-                        child: Container(
-                          alignment: Alignment.center,
-                          child: 
-                        const Text('Digite um filme no campo de pesquisa.', style: AppTextStyles.labelLarge, textAlign: TextAlign.center,)),
-                      ) ,
-                      SearchMovieBlocStatus.loading => const AppLoadingDots(),
-                      SearchMovieBlocStatus.failed => errorMessageWidget(
-                          'Não foi possível efetuar a pesquisa!'),
-                      SearchMovieBlocStatus.loaded =>
-                        loadedWidget(state.filteredList),
-                    })),
-        )],
+            const SizedBox(),
+            Expanded(
+                child: 
+                Container(
+                color: Colors.black,
+              padding: const EdgeInsets.only(left: 5, right: 5, bottom: 5),
+              child: favoriteListener(
+                  child: BlocConsumer<SearchMovieBloc, SearchMovieBlocState>(
+                      bloc: bloc,
+                      listenWhen: (previous, current) =>
+                          current.status == SearchMovieBlocStatus.loaded,
+                      listener: (context, state) {
+                        focusedCardIndex.value = 0;
+                      },
+                      builder: (context, state) => switch (state.status) {
+                            SearchMovieBlocStatus.initial => Center(
+                                child: Container(
+                                    alignment: Alignment.center,
+                                    child: const Text(
+                                      'Digite um filme no campo de pesquisa.',
+                                      style: AppTextStyles.labelLarge,
+                                      textAlign: TextAlign.center,
+                                    )),
+                              ),
+                            SearchMovieBlocStatus.loading =>
+                              const AppLoadingDots(),
+                            SearchMovieBlocStatus.failed => errorMessageWidget(
+                                'Não foi possível efetuar a pesquisa!'),
+                            SearchMovieBlocStatus.loaded =>
+                              loadedWidget(state.filteredList),
+                          })),
+            ))
+          ],
         ));
   }
 }

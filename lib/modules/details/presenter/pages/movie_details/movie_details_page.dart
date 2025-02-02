@@ -77,7 +77,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
               alignment: Alignment.bottomCenter,
               margin: const EdgeInsets.only(top: 25),
               decoration: const BoxDecoration(
-                color: AppColors.secundaryColor,
+                color: AppColors.primaryColorDark,
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(25),
                     topRight: Radius.circular(25)),
@@ -90,11 +90,11 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
                   infoWidget(movieDetails),
                   divider(),
                   showRateWidget(showDescription: true),
-                  itemDot('Sinopse: ', bold: true),
+                  titleDot('Sinopse: '),
                   Text(
                     widget.movie.overview,
                     textAlign: TextAlign.justify,
-                    style: AppTextStyles.bodyMedium,
+                    style: AppTextStyles.labelSmall.copyWith(fontWeight: FontWeight.w400),
                   ),
                   divider(),
                   movieDetails.trailer.isEmpty
@@ -130,8 +130,8 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
                 children: [
                   ClipRRect(
                       borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(25),
-                          topRight: Radius.circular(25)),
+                          topLeft: Radius.circular(0),
+                          topRight: Radius.circular(0)),
                       child: widget.movie.posterPath == null
                           ? const SizedBox(
                               height: 300,
@@ -141,7 +141,6 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
                               width: MediaQuery.of(context).size.width,
                               fit: BoxFit.fitWidth,
                             )),
-                  titleWidget(),
                 ],
               ),
             ),
@@ -155,15 +154,13 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25),
         ),
-        padding: const EdgeInsets.only(left: 30, top: 25),
         child: Column(children: [
           DefaultMainButton(
               label: 'Avaliar',
               compact: true,
               leftIcon: Icons.star,
-              invertColors: true,
-              primaryColor: AppColors.primaryColor,
-              maxWidth: 400,
+              margin: const EdgeInsets.all(0),
+              maxWidth: 300,
               minWidth: 200,
               onPressed: () {
                 openReviewBottomSheet(context, widget.movie);
@@ -186,10 +183,8 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
                     ManageWatchlistBlocStatus.inWatchList => DefaultMainButton(
                         compact: true,
                         label: 'Remover da lista para assistir',
-                        maxWidth: 400,
+                        maxWidth: 300,
                         leftIcon: Icons.tv_off,
-                        primaryColor: AppColors.primaryColor,
-                        invertColors: true,
                         onPressed: () {
                           watchListBloc
                               .add(RemoveFromWatchlistEvent(widget.movie.id));
@@ -199,9 +194,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
                           compact: true,
                           label: 'Adicionar à lista para assistir',
                           leftIcon: Icons.tv,
-                          invertColors: true,
-                          primaryColor: AppColors.primaryColor,
-                          maxWidth: 400,
+                          maxWidth: 300,
                           onPressed: () {
                             watchListBloc
                                 .add(AddToWatchlistEvent(widget.movie));
@@ -212,7 +205,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
 
   Widget videoTrailer(String videoId) => Column(
         children: [
-          itemDot('Trailer'),
+          titleDot('Trailer: '),
           Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
@@ -227,11 +220,9 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // extendBodyBehindAppBar: true,
         appBar: AppBar(
-          title: const Text('Detalhes do filme', style: AppTextStyles.labelLarge,),
+          title: Text(widget.movie.title, style: AppTextStyles.labelLarge,),
           toolbarHeight: 70,
-          // backgroundColor: Colors.transparent,
           iconTheme: const IconThemeData(
             color: AppColors.secundaryColor,
             size: 32,

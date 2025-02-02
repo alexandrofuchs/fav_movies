@@ -18,7 +18,7 @@ mixin MovieWidgets on FavoriteAction, CommonWidgets {
             onPressed: favoriteAction,
             icon: const Icon(
               Icons.favorite,
-              color: AppColors.successColor,
+              color: AppColors.secundaryColor,
               size: 24,
             ),
           ).animate().scaleXY(
@@ -26,8 +26,7 @@ mixin MovieWidgets on FavoriteAction, CommonWidgets {
         ],
       );
 
-  Widget firstCardHeader(String title, Function() favoriteAction) => Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  Widget focusedCardHeader(String title, Function() favoriteAction) => Row(
         children: [
           Expanded(
             child: Padding(
@@ -36,8 +35,8 @@ mixin MovieWidgets on FavoriteAction, CommonWidgets {
                 title,
                 softWrap: true,
                 maxLines: 2,
-                style: AppTextStyles.titleMedium
-                    .copyWith(fontWeight: FontWeight.w700),
+                style: AppTextStyles.labelMedium
+                    .copyWith(fontWeight: FontWeight.w400, wordSpacing: 1 , letterSpacing: 1),
               ),
             ),
           ),
@@ -50,7 +49,7 @@ mixin MovieWidgets on FavoriteAction, CommonWidgets {
           children: [
             Text(
               label,
-              style: AppTextStyles.bodySmall.copyWith(),
+              style: AppTextStyles.labelSmall.copyWith(color: AppColors.primaryColorLight, fontSize: 8),
               softWrap: true,
               maxLines: 1,
             ),
@@ -59,18 +58,18 @@ mixin MovieWidgets on FavoriteAction, CommonWidgets {
               softWrap: false,
               overflow: TextOverflow.fade,
               style:
-                  AppTextStyles.bodySmall.copyWith(fontWeight: FontWeight.w700),
+                  AppTextStyles.labelSmall.copyWith(fontSize: 10, fontWeight: FontWeight.w700),
             ),
           ],
         ),
       );
 
-  Widget firstCardContent(Movie movie) => Column(
+  Widget focusedCardContent(BuildContext context, Movie movie) => Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 15, right: 15, bottom: 15),
+            padding: const EdgeInsets.only(left: 15, right: 15, bottom: 5),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 contentTextItem('Avaliação', movie.voteAverage.toStringAsFixed(1)),
@@ -80,20 +79,29 @@ mixin MovieWidgets on FavoriteAction, CommonWidgets {
               ],
             ),
           ),
-          DefaultMainButton(
-              label: 'Ver detalhes',
-              compact: true,
-              secundaryColor: AppColors.secundaryColor,
-              onPressed: () {
-                Modular.to.pushNamed('/details/', arguments: movie);
-              })
+          Align(
+            alignment: Alignment.topRight,
+            child: DefaultMainButton(
+                label: 'Ver detalhes',
+                margin: EdgeInsets.zero,
+                boldText: false,
+                expandedWidth: true,
+                iconColor: Colors.transparent,
+                leftIcon: Icons.more_horiz,
+                shape: const RoundedRectangleBorder(),
+                primaryColor: Colors.transparent,
+                secundaryColor: AppColors.secundaryColor,
+                onPressed: () {
+                  Modular.to.pushNamed('/details/', arguments: movie);
+                }),
+          )
         ],
       );
 
   Widget moviePosterWidget(String? path,
-          {double height = 100, double width = 100}) =>
-      ClipRRect(
-          borderRadius: BorderRadius.circular(5),
+          {double height = 100, double width = 100, BorderRadius borderRadius = BorderRadius.zero }) 
+          => ClipRRect(
+          borderRadius: borderRadius,
           child: path != null
               ? Image.network(
                   loadingBuilder: (BuildContext context, Widget child,
@@ -109,10 +117,10 @@ mixin MovieWidgets on FavoriteAction, CommonWidgets {
                       ),
                       height: height,
                       width: width,
-                    ).animate().show();
+                    );
                   },
                   path,
-                  fit: BoxFit.fill,
+                  fit: BoxFit.fitWidth,
                   width: width,
                 )
               : SizedBox(
@@ -128,64 +136,56 @@ mixin MovieWidgets on FavoriteAction, CommonWidgets {
               padding: const EdgeInsets.only(right: 10),
               child: moviePosterWidget(
                 movie.posterPath,
-                width: 130,
+                width: 100,
               )),
           Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    movie.title,
-                    style: AppTextStyles.titleMedium
-                        .copyWith(fontWeight: FontWeight.w700),
-                  ),
-                  const SizedBox(height: 10),
-                  infoRow(
-                    'Nota: ',
-                    movie.voteAverage.toStringAsFixed(1),
-                  ),
-                  infoRow('Data: ', movie.releaseDate),
-                  infoRow('Idioma: ', movie.originalLanguage.label),
-                  infoRow('Adulto: ', movie.adult ? 'Sim' : 'Não'),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      favoriteIconButton(() => favoriteAction(movie)),
-                    ],
-                  ),
-                ],
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const SizedBox(height: 15,),
+                Text(
+                  movie.title,
+                  style: AppTextStyles.labelMedium
+                      .copyWith(fontWeight: FontWeight.w500, wordSpacing: 1, letterSpacing: 1),
+                ),
+                const SizedBox(height: 25,),
+                infoRow(
+                  'Avaliação: ',
+                  movie.voteAverage.toStringAsFixed(1),
+                ),
+                const SizedBox(height: 5,),
+                infoRow('Data: ', movie.releaseDate),
+                const SizedBox(height: 5,),
+                infoRow('Idioma: ', movie.originalLanguage.label),
+                const SizedBox(height: 5,),
+                infoRow('Adulto: ', movie.adult ? 'Sim' : 'Não'),
+                
+              ],
             ),
           ),
+          favoriteIconButton(() => favoriteAction(movie)),
         ],
       );
 
-  Widget firstCardContainer(List<Widget> children,
-          {Color backgroundColor = AppColors.secundaryColor}) =>
+  Widget firstCardContainer(List<Widget> children) =>
       Container(
-        margin: const EdgeInsets.only(top: 15, bottom: 5, left: 15, right: 15),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5),
-          boxShadow: const [
-            BoxShadow(
-              spreadRadius: 1,
-              blurRadius: 1,
-              offset: Offset(0, 4),
-              color: AppColors.primaryColorDark,
-            )
-          ],
-          color: AppColors.secundaryColor,
+        alignment: Alignment.center,
+        margin: const EdgeInsets.only(top: 5),
+        padding: const EdgeInsets.only(top: 5, left: 25, right: 25),
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            stops: [0.75, 1],
+            colors: [AppColors.primaryColorDark, AppColors.primaryColor])
         ),
         child: Column(
           children: children,
         ),
       ).animate().shimmer(duration: const Duration(seconds: 2));
 
-  Widget cardWidget(int index, Movie movie) => Padding(
-    padding: const EdgeInsets.only(top: 5, bottom: 0),
+  Widget cardWidget(BuildContext context, int index, Movie movie) => Center(
     child: ValueListenableBuilder(
         valueListenable: focusedCardIndex,
         builder: (context, value, child) => AnimatedCrossFade(
@@ -194,18 +194,16 @@ mixin MovieWidgets on FavoriteAction, CommonWidgets {
                   : CrossFadeState.showSecond,
               duration: const Duration(milliseconds: 300),
               alignment: Alignment.center,
-              firstChild: focusedMovieItem(movie),
+              firstChild: focusedMovieItem(context, movie),
               secondChild: otherMovieItem(index, movie),
             )),
   );
 
-  Widget focusedMovieItem(Movie movie) => firstCardContainer([
-        Padding(
-          padding: const EdgeInsets.only(top: 10),
-          child: moviePosterWidget(movie.posterPath, width: 260),
-        ),
-        firstCardHeader(movie.title, () => favoriteAction(movie)),
-        firstCardContent(movie),
+  Widget focusedMovieItem(BuildContext context, Movie movie) => 
+    firstCardContainer([
+        moviePosterWidget(movie.posterPath, width: MediaQuery.of(context).size.width),
+        focusedCardHeader(movie.title, () => favoriteAction(movie)),
+        focusedCardContent(context, movie),
       ]);
 
   Widget otherMovieItem(int index, Movie movie) => GestureDetector(
@@ -213,17 +211,10 @@ mixin MovieWidgets on FavoriteAction, CommonWidgets {
           focusedCardIndex.value = index;
         },
         child: Container(
-          margin: const EdgeInsets.all(15),
-          padding: const EdgeInsets.all(2),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
-            boxShadow: const [
-              BoxShadow(
-                spreadRadius: 0,
-                blurRadius: 0,
-                color: AppColors.secundaryColor,
-              )
-            ],
+          margin: const EdgeInsets.only(top: 5, bottom: 0),
+          
+          decoration: const BoxDecoration(
+            color: AppColors.primaryColorDark,
           ),
           child: otherCardContent(movie),
         ),

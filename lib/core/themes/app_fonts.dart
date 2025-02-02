@@ -19,13 +19,13 @@ abstract class AppTextStyles {
   static const TextStyle labelSmall = TextStyle(
             fontSize: 12,
       color: Colors.white,
-      fontWeight: FontWeight.w700);
+      fontWeight: FontWeight.w400);
   static const TextStyle labelMedium = TextStyle(
             fontSize: 14,
       color: Colors.white,
-      fontWeight: FontWeight.w700);
+      fontWeight: FontWeight.w400);
   static const TextStyle labelLarge = TextStyle(
             fontSize: 16,
       color: Colors.white,
-      fontWeight: FontWeight.w700);
+      fontWeight: FontWeight.w400);
 }

@@ -7,14 +7,12 @@ mixin NavigationRoutes {
           label: 'Início',
           icon: Icon(
             Icons.home,
-            color: AppColors.secundaryColor,
           ),
         ),
         'favorites': const NavigationRoute(
           route: '/favorites/',
           icon: Icon(
             Icons.favorite,
-            color: AppColors.secundaryColor,
           ),
           label: 'Favoritos',
         ),
@@ -22,7 +20,6 @@ mixin NavigationRoutes {
           route: '/watchlist/',
           icon: Icon(
             Icons.tv,
-            color: AppColors.secundaryColor,
           ),
           label: 'Assistir',
         ),
@@ -30,7 +27,6 @@ mixin NavigationRoutes {
           route: '/search/',
           icon: Icon(
             Icons.search,
-            color: AppColors.secundaryColor,
           ),
           label: 'Pesquisar',
         ),

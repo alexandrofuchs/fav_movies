@@ -77,7 +77,7 @@ class HomeScaffoldState extends State<HomeScaffold>  {
                       color: AppColors.primaryColor,
                     ),
                   Status.loaded => NavigationBar(
-                      overlayColor: const WidgetStatePropertyAll(AppColors.secundaryColor),
+                      overlayColor: const WidgetStatePropertyAll(AppColors.orangeColor),
                       onDestinationSelected: (int index) {
                         Modular.get<BottomNavigatorBloc>().navigateTo(List.of(state.navigations.values)[index]);
                       },

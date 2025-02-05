@@ -18,7 +18,7 @@ mixin MovieWidgets on FavoriteAction, CommonWidgets {
             onPressed: favoriteAction,
             icon: const Icon(
               Icons.favorite,
-              color: AppColors.secundaryColor,
+              color: AppColors.orangeColor,
               size: 24,
             ),
           ).animate().scaleXY(
@@ -27,6 +27,7 @@ mixin MovieWidgets on FavoriteAction, CommonWidgets {
       );
 
   Widget focusedCardHeader(String title, Function() favoriteAction) => Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
             child: Padding(
@@ -35,8 +36,10 @@ mixin MovieWidgets on FavoriteAction, CommonWidgets {
                 title,
                 softWrap: true,
                 maxLines: 2,
-                style: AppTextStyles.labelMedium
-                    .copyWith(fontWeight: FontWeight.w400, wordSpacing: 1 , letterSpacing: 1),
+                style: AppTextStyles.labelMedium.copyWith(
+                    fontWeight: FontWeight.w400,
+                    wordSpacing: 1,
+                    letterSpacing: 1),
               ),
             ),
           ),
@@ -49,7 +52,8 @@ mixin MovieWidgets on FavoriteAction, CommonWidgets {
           children: [
             Text(
               label,
-              style: AppTextStyles.labelSmall.copyWith(color: AppColors.primaryColorLight, fontSize: 8),
+              style: AppTextStyles.labelSmall
+                  .copyWith(color: AppColors.primaryColorLight, fontSize: 8),
               softWrap: true,
               maxLines: 1,
             ),
@@ -57,8 +61,8 @@ mixin MovieWidgets on FavoriteAction, CommonWidgets {
               text,
               softWrap: false,
               overflow: TextOverflow.fade,
-              style:
-                  AppTextStyles.labelSmall.copyWith(fontSize: 10, fontWeight: FontWeight.w700),
+              style: AppTextStyles.labelSmall
+                  .copyWith(fontSize: 10, fontWeight: FontWeight.w700),
             ),
           ],
         ),
@@ -72,7 +76,8 @@ mixin MovieWidgets on FavoriteAction, CommonWidgets {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                contentTextItem('Avaliação', movie.voteAverage.toStringAsFixed(1)),
+                contentTextItem(
+                    'Avaliação', movie.voteAverage.toStringAsFixed(1)),
                 contentTextItem('Idioma', movie.originalLanguage.label),
                 contentTextItem('Data', movie.releaseDate),
                 contentTextItem('Adulto', movie.adult ? 'Sim' : 'Não'),
@@ -89,8 +94,9 @@ mixin MovieWidgets on FavoriteAction, CommonWidgets {
                 iconColor: Colors.transparent,
                 leftIcon: Icons.more_horiz,
                 shape: const RoundedRectangleBorder(),
-                primaryColor: Colors.transparent,
-                secundaryColor: AppColors.secundaryColor,
+                invertColors: true,
+                primaryColor: AppColors.orangeColor,
+                secundaryColor: Colors.transparent,
                 onPressed: () {
                   Modular.to.pushNamed('/details/', arguments: movie);
                 }),
@@ -99,8 +105,10 @@ mixin MovieWidgets on FavoriteAction, CommonWidgets {
       );
 
   Widget moviePosterWidget(String? path,
-          {double height = 100, double width = 100, BorderRadius borderRadius = BorderRadius.zero }) 
-          => ClipRRect(
+          {double height = 100,
+          double width = 100,
+          BorderRadius borderRadius = BorderRadius.zero}) =>
+      ClipRRect(
           borderRadius: borderRadius,
           child: path != null
               ? Image.network(
@@ -112,7 +120,7 @@ mixin MovieWidgets on FavoriteAction, CommonWidgets {
 
                     return Container(
                       decoration: BoxDecoration(
-                        color: AppColors.secundaryColor,
+                        color: AppColors.primaryColor,
                         borderRadius: BorderRadius.circular(5),
                       ),
                       height: height,
@@ -143,24 +151,35 @@ mixin MovieWidgets on FavoriteAction, CommonWidgets {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const SizedBox(height: 15,),
+                const SizedBox(
+                  height: 15,
+                ),
                 Text(
                   movie.title,
-                  style: AppTextStyles.labelMedium
-                      .copyWith(fontWeight: FontWeight.w500, wordSpacing: 1, letterSpacing: 1),
+                  style: AppTextStyles.labelMedium.copyWith(
+                      fontWeight: FontWeight.w500,
+                      wordSpacing: 1,
+                      letterSpacing: 1),
                 ),
-                const SizedBox(height: 25,),
+                const SizedBox(
+                  height: 25,
+                ),
                 infoRow(
                   'Avaliação: ',
                   movie.voteAverage.toStringAsFixed(1),
                 ),
-                const SizedBox(height: 5,),
+                const SizedBox(
+                  height: 5,
+                ),
                 infoRow('Data: ', movie.releaseDate),
-                const SizedBox(height: 5,),
+                const SizedBox(
+                  height: 5,
+                ),
                 infoRow('Idioma: ', movie.originalLanguage.label),
-                const SizedBox(height: 5,),
+                const SizedBox(
+                  height: 5,
+                ),
                 infoRow('Adulto: ', movie.adult ? 'Sim' : 'Não'),
-                
               ],
             ),
           ),
@@ -168,42 +187,47 @@ mixin MovieWidgets on FavoriteAction, CommonWidgets {
         ],
       );
 
-  Widget firstCardContainer(List<Widget> children) =>
-      Container(
+  Widget firstCardContainer(List<Widget> children) => Container(
         alignment: Alignment.center,
         margin: const EdgeInsets.only(top: 5),
-        padding: const EdgeInsets.only(top: 5, left: 25, right: 25),
+        padding: const EdgeInsets.only(top: 1, left: 1, right: 1),
         decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            stops: [0.75, 1],
-            colors: [AppColors.primaryColorDark, AppColors.primaryColor])
-        ),
+            border: Border(
+              bottom: BorderSide(color: AppColors.orangeColor, width: 0.5),
+              left: BorderSide(color: AppColors.orangeColor, width: 0.5),
+              right: BorderSide(color: AppColors.orangeColor, width: 0.5),
+              top: BorderSide(color: AppColors.orangeColor, width: 0.5),
+            ),
+            gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                stops: [0.75, 1],
+                colors: [AppColors.primaryColorDark, AppColors.primaryColor])),
         child: Column(
           children: children,
         ),
       ).animate().shimmer(duration: const Duration(seconds: 2));
 
   Widget cardWidget(BuildContext context, int index, Movie movie) => Center(
-    child: ValueListenableBuilder(
-        valueListenable: focusedCardIndex,
-        builder: (context, value, child) => AnimatedCrossFade(
-              crossFadeState: value == index
-                  ? CrossFadeState.showFirst
-                  : CrossFadeState.showSecond,
-              duration: const Duration(milliseconds: 300),
-              alignment: Alignment.center,
-              firstChild: focusedMovieItem(context, movie),
-              secondChild: otherMovieItem(index, movie),
-            )),
-  );
+        child: ValueListenableBuilder(
+            valueListenable: focusedCardIndex,
+            builder: (context, value, child) => AnimatedCrossFade(
+                  crossFadeState: value == index
+                      ? CrossFadeState.showFirst
+                      : CrossFadeState.showSecond,
+                  duration: const Duration(milliseconds: 300),
+                  alignment: Alignment.center,
+                  firstChild: focusedMovieItem(context, movie),
+                  secondChild: otherMovieItem(index, movie),
+                )),
+      );
 
-  Widget focusedMovieItem(BuildContext context, Movie movie) => 
-    firstCardContainer([
-        moviePosterWidget(movie.posterPath, width: MediaQuery.of(context).size.width),
+  Widget focusedMovieItem(BuildContext context, Movie movie) =>
+      firstCardContainer([
+        moviePosterWidget(movie.posterPath,
+            width: MediaQuery.of(context).size.width),
         focusedCardHeader(movie.title, () => favoriteAction(movie)),
-        focusedCardContent(context, movie),
+        focusedCardContent(context, movie)
       ]);
 
   Widget otherMovieItem(int index, Movie movie) => GestureDetector(
@@ -212,8 +236,9 @@ mixin MovieWidgets on FavoriteAction, CommonWidgets {
         },
         child: Container(
           margin: const EdgeInsets.only(top: 5, bottom: 0),
-          
           decoration: const BoxDecoration(
+            border: Border(
+                bottom: BorderSide(color: AppColors.orangeColor, width: 0.5)),
             color: AppColors.primaryColorDark,
           ),
           child: otherCardContent(movie),

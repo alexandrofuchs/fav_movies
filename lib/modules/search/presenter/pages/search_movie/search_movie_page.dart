@@ -64,35 +64,31 @@ class _SearchMoviePageState extends State<SearchMoviePage>
             const SizedBox(),
             Expanded(
                 child: 
-                Container(
-                color: Colors.black,
-              padding: const EdgeInsets.only(left: 5, right: 5, bottom: 5),
-              child: favoriteListener(
-                  child: BlocConsumer<SearchMovieBloc, SearchMovieBlocState>(
-                      bloc: bloc,
-                      listenWhen: (previous, current) =>
-                          current.status == SearchMovieBlocStatus.loaded,
-                      listener: (context, state) {
-                        focusedCardIndex.value = 0;
-                      },
-                      builder: (context, state) => switch (state.status) {
-                            SearchMovieBlocStatus.initial => Center(
-                                child: Container(
-                                    alignment: Alignment.center,
-                                    child: const Text(
-                                      'Digite um filme no campo de pesquisa.',
-                                      style: AppTextStyles.labelLarge,
-                                      textAlign: TextAlign.center,
-                                    )),
-                              ),
-                            SearchMovieBlocStatus.loading =>
-                              const AppLoadingDots(),
-                            SearchMovieBlocStatus.failed => errorMessageWidget(
-                                'Não foi possível efetuar a pesquisa!'),
-                            SearchMovieBlocStatus.loaded =>
-                              loadedWidget(state.filteredList),
-                          })),
-            ))
+                favoriteListener(
+                    child: BlocConsumer<SearchMovieBloc, SearchMovieBlocState>(
+                        bloc: bloc,
+                        listenWhen: (previous, current) =>
+                            current.status == SearchMovieBlocStatus.loaded,
+                        listener: (context, state) {
+                          focusedCardIndex.value = 0;
+                        },
+                        builder: (context, state) => switch (state.status) {
+                              SearchMovieBlocStatus.initial => Center(
+                                  child: Container(
+                                      alignment: Alignment.center,
+                                      child: const Text(
+                                        'Digite o nome do filme no campo de pesquisa.',
+                                        style: AppTextStyles.labelLarge,
+                                        textAlign: TextAlign.center,
+                                      )),
+                                ),
+                              SearchMovieBlocStatus.loading =>
+                                const AppLoadingDots(),
+                              SearchMovieBlocStatus.failed => errorMessageWidget(
+                                  'Não foi possível efetuar a pesquisa!'),
+                              SearchMovieBlocStatus.loaded =>
+                                loadedWidget(state.filteredList),
+                            })))
           ],
         ));
   }

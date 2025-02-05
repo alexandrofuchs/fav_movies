@@ -16,15 +16,15 @@ abstract class AppTheme with ThemedComponents {
             backgroundColor: AppColors.primaryColorDark,
             elevation: 1,
             overlayColor:
-                const WidgetStatePropertyAll(AppColors.secundaryColor),
+                const WidgetStatePropertyAll(AppColors.orangeColor),
             indicatorColor: AppColors.primaryColor,
-            labelTextStyle:  const WidgetStatePropertyAll(
-                AppTextStyles.labelSmall),
+            labelTextStyle:  WidgetStatePropertyAll(
+                AppTextStyles.labelSmall.copyWith(color: AppColors.orangeColor)),
             iconTheme: const WidgetStatePropertyAll(
-              IconThemeData(size: 24, color: AppColors.primaryColorLight)),
+              IconThemeData(size: 24, color: AppColors.orangeColor)),
             indicatorShape: const Border(
 
-                top: BorderSide(color: AppColors.secundaryColor, width: 0.25))),
+                top: BorderSide(color: AppColors.orangeColor, width: 0.25))),
           textTheme:  const TextTheme(
             titleLarge: AppTextStyles.titleLarge,
             titleMedium: AppTextStyles.titleMedium,

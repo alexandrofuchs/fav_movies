@@ -9,7 +9,7 @@ class AppLoadingDots extends StatefulWidget {
   const AppLoadingDots(
       {super.key,
       this.dotSize = const Size(14, 14),
-      this.color = AppColors.secundaryColor});
+      this.color = AppColors.orangeColor});
 
   @override
   State<StatefulWidget> createState() => _AppLoadingDotsState();
@@ -48,7 +48,7 @@ class _AppLoadingDotsState extends State<AppLoadingDots> {
                   BoxShadow(
                     blurRadius: 5,
                     spreadRadius: 2,
-                    color: AppColors.secundaryColor,
+                    color: AppColors.orangeColor,
                   )
                 ]
                 

@@ -60,10 +60,10 @@ class DefaultMainButton extends StatelessWidget {
             softWrap: true,
             style: AppTextStyles.bodyMedium.copyWith(
                 color: getSecundaryColor,
-                fontSize: compact ? 8 : 10,
-                fontWeight: FontWeight.w400),
+                fontWeight: boldText ? FontWeight.w700 : FontWeight.normal,
+                fontSize: compact ? 8 : 10,),
             textAlign: TextAlign.center,
-            maxLines: compact ? 1 : null,
+            maxLines: compact ? 1 : 1,
   );
 
   Widget leftIconWidget() => Padding(

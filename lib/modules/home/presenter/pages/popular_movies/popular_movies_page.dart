@@ -1,4 +1,5 @@
 import 'package:fav_movies/core/common/models/movie.dart';
+import 'package:fav_movies/core/themes/app_colors.dart';
 import 'package:fav_movies/core/themes/app_fonts.dart';
 import 'package:fav_movies/core/widgets/common/common_widgets.dart';
 import 'package:fav_movies/core/widgets/loading/app_loading_dots_widget.dart';
@@ -60,7 +61,8 @@ class _PopularMoviesPageState extends State<PopularMoviesPage>
                   ),
                 )
               : Expanded(
-                  child: Padding(
+                  child: Container(
+                    color: Colors.black,
                     padding:
                         const EdgeInsets.only(left: 5, right: 5, bottom: 5),
                     child: ListView.builder(
@@ -79,7 +81,7 @@ class _PopularMoviesPageState extends State<PopularMoviesPage>
   @override
   Widget build(BuildContext context) {
     return HomeScaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: AppColors.primaryColor,
       appBar: AppBar(
           title: ValueListenableBuilder(
         valueListenable: showSearchBar,
@@ -98,15 +100,16 @@ class _PopularMoviesPageState extends State<PopularMoviesPage>
                 ),
               ],
             ),
-            secondChild: searchBar(
+            secondChild: searchBarContainer(searchBar(
               'Pesquisar em filmes polulares',
               (value) {
                 popularMoviesBloc.add(SearchByTextEvent(value));
               },
               onClearText: () {
                 showSearchBar.value = false;
-              },
+              }),
               margin: EdgeInsets.zero,
+              padding: EdgeInsets.zero
             ),
             crossFadeState:
                 show ? CrossFadeState.showSecond : CrossFadeState.showFirst,

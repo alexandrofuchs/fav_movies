@@ -7,8 +7,12 @@ import 'package:flutter_modular/flutter_modular.dart';
 mixin SearchWidgets {
   final TextEditingController searchBarController = TextEditingController();
 
-  Widget searchBarContainer(Widget child) => Container(
-      padding: const EdgeInsets.only(left: 25, bottom: 25, right: 25),
+  Widget searchBarContainer(Widget child, {
+    EdgeInsets padding = const EdgeInsets.only(left: 25, bottom: 25, right: 25),
+    EdgeInsets margin = EdgeInsets.zero,
+  }) => Container(
+      padding: padding,
+      margin: margin,
       decoration: const BoxDecoration(
         color: AppColors.primaryColorDark,
       ),
@@ -25,15 +29,12 @@ mixin SearchWidgets {
     bool autofocus = false,
     Key? key,
     void Function()? onClearText,
-    EdgeInsets padding =
-        const EdgeInsets.only(left: 25, right: 25, bottom: 5, top: 5),
-    EdgeInsets margin = const EdgeInsets.only(right: 25, left: 25, top: 15),
+    
   }) =>
       Row(children: [
         const Icon(
           Icons.search,
           size: 24,
-          color: AppColors.secundaryColor,
         ),
         const SizedBox(
           width: 10,
@@ -61,7 +62,6 @@ mixin SearchWidgets {
           icon: const Icon(
             Icons.cancel,
             size: 24,
-            color: AppColors.secundaryColor,
           ),
           padding: EdgeInsets.zero,
           onPressed: () {

@@ -45,12 +45,12 @@ mixin CommonWidgets {
               topRight: Radius.circular(5),
               bottomRight: Radius.circular(5)
               )),
-              color:   AppColors.secundaryColor,
+              color:   AppColors.orangeColor,
             )),
           Flexible(
               child: Text(
             text,
-            style: AppTextStyles.labelMedium,
+            style: AppTextStyles.labelMedium.copyWith(fontWeight: FontWeight.w500),
             softWrap: true,
           )),
         ],
@@ -106,7 +106,7 @@ mixin CommonWidgets {
   Widget divider() => const Padding(
     padding: EdgeInsets.only(top: 15),
     child: Divider(
-          color: AppColors.primaryColorDark,
+          color: AppColors.orangeColor,
           height: 2,
           thickness: 0.3,
           indent: 1,

@@ -82,21 +82,27 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
                     topLeft: Radius.circular(25),
                     topRight: Radius.circular(25)),
               ),
-              padding: const EdgeInsets.all(25),
+              padding: const EdgeInsets.all(0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  infoWidget(movieDetails),
-                  divider(),
+                  
+                  Padding(
+                    padding: const EdgeInsets.all(25),
+                    child: infoWidget(movieDetails),
+                  ),
                   showRateWidget(showDescription: true),
                   titleDot('Sinopse: '),
-                  Text(
-                    widget.movie.overview,
-                    textAlign: TextAlign.justify,
-                    style: AppTextStyles.labelSmall.copyWith(fontWeight: FontWeight.w400),
+                  Padding(
+                    padding: const EdgeInsets.all(15),
+                    child: Text(
+                      widget.movie.overview,
+                      textAlign: TextAlign.justify,
+                      style: AppTextStyles.labelSmall
+                          .copyWith(fontWeight: FontWeight.w400),
+                    ),
                   ),
-                  divider(),
                   movieDetails.trailer.isEmpty
                       ? const SizedBox()
                       : videoTrailer(movieDetails.trailer.first.key),
@@ -158,7 +164,10 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
           DefaultMainButton(
               label: 'Avaliar',
               compact: true,
+              boldText: true,
               leftIcon: Icons.star,
+              iconColor: AppColors.orangeColor,
+              secundaryColor: AppColors.orangeColor,
               margin: const EdgeInsets.all(0),
               maxWidth: 300,
               minWidth: 200,
@@ -185,6 +194,9 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
                         label: 'Remover da lista para assistir',
                         maxWidth: 300,
                         leftIcon: Icons.tv_off,
+                        boldText: true,
+                        iconColor: AppColors.orangeColor,
+                        secundaryColor: AppColors.orangeColor,
                         onPressed: () {
                           watchListBloc
                               .add(RemoveFromWatchlistEvent(widget.movie.id));
@@ -194,6 +206,9 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
                           compact: true,
                           label: 'Adicionar à lista para assistir',
                           leftIcon: Icons.tv,
+                          boldText: true,
+                          iconColor: AppColors.orangeColor,
+                          secundaryColor: AppColors.orangeColor,
                           maxWidth: 300,
                           onPressed: () {
                             watchListBloc
@@ -207,6 +222,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
         children: [
           titleDot('Trailer: '),
           Container(
+            margin: const EdgeInsets.all(15),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
               border: Border.all(color: AppColors.primaryColor, width: 5),
@@ -221,11 +237,14 @@ class _MovieDetailsPageState extends State<MovieDetailsPage>
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(widget.movie.title, style: AppTextStyles.labelLarge,),
+          title: Text(
+            widget.movie.title,
+            style: AppTextStyles.labelLarge,
+          ),
           toolbarHeight: 70,
           iconTheme: const IconThemeData(
-            color: AppColors.secundaryColor,
-            size: 32,
+            color: AppColors.orangeColor,
+            size: 24,
           ),
         ),
         body: BlocBuilder<MovieDetailsBloc, MovieDetailsBlocState>(

@@ -56,12 +56,15 @@ class _FavoritePageState extends State<WatchListPage> with DefaultAppbarWidgets,
                     label: 'Voltar para o início')
               ]),
         )
-      : ListView.builder(
+      : Container(
+                color: Colors.black,
+                padding: const EdgeInsets.only(left: 5, right: 5, bottom: 5),
+                child: ListView.builder(
           shrinkWrap: true,
           itemCount: movies.length,
           itemBuilder: (context, index) => 
           favoriteListener(child: cardWidget(context, index, movies[index]),
-        ));
+        )));
 
   @override
   Widget build(BuildContext context) {
@@ -72,10 +75,7 @@ class _FavoritePageState extends State<WatchListPage> with DefaultAppbarWidgets,
         body: Column(
           children: [
             Expanded(
-              child: Container(
-                color: Colors.black,
-                padding: const EdgeInsets.only(left: 5, right: 5, bottom: 5),
-                child: BlocBuilder<LoadWatchListBloc, LoadWatchListBlocState>(
+              child: BlocBuilder<LoadWatchListBloc, LoadWatchListBlocState>(
                     bloc: bloc,
                     builder: (context, state) => switch (state.status) {
                           LoadWatchListBlocStatus.loading => const AppLoadingDots(),
@@ -84,7 +84,6 @@ class _FavoritePageState extends State<WatchListPage> with DefaultAppbarWidgets,
                           LoadWatchListBlocStatus.loaded =>
                             loadedWidget(state.sourceList!),
                         }),
-              ),
             ),
           ],
         ));

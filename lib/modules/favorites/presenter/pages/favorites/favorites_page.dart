@@ -53,11 +53,16 @@ class _FavoritePageState extends State<FavoritesPage> with DefaultAppbarWidgets,
                     label: 'Voltar para o início')
               ]),
         )
-      : ListView.builder(
+      :  Container(
+                color: Colors.black,
+                padding: const EdgeInsets.only(left: 5, right: 5, bottom: 5),
+                child: 
+      
+        ListView.builder(
           shrinkWrap: true,
           itemCount: movies.length,
           itemBuilder: (context, index) => cardWidget(context, index, movies[index]),
-        );
+      ));
 
   @override
   Widget build(BuildContext context) {
@@ -68,10 +73,7 @@ class _FavoritePageState extends State<FavoritesPage> with DefaultAppbarWidgets,
         body: favoriteListener(child: Column(
           children: [
             Expanded(
-              child: Container(
-                color: Colors.black,
-                padding: const EdgeInsets.only(left: 5, right: 5, bottom: 5),
-                child: BlocBuilder<LoadFavoriteMoviesBloc, LoadFavoriteBlocState>(
+              child:BlocBuilder<LoadFavoriteMoviesBloc, LoadFavoriteBlocState>(
                     bloc: bloc,
                     builder: (context, state) => switch (state.status) {
                           LoadFavoriteBlocStatus.loading => const AppLoadingDots(),
@@ -81,7 +83,7 @@ class _FavoritePageState extends State<FavoritesPage> with DefaultAppbarWidgets,
                             loadedWidget(state.sourceList!),
                         }),
               ),
-            ),
+            
           ],
         )));
   }
